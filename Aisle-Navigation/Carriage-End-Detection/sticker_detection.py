@@ -7,9 +7,16 @@ def blob_detection(img):
     cv2.waitKey(1000)
     kernel = np.ones((5, 5), np.uint8)
     mask = cv2.dilate(mask, kernel, iterations=3)
-    cv2.imshow("Window 4",mask)
-    cv2.waitKey(2000)
-    return 0
+    M = cv2.moments(mask)
+    cx = int(M['m10'] / M['m00'])
+    cy = int(M['m01'] / M['m00'])
+    contours, _ = cv2.findContours(mask,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    nu = np.zeros(img.shape)
+    nu = cv2.drawContours(nu, contours, -1, (0,0,255), 1)
+    cv2.imshow("Window 4",nu)
+    cv2.waitKey(10000)
+    cv2.destroyAllWindows()
+    return mask
 
 def remove_illumination(image):
     image = image / 1.0
@@ -25,6 +32,24 @@ def remove_illumination(image):
     return image
 
 
+
+def matchsticker(image):
+    template = cv2.imread("./images/blue_cross.jpg")
+    imgray = cv2.cvtColor(template,cv2.COLOR_BGR2GRAY)
+    ret,thresh = cv2.threshold(imgray,127,255,0)
+    template_contours, _ = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    cnt1 = template_contours[0]
+    contours, _ = cv2.findContours(image,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+    cnt2 = contours[0]
+    print(template_contours)
+    print(contours)
+    ret = cv2.matchShapes(cnt1,cnt2,1,0.0)
+    print(ret)
+    if ret < .1:
+        return True
+    else:
+        return False
+
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
     img = cv2.imread("./images/blue_cross.jpg", 1)
@@ -33,4 +58,4 @@ if __name__ == '__main__':
     cv2.imshow("Window 2", img)
     cv2.waitKey(2000)
     cv2.destroyAllWindows()
-    blob_detection(img)
+    matchsticker(blob_detection(img))
