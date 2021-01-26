@@ -1,0 +1,166 @@
+#VRML_OBJ R2021a utf8
+TiagoBase {
+  hidden position_0_0 260.20368520481475
+  hidden position_0_1 256.9804009948509
+  hidden position_0_2 12.789285201259743
+  hidden position_0_3 12.789655762467715
+  hidden position_0_4 31.654558875797527
+  hidden position_0_5 25.38242809170786
+  hidden translation_12 0.00010134693178605163 -4.327265906945539e-05 0.02075632198772033
+  hidden rotation_12 0.04550592561632033 0.9976600355497139 -0.05102611293000585 9.06946992349604e-05
+  hidden translation_16 0.00011543198513356997 -0.2018319567957055 -0.00013600845835950282
+  hidden rotation_16 0.21053012632236653 0.6912151341391437 -0.6913021801265306 2.726072815537564
+  hidden translation_17 -0.0013177533388856815 0.20346678258750622 8.279663811275925e-05
+  hidden rotation_17 -0.8812066406123042 0.3109354224226066 -0.3560814789112912 4.568317244570684
+  hidden translation_18 0.16920810371133863 -0.10182372631727024 -0.013395647490112909
+  hidden rotation_18 0.03513043625464844 -0.008462107615357393 0.999346909327919 6.281181200387373
+  hidden position_18_0 857.2288724396179
+  hidden rotation_19 -0.15114828494919372 0.698981618738697 0.6989841862462612 2.8415681890646365
+  hidden translation_20 0.16920737731153992 0.10217893309204999 -0.013196039989243704
+  hidden rotation_20 0.035559648441028255 -0.008678281676347226 0.9993298748811107 6.28119464255257
+  hidden position_20_0 846.2043432566434
+  hidden rotation_21 0.40374542907439165 0.6469105633961161 0.6469129396356628 3.9090521419967743
+  hidden translation_22 -0.17388461732313368 -0.10157365856700509 -0.015263820113389712
+  hidden rotation_22 0.15511145619213443 -0.026503062618192137 0.987541403602812 6.282593388818168
+  hidden position_22_0 849.7143041905988
+  hidden rotation_23 0.6106334891475921 -0.5599662661117586 -0.5599683229864816 4.23799253966848
+  hidden translation_24 -0.17406029703485112 0.10249375728186737 -0.015064225780258945
+  hidden rotation_24 0.17952711691549425 0.004632731004618529 0.9837421166624153 6.282627325848614
+  hidden position_24_0 855.7353795766353
+  hidden rotation_25 -0.7103979472575219 0.4976609976008501 0.4976628256151205 1.90625528794043
+  translation -1.104700170945249e-05 0.07631821390581633 3.0122113933954333e-05
+  rotation 0.5448482866370694 0.5916770794582831 0.5941873258429252 -2.139484780047604
+  name "RaillyClean"
+  controller ""
+  bodySlot [
+    Solid {
+      translation 0 0 0.4
+      children [
+        Robot {
+          translation 0 0 0.5
+        }
+        DistanceSensor {
+          translation -0.155 0 0.15
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "back distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+        }
+        DistanceSensor {
+          translation -0.00500018 -0.155 0.15
+          rotation 0 0 1 1.5708
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "right distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+        }
+        DistanceSensor {
+          translation -0.00499949 0.155 0.15
+          rotation -0.5773542691637779 -0.5773542691637779 0.5773422691581833 2.09441
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "left distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+        }
+        DistanceSensor {
+          translation 0.155 0 0.15
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "front distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+        }
+        Camera {
+          translation 0.17 0 0
+          children [
+            DEF camerashape Shape {
+              appearance PBRAppearance {
+                baseColor 1 0 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.05 0.05 0.05
+              }
+            }
+          ]
+          name "front_camera"
+          boundingObject USE camerashape
+          physics Physics {
+          }
+        }
+        Camera {
+          translation -0.17 0 0
+          children [
+            DEF camerashape Shape {
+              appearance PBRAppearance {
+                baseColor 1 0 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.05 0.05 0.05
+              }
+            }
+          ]
+          name "rear_camera"
+          boundingObject USE camerashape
+          physics Physics {
+          }
+        }
+        DEF Stack Shape {
+          appearance PBRAppearance {
+            metalness 0
+          }
+          geometry Box {
+            size 0.3 0.3 0.4
+          }
+        }
+      ]
+      boundingObject USE Stack
+      physics Physics {
+      }
+    }
+  ]
+}
