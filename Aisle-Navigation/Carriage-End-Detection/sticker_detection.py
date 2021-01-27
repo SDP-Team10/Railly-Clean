@@ -7,6 +7,8 @@ def blob_detection(img):
     cv2.waitKey(1000)
     kernel = np.ones((5, 5), np.uint8)
     mask = cv2.dilate(mask, kernel, iterations=3)
+    kernel2 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (11, 11))
+    mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel2, iterations=3)
     M = cv2.moments(mask)
     cx = int(M['m10'] / M['m00'])
     cy = int(M['m01'] / M['m00'])
@@ -14,7 +16,7 @@ def blob_detection(img):
     nu = np.zeros(img.shape)
     nu = cv2.drawContours(nu, contours, -1, (0,0,255), 1)
     cv2.imshow("Window 4",nu)
-    cv2.waitKey(10000)
+    cv2.waitKey(2000)
     cv2.destroyAllWindows()
     return mask
 
@@ -37,12 +39,17 @@ def matchsticker(image):
     template = cv2.imread("./images/blue_cross.jpg")
     imgray = cv2.cvtColor(template,cv2.COLOR_BGR2GRAY)
     ret,thresh = cv2.threshold(imgray,127,255,0)
+    thresh = cv2.bitwise_not(thresh)
+    kernel = np.ones((5, 5), np.uint8)
+    thresh = cv2.dilate(thresh, kernel, iterations=3)
+    cv2.imshow("Window 4",thresh)
+    cv2.waitKey(2000)
+    kernel2 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (11, 11))
+    thresh= cv2.morphologyEx(thresh, cv2.MORPH_OPEN, kernel2, iterations=3)
     template_contours, _ = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     cnt1 = template_contours[0]
     contours, _ = cv2.findContours(image,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
     cnt2 = contours[0]
-    print(template_contours)
-    print(contours)
     ret = cv2.matchShapes(cnt1,cnt2,1,0.0)
     print(ret)
     if ret < .1:
