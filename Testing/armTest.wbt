@@ -1,0 +1,215 @@
+#VRML_SIM R2021a utf8
+WorldInfo {
+  coordinateSystem "NUE"
+}
+Viewpoint {
+  orientation 0.7600934978789398 -0.6133847031093733 -0.21451592125896865 5.634837164449762
+  position 3.217260175979559 3.5046655943550684 5.090690285528922
+}
+TiagoBase {
+  translation 1.78403 0.0764662 0.146455
+  rotation -0.02905469263148261 0.7051518211674953 0.7084608203283049 3.08389
+  name "RaillyClean"
+  controller "tiagoController"
+  bodySlot [
+    Solid {
+      translation 0 0 0.4
+      children [
+        Robot {
+          translation 0 0 0.5
+        }
+        DistanceSensor {
+          translation -0.155 0 0.15
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "back distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+          lookupTable [
+            0 0 0
+            0.04 0 0.01
+            10 10 0.1
+          ]
+          type "sonar"
+        }
+        DistanceSensor {
+          translation -0.00500018 -0.155 0.15
+          rotation 0 0 1 1.5708
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "right distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+          lookupTable [
+            0 0 0
+            0.04 0 0.01
+            10 10 0.1
+          ]
+          type "sonar"
+        }
+        DistanceSensor {
+          translation -0.00499949 0.155 0.15
+          rotation -0.5773542691637779 -0.5773542691637779 0.5773422691581833 2.09441
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "left distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+          lookupTable [
+            0 0 0
+            0.04 0 0.01
+            10 10 0.1
+          ]
+          type "sonar"
+        }
+        DistanceSensor {
+          translation 0.155 0 0.15
+          rotation 0 0 1 -5.307179586466759e-06
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "front distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+          lookupTable [
+            0 0 0
+            0.04 0 0.01
+            10 10 0.1
+          ]
+          type "sonar"
+        }
+        Camera {
+          translation 0.17 0 0
+          rotation -0.577349935856137 0.577349935856137 0.5773509358560258 -2.094395307179586
+          children [
+            DEF camerashape Shape {
+              appearance PBRAppearance {
+                baseColor 1 0 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.05 0.05 0.05
+              }
+            }
+          ]
+          name "front_camera"
+          boundingObject USE camerashape
+          physics Physics {
+          }
+        }
+        Camera {
+          translation -0.17 0 0
+          children [
+            DEF camerashape Shape {
+              appearance PBRAppearance {
+                baseColor 1 0 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.05 0.05 0.05
+              }
+            }
+          ]
+          name "rear_camera"
+          boundingObject USE camerashape
+          physics Physics {
+          }
+        }
+        DEF Stack Shape {
+          appearance PBRAppearance {
+            metalness 0
+          }
+          geometry Box {
+            size 0.3 0.3 0.4
+          }
+        }
+      ]
+      boundingObject USE Stack
+      physics Physics {
+      }
+    }
+  ]
+}
+Solid {
+  translation -1.01 0.499793 0.0487862
+  rotation 0.6785982482200877 0.6785982482200877 0.2810851028163115 -2.593565307179586
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.05 0.01 0.2
+      }
+    }
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.2 0.01 0.05
+      }
+    }
+  ]
+}
+TexturedBackground {
+}
+TexturedBackgroundLight {
+}
+RectangleArena {
+  floorSize 10 10
+  wallHeight 0.7
+}
+Table {
+  translation -1.51 0.32 0.01
+  rotation 0 1 0 -1.5707953071795862
+  size 1.8 0.48 1
+  frameThickness 0.47
+}
+Table {
+  translation 0 0.39 -1.81
+  name "table(1)"
+  size 1.8 0.48 1
+  frameThickness 0.47
+}
