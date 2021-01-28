@@ -22,7 +22,7 @@ def shouldStop(distanceSensor):
     :param distanceSensor: distancesensor that needs to be checked for objects in the way
     :return: boolean if distance is <40cm, return true, otherwise false
     """
-    if(distanceSensor.getValue<4e+4): #0.4 is placeholder, need to set up "lookupTable field
+    if(distanceSensor.getValue<0.1): #Threshold value, based on lookup table in Distance Sensor node
         return True
     else:
         return False
