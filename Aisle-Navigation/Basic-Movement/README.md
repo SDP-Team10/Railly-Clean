@@ -1,3 +1,3 @@
 # Basic Movement
 
-Simulate back & forth movement and crude turning in Webots
+Simulate back & forth movement and crude turning in Webots.
