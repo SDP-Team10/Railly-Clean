@@ -3,6 +3,7 @@ Test cases to cover all functionality that's to be achieved by the first demo
 
 **Functions in project report**
 
+
 * 1 RobotStability
   * 1.1 Robot remains upright with no arm
   * 1.2 Robot remains upright with arm at mimimum extension
