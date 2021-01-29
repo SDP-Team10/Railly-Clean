@@ -3,14 +3,78 @@ WorldInfo {
   coordinateSystem "NUE"
 }
 Viewpoint {
-  orientation 0.7600934978789398 -0.6133847031093733 -0.21451592125896865 5.634837164449762
-  position 3.217260175979559 3.5046655943550684 5.090690285528922
+  orientation 0.3402732157443384 -0.8690549007764485 -0.3591068338022047 4.621088833048081
+  position 6.167439990226379 6.758338248353503 0.5851643725230071
+}
+SolidBox {
+  translation -3.77 0.5 0
+  size 1 1 1
+}
+SolidBox {
+  translation -2.74 0.5 0.97
+  name "box(1)"
+  size 1 1 1
+}
+SolidBox {
+  translation -2.74 0.5 -1.01
+  name "box(6)"
+  size 1 1 1
+}
+SolidBox {
+  translation -1.74 0.5 -1.01
+  name "box(7)"
+  size 1 1 1
+}
+SolidBox {
+  translation -0.76 0.5 -0.94
+  name "box(8)"
+  size 1 1 1
+}
+SolidBox {
+  translation 0.22 0.5 -0.9
+  name "box(9)"
+  size 1 1 1
+}
+SolidBox {
+  translation 1.2 0.5 -0.81
+  name "box(10)"
+  size 1 1 1
+}
+SolidBox {
+  translation 2.16 0.5 -0.81
+  name "box(11)"
+  size 1 1 1
+}
+SolidBox {
+  translation -1.76 0.5 0.97
+  name "box(2)"
+  size 1 1 1
+}
+SolidBox {
+  translation -0.76 0.5 1.14
+  name "box(3)"
+  size 1 1 1
+}
+SolidBox {
+  translation 0.24 0.5 1.5
+  name "box(4)"
+  size 1 1 1
+}
+SolidBox {
+  translation 1.22 0.5 1.79
+  name "box(5)"
+  size 1 1 1
+}
+SolidBox {
+  translation 2.19 0.5 1.79
+  name "box(12)"
+  size 1 1 1
 }
 TiagoBase {
-  translation 1.78403 0.0764662 0.146455
+  translation 3.40401 0.0746367 0.700824
   rotation -0.02905469263148261 0.7051518211674953 0.7084608203283049 3.08389
   name "RaillyClean"
-  controller "tiagoController"
+  controller "tiagoControllerCentering"
   bodySlot [
     Solid {
       translation 0 0 0.4
@@ -40,11 +104,10 @@ TiagoBase {
             0.04 0 0.01
             10 10 0.1
           ]
-          type "sonar"
         }
         DistanceSensor {
           translation -0.00500018 -0.155 0.15
-          rotation 0 0 1 1.5708
+          rotation 0 0 1 -1.5707953071795862
           children [
             DEF dSensorShape Shape {
               appearance PBRAppearance {
@@ -65,7 +128,6 @@ TiagoBase {
             0.04 0 0.01
             10 10 0.1
           ]
-          type "sonar"
         }
         DistanceSensor {
           translation -0.00499949 0.155 0.15
@@ -90,7 +152,6 @@ TiagoBase {
             0.04 0 0.01
             10 10 0.1
           ]
-          type "sonar"
         }
         DistanceSensor {
           translation 0.155 0 0.15
@@ -115,7 +176,6 @@ TiagoBase {
             0.04 0 0.01
             10 10 0.1
           ]
-          type "sonar"
         }
         Camera {
           translation 0.17 0 0
@@ -170,7 +230,7 @@ TiagoBase {
   ]
 }
 Solid {
-  translation -1.01 0.499793 0.0487862
+  translation -3.27 0.471509 -0.106778
   rotation 0.6785982482200877 0.6785982482200877 0.2810851028163115 -2.593565307179586
   children [
     Shape {
@@ -200,16 +260,4 @@ TexturedBackgroundLight {
 RectangleArena {
   floorSize 10 10
   wallHeight 0.7
-}
-Table {
-  translation -1.51 0.32 0.01
-  rotation 0 1 0 -1.5707953071795862
-  size 1.8 0.48 1
-  frameThickness 0.47
-}
-Table {
-  translation 0 0.39 -1.81
-  name "table(1)"
-  size 1.8 0.48 1
-  frameThickness 0.47
 }
