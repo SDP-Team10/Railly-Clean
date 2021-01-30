@@ -25,4 +25,7 @@ Test cases to cover all functionality that's to be achieved by the first demo
   * Robot starts facing 180 degrees to end - > identify carriage end from 1m
   * Robot starts facing 90 degrees to end - > identify carriage end from 5m
   * Robot starts facing 180 degrees to end - > identify carriage end from 5m
-
+  * Robot identifies obstacle which is not carriage end when immediately in front of it
+  * Robot detects obstacle which is not carriage end from 1m
+  * Robot detects obstacle which is not carriage end from 5m
+  
