@@ -124,7 +124,10 @@ while robot.step(TIME_STEP) != -1:
             detectedSticker = True
             newLeftVel = -BASE_SPEED*MOVE_MULT
             newRightVel = -BASE_SPEED*MOVE_MULT
-            limitVel(newLeftVel, newRightVel)
+        else:
+            newLeftVel = 0
+            newRightVel = 0
+        limitVel(newLeftVel, newRightVel)
     elif not inThreshold and detectedSticker:
             newLeftVel = 0
             newRightVel = 0
