@@ -14,6 +14,7 @@ Test cases to cover all functionality that's to be achieved by the first demo
 * RobotMovement
   * Robot moves through carriage without collisions with seating area starting 1m away from end
   * Robot moves through carriage without collisions with seating area starting 5m away from end
+  * Robot doesn't collide with unexpected obstacles in front of it
  
 * CarriageEndRecognition
   * Robot identifies carriage end when immediately in front of it
