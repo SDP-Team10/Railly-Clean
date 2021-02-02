@@ -1,6 +1,6 @@
 # Railly-Clean
 
-1. During development, switch to the branch for the current milestone before pushing files to the repo.
+1. During development, switch to the branch for the [current milestone](https://github.com/SDP-Team10/Railly-Clean/tree/table-sanitisation) before pushing files to the repo.
 2. When committing changes, try to reference relevant open issues by including `#X` in your commit message where X is the reference number of the issue.
 ```bash
 git commit -m "Added basic movement functions #2"
