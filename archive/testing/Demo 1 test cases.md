@@ -3,25 +3,29 @@ Test cases to cover all functionality that's to be achieved by the first demo
 
 **Functions in project report**
 
+* RobotStability
+  * Robot remains upright with no arm
+  * Robot remains upright with arm at 'minimum extension'
+  * Robot remains upright with arm at 'maximum extension'
+  * Robot remains upright during simulated 'movement' of the train (no arm)
+  * Robot remains upright during simulated 'movement' of the train arm 'minimum extension'
+  * Robot remains upright during simulated 'movement' of the train arm 'maximum extension' 
 
-* 1 RobotStability
-  * 1.1 Robot remains upright with no arm
-  * 1.2 Robot remains upright with arm at mimimum extension
-  * 1.3 Robot remains upright with arm at maximum extension
-  * 1.4 Robot remains upright with no arm with forward simulated movement
-  * 1.5 Robot remains upright with arm at mimimum extension with forward simulated movement
-  * 1.6 Robot remains upright with arm at maximum extension with forward simulated movement
-  * 1.7 Robot remains upright with no arm with forward + sideways simulated movement
-  * 1.8 Robot remains upright with arm at mimimum extension with forward + sideways simulated movement
-  * 1.9 Robot remains upright with arm at maximum extension with forward + sideways simulated movement
-
-* 2 RobotMovement
-  * Robot moves through carriage without collisions with seats 
+* RobotMovement
+  * Robot moves through carriage without collisions with seating area starting 1m away from end
+  * Robot moves through carriage without collisions with seating area starting 5m away from end
+  * Robot doesn't collide with unexpected obstacles in front of it
+ 
+* CarriageEndRecognition
+  * Robot identifies carriage end when immediately in front of it
+  * Robot identifies carriage end from 1m 
+  * Robot identifies carriage end from 5m
+  * Robot stop before carriage end
+  * Robot starts facing 90 degrees to end - > identify carriage end from 1m
+  * Robot starts facing 180 degrees to end - > identify carriage end from 1m
+  * Robot starts facing 90 degrees to end - > identify carriage end from 5m
+  * Robot starts facing 180 degrees to end - > identify carriage end from 5m
+  * Robot identifies obstacle which is not carriage end when immediately in front of it
+  * Robot detects obstacle which is not carriage end from 1m
+  * Robot detects obstacle which is not carriage end from 5m
   
-* 3 CarriageEndRecognition
-  * 3.1 Robot identifies carriage end from 1m
-  * 3.2 Robot identifies carriage end from 3m
-  * 3.3 Robot identified carriage end when facing 90 degrees from end
-  * 3.3 Robot identified carriage end when facing 180 degrees from end
-  * 3.4 Robot stops before collison with end
-
