@@ -21,9 +21,9 @@ class TiagoController(object):
     def __init__(self) -> None:
         """Create a robot instance, retrieve the  """
         self.robot = Robot()
-        self.timestep = int(self.robot.getBasicTimeStep())
+        self.time_step = int(self.robot.getBasicTimeStep())
         self.camera = self.robot.getDevice("front_camera")
-        self.camera.enable(self.timestep)
+        self.camera.enable(self.time_step)
         self.ds_names = [
             "front distance sensor",
             "back distance sensor",
@@ -34,7 +34,7 @@ class TiagoController(object):
         self.left_motor = self.robot.getDevice("wheel_left_joint")
         self.right_motor = self.robot.getDevice("wheel_right_joint")
 
-    # Distance sensor initilazation
+    # Distance sensor initialization
     def init_dist(self):
         """ function init_dist
         :return: list of enabled distance sensor objects
@@ -42,19 +42,21 @@ class TiagoController(object):
         dist_sensors = []
         for name in self.ds_names:
             sensor = self.robot.getDevice(name)
-            sensor.enable(self.timestep)
+            sensor.enable(self.time_step)
             dist_sensors.append(sensor)
         return dist_sensors
 
-    def should_stop(self, distance_sensor, threshold=0.6) -> bool:
+    @staticmethod
+    def should_stop(distance_sensor, threshold=0.6) -> bool:
         """function should_stop
         :param distance_sensor: distance_sensor that needs to be checked for objects in the way
         :return: boolean if distance is less than threshold return true, otherwise false
         """
         return distance_sensor.getValue() < threshold
 
-    def enable_speed_control(self, motor, init_velocity=0.0) -> None:
-        """Disable position control and set velocity of the motor to initVelocity (in rad / s)"""
+    @staticmethod
+    def enable_speed_control(motor, init_velocity=0.0) -> None:
+        """Disable position control and set velocity of the motor to initVelocity (in rad/s)"""
         motor.setPosition(float("inf"))
         motor.setVelocity(init_velocity)
 
@@ -87,7 +89,7 @@ class TiagoController(object):
         return left_vel, right_vel
 
 
-# Main #
+# Main
 if __name__ == "__main__":
     tiago_controller = TiagoController()
     tiago_controller.enable_speed_control(tiago_controller.left_motor)
