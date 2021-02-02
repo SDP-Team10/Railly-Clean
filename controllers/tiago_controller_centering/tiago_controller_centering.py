@@ -15,7 +15,6 @@ BASE_SPEED = 6.5  # maximum velocity of the turtlebot motors
 TURN_MULT = 0.3  # constant to slow down turn speed
 MOVE_MULT = 0.75  # constant to slow down move speed
 TURN_LIMIT = 90  # constant to vary when to fix movement
-TURN_LIMIT = 90  # constant to vary when to fix movement
 
 
 class TiagoController(object):
