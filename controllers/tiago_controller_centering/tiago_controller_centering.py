@@ -83,10 +83,10 @@ class TiagoController(object):
         if abs(left_dist - right_dist) > 0.01:
             if left_dist < right_dist < threshold:
                 right_vel = -BASE_SPEED * TURN_MULT
-                print('Turning right')
+                print("Turning right")
             elif right_dist < left_dist < threshold:
                 left_vel = -BASE_SPEED * TURN_MULT
-                print('Turning left')
+                print("Turning left")
         return left_vel, right_vel
 
 
