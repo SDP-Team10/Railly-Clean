@@ -5,7 +5,8 @@
 #  from controller import Robot, Motor, distance_sensor
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join('..', '..')))
+
+sys.path.append(os.path.abspath(os.path.join("..", "..")))
 from libraries import sticker_detection as vc
 from controller import Robot
 
@@ -82,10 +83,10 @@ class TiagoController(object):
         if abs(left_dist - right_dist) > 0.1:
             if right_dist < left_dist < threshold:
                 left_vel = -BASE_SPEED * TURN_MULT
-                print('Turning left')
+                print("Turning left")
             elif left_dist < right_dist < threshold:
                 right_vel = -BASE_SPEED * TURN_MULT
-                print('Turning right')
+                print("Turning right")
         return left_vel, right_vel
 
 
