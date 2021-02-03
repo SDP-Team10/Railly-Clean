@@ -5,7 +5,8 @@
 #  from controller import Robot, Motor, distance_sensor
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join('..', '..')))
+
+sys.path.append(os.path.abspath(os.path.join("..", "..")))
 from libraries import sticker_detection as vc
 from controller import Robot
 
