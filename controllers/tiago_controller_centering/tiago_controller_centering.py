@@ -19,7 +19,7 @@ TURN_LIMIT = 90  # constant to vary when to fix movement
 
 class TiagoController(object):
     def __init__(self) -> None:
-        """Create a robot instance, retrieve the  """
+        """Create a robot instance"""
         self.robot = Robot()
         self.time_step = int(self.robot.getBasicTimeStep())
         self.camera = self.robot.getDevice("front_camera")
@@ -79,13 +79,13 @@ class TiagoController(object):
         left_dist, right_dist = self.check_distance_sensors()
         left_vel = 0
         right_vel = 0
-        if abs(left_dist - right_dist) > 0.1:
-            if right_dist < left_dist < threshold:
-                left_vel = -BASE_SPEED * TURN_MULT
-                print('Turning left')
-            elif left_dist < right_dist < threshold:
+        if abs(left_dist - right_dist) > 0.01:
+            if left_dist < right_dist < threshold:
                 right_vel = -BASE_SPEED * TURN_MULT
                 print('Turning right')
+            elif right_dist < left_dist < threshold:
+                left_vel = -BASE_SPEED * TURN_MULT
+                print('Turning left')
         return left_vel, right_vel
 
 
