@@ -7,8 +7,8 @@ from collections import deque
 
 # can import these as json?
 params = {
-    "WHEEL_RADIUS": 5,  # get from webots
-    "SPEED": 6.28,  # get from webots
+    "WHEEL_RADIUS": 0.0985,  # get from webots
+    "SPEED": 4.875,  # get from webots
     "DISTANCE_TO_WALL": 1.7,  # should be setup parameter while installing in carriage
 }
 
@@ -45,7 +45,7 @@ def that_a_table(distances):
         :return boolean: True if it is assumed to be a table, false othersiwe
     """
     global _enable_updates
-    if len(distances != 5):
+    if len(distances) != 5:
         # if there aren't 5 elements, either not enough data to decide or incorrect list passed
         return False
     else:
@@ -73,7 +73,7 @@ def unoccupied_table(distance_sensor, distances):
     # robot should move back (distances[2] / 2) + distances[1] + (distances[0] / 2)
     move_distance(((distances[2] / 2) + distances[1] + (distances[0] / 2)), -1)
     # robot should active slightyly-higher distance sensor
-    if distance_sensor.getValue < (params["DISTANCE_TO_WALL"] - 0.2):
+    if distance_sensor.getValue() < (params["DISTANCE_TO_WALL"] - 0.2):
         # occupant detected!
         # move back to pole - same as previous distance
         move_distance(((distances[2] / 2) + distances[1] + (distances[0] / 2)), 1)
@@ -85,7 +85,7 @@ def unoccupied_table(distance_sensor, distances):
         # move next to front seats distances (distances[0] / 2)  + distances[1:4] + (distances[4] / 2)
         move_distance((distances[0] / 2) + sum(distances[1:4]) + (distances[4] / 2), 1)
         # check top sensor again!
-        if distance_sensor.getValue < (params["DISTANCE_TO_WALL"] - 0.2):
+        if distance_sensor.getValue() < (params["DISTANCE_TO_WALL"] - 0.2):
             # occupant detected!
             # move back to end of seat -> distances[4] / 2
             move_distance((distances[4] / 2), 1)
