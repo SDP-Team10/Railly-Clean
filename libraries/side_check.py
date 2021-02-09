@@ -121,10 +121,10 @@ class SideCheck:
         """
         # pls help movement team?
 
-    def side_check(self, robot, ds):
+    def side_check(self, robot, side_sensor):
         # use global variables and hope that state is stored between loops
-        side_sensor = ds[3]  # corresponding distance sensor in seat level
-        passanger_sensor = ds[4]  # distance sensor in passenet butt level - unused
+        # side_sensor = ds[3]  # corresponding distance sensor in seat level
+        # passanger_sensor = ds[4]  # distance sensor in passenet butt level - unused
 
         self._current_side_distance = side_sensor.getValue()
         # check if there is a larger than noise vairance in the distance sensor
