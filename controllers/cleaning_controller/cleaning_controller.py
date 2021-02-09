@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 """arm_control controller."""
 
 import sys
@@ -8,15 +6,16 @@ import os
 sys.path.append(os.path.abspath(os.path.join("..", "..")))
 from libraries import sticker_detection as vc
 from libraries import side_check as sc
-# to change accordingly
-from libraries import robot_movement as mc
-from libraries import arm_control as ac
+from libraries import movement as mc  # to change
+from libraries import arm_controller as ac  # to change
 from controller import Robot
 
 
 TIME_STEP = 32  # this or robot.getBasicTimeStep()
 CLEAN_ATTEMPTS = 3  # parameter for how many times it takes to cover a whole table
-TABLE_WIDTH = 1
+ACTION_STEPS = 4
+STOP_THRESHOLD = 0.6
+# TABLE_WIDTH = 1
 
 
 class CleaningController(object):
@@ -28,8 +27,8 @@ class CleaningController(object):
         self.ds_names = [
             "front distance sensor",
             "back distance sensor",
-            "right distance sensor",
             "left distance sensor",
+            "right distance sensor"
         ]
         self.distance_sensors = self.init_dist()
         self.am_names = [
@@ -63,55 +62,93 @@ class CleaningController(object):
             dist_sensors.append(sensor)
         return dist_sensors
 
-    def clean_table(self, swept, clean_step):
-        # pass Robot instance or Motor instances?
-        if not swept:
+    def clean_table(self, action, clean_step):
+        next_step = clean_step
+        if action == 0:
             mc.stop(self.robot)
             ac.sweep(self.robot)
-            return True, clean_step
-        else:
+        elif action == 1:
             mc.stop(self.robot)
             ac.wipe(self.robot)
-            return False, (clean_step+1) % (CLEAN_ATTEMPTS*2)
+        elif action == 2:
+            mc.stop(self.robot)
+            ac.next_iteration(self.robot)
+        return (action+1) % ACTION_STEPS, next_step
 
 
 # Main
 if __name__ == "__main__":
     controller = CleaningController()
     robot = controller.robot()
-    table_check = sc.SideCheck()
+    dist_sensors = controller.distance_sensors
+    table_check_l = sc.SideCheck()
+    table_check_r = sc.SideCheck()
 
     table_detected = False
-    swept = False
+    action = 0
     clean_step = 0
-    side = 'l'
+    side = 'f'
 
     while controller.robot.step(controller.time_step) != -1:
-        # assume already centered
-        # better to work with an instance of side_check
-        # global variables -> instance variables to be updated each time
-        if not table_detected:
-            if table_check.side_check(robot, controller.distance_sensors):
-                # assume stop at pole, move to dge
-                mc.move_backward(TABLE_WIDTH / 2)
+        table_length_l = table_check_l.side_check(robot, dist_sensors[2])
+        table_length_r = table_check_r.side_check(robot, dist_sensors[3])
+
+        if not table_detected:  # assume already centered
+            if table_length_r or table_length_r:  # if not none -> table detected
+                table_check_l.stop_scanning()
+                table_check_r.stop_scanning()
+                mc.move_back(robot, table_length_l / 2)  # to back edge of table
                 table_detected = True
-            if vc.is_carriage_end(controller.camera):
+                if table_length_l:
+                    side = 'l'
+                else:
+                    side = 'r'
+            elif controller.distance_sensors[0] < STOP_THRESHOLD:  # check front distance sensor
                 mc.stop(robot)
+                if vc.is_carriage_end(controller.camera):
+                    pass
             else:
-                mc.move_forward(robot)
+                mc.move_forward()
+
         else:
-            # left side first
-            if clean_step < CLEAN_ATTEMPTS:
-                swept, clean_step = controller.clean_table(swept, clean_step)
-            elif clean_step == CLEAN_ATTEMPTS and side == 'l':
-                ac.switch_side(robot)
-                side = 'r'
-            # right side after
-            elif clean_step < CLEAN_ATTEMPTS*2 and side == 'r':
-                swept, clean_step = controller.clean_table(swept, clean_step)
+            if side == 'l':
+                if clean_step < 2:
+                    if action < 3:
+                        action, clean_step = controller.clean_table(action, clean_step)
+                    else:
+                        mc.move_forward(table_length_l / CLEAN_ATTEMPTS)
+                        action = 0
+                        clean_step += 1
+                else:
+                    if action < 3:
+                        action, clean_step = controller.clean_table(action, clean_step)
+                    else:
+                        clean_step = 0
+                        if table_length_r:
+                            mc.turn_angle(180)
+                            side = 'r'
+                        else:
+                            side = 'f'
+            if side == 'r':
+                if clean_step < CLEAN_ATTEMPTS:
+                    if action < 3:
+                        action, clean_step = controller.clean_table(action, clean_step)
+                    else:
+                        mc.move_forward(table_length_l / CLEAN_ATTEMPTS)
+                        action = 0
+                        clean_step += 1
+                else:
+                    if action < 3:
+                        action, clean_step = controller.clean_table(action, clean_step)
+                    else:
+                        clean_step = 0
+                        side = 'f'
+                        if table_length_l:
+                            mc.turn_angle(90)
             else:
                 table_detected = False
-                side = 'l'
+                table_check_l.done_cleaning()
+                table_check_r.done_cleaning()
 
 
 # Enter here exit cleanup code.
