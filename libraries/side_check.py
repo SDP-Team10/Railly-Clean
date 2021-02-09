@@ -64,6 +64,10 @@ class SideCheck:
         """Function that re-enables the side_check method when the robot is done cleaning."""
         self._enable_updates = True
 
+    def stop_scanning(self):
+        """Function stop_scanning to be called when the robot is stopping for any other reason than this instance"""
+        self._enable_updates = False
+
     def unoccupied_table(self, distance_sensor, distances):
         """Function unoccupied_table to check if the table is occupeid - UNUSED.
 
