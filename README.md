@@ -8,8 +8,8 @@ git commit -m "Add basic movement functions #2"
 ```bash
 git commit -m "#2 Add basic movement functions"
 ```
-3. For integration's sakes, it is recommended to represent functionalities as classes and functions that can go into `libraries/`.
-4. Often times, the controller will need to pass its Robot instance to the functionality classes and functions it calls.
+3. For integration's sakes, it is recommended to represent functionalities as classes and functions residing in `libraries/`.
+4. Often times, the controller will need to pass its `Robot` instance to the functionality classes and functions it calls.
 5. After integration, files no longer needed for the milestone should be moved to `archive/`.
 6. After testing completes, the milestone branch will be merged into `main`.
 7. The file structure tries to emulate a Webots project directory. Python scripts are either in `controllers/` or `libraries/`.
