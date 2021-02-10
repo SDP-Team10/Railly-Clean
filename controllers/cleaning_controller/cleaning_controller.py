@@ -101,7 +101,7 @@ if __name__ == "__main__":
                     mc.move_distance(robot, table_length_r / 2, 1)  # to front edge of table
                     mc.turn_angle(robot, 180)
             
-            elif controller.dist_sensors[0] < STOP_THRESHOLD:  # check front distance sensor
+            elif dist_sensors[0] < STOP_THRESHOLD:  # check front distance sensor
                 mc.stop(robot)
                 if vc.is_carriage_end(controller.camera):
                     print("End of carriage detected")

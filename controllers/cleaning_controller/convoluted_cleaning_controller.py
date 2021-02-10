@@ -76,13 +76,13 @@ class CleaningController(object):
         return 'f', False
 
 
-# Each library function has at least a timestep to execute
+# Each library function has at least one timestep to execute
 if __name__ == "__main__":
     controller = CleaningController()
     robot, dist_sensors = controller.robot, controller.distance_sensors
     table_check_l, table_check_r = sc.SideCheck(), sc.SideCheck()
     table_length_l, table_length_r = None, None
-    table_detected, action, clean_step, side = False, 0, 0, 0, 'f'
+    table_detected, side, action, clean_step = False, 'f', 0, 0
 
 
     # Assume robot is already centered
@@ -103,7 +103,7 @@ if __name__ == "__main__":
                     side = 'r'
                     action = -1  # extra action needed
                 
-            elif controller.dist_sensors[0] < STOP_THRESHOLD:  # check front distance sensor
+            elif dist_sensors[0] < STOP_THRESHOLD:  # check front distance sensor
                 mc.stop(robot)
                 if vc.is_carriage_end(controller.camera):
                     print("End of carriage detected")
