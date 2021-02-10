@@ -86,22 +86,25 @@ if __name__ == "__main__":  # assumes functions take care of their own timesteps
         if not table_detected:  # assume already centered
             table_length_l = table_check_l.side_check(robot, dist_sensors[2])
             table_length_r = table_check_r.side_check(robot, dist_sensors[3])
+            
             if table_length_l or table_length_r:  # if not None -> table detected
                 table_detected = True
                 table_check_l.stop_scanning()
                 table_check_r.stop_scanning()
-                mc.move_distance(robot, table_length_l / 2, -1)  # to back edge of table
                 if table_length_l:
                     side = 'l'
+                    mc.move_distance(robot, table_length_l / 2, -1)  # to back edge of table
                 else:
                     side = 'r'
-                    mc.move_distance(robot, table_length_l, 1)
+                    mc.move_distance(robot, table_length_r / 2, 1)  # to front edge of table
                     mc.turn_angle(robot, 180)
+            
             elif controller.distance_sensors[0] < STOP_THRESHOLD:  # check front distance sensor
                 mc.stop(robot)
                 if vc.is_carriage_end(controller.camera): pass
+            
             else:
-                mc.move_forward()  # business as usual
+                mc.move_forward(robot)  # business as usual
 
         else:
             for i in range(CLEAN_ATTEMPTS-1):
