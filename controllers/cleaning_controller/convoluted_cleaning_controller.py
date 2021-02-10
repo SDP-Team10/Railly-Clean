@@ -6,16 +6,17 @@ import os
 sys.path.append(os.path.abspath(os.path.join("..", "..")))
 from libraries import sticker_detection as vc
 from libraries import side_check as sc
-from libraries import movement as mc  # to change
+from libraries import move_lib as mc
 from libraries import arm_controller as ac  # to change
 from controller import Robot
 
 
 TIME_STEP = 32  # this or robot.getBasicTimeStep()
-CLEAN_ATTEMPTS = 3  # parameter for how many times it takes to cover a whole table
+TABLE_WIDTH = 1  # parameter
+HEAD_WIDTH = 0.3  # parameter
+CLEAN_ATTEMPTS = int(TABLE_WIDTH // HEAD_WIDTH)
 ACTION_STEPS = 4
 STOP_THRESHOLD = 0.6
-# TABLE_WIDTH = 1
 
 
 class CleaningController(object):
@@ -64,7 +65,7 @@ class CleaningController(object):
 
     def clean_table(self, action, clean_step):
         mc.stop(self.robot)
-        if action == 0:   ac.sweep(self.robot)
+        if   action == 0: ac.sweep(self.robot)
         elif action == 1: ac.wipe(self.robot)
         elif action == 2: ac.next_iteration(self.robot)
     
@@ -75,65 +76,71 @@ class CleaningController(object):
         return 'f', False
 
 
-# Main
+# Each library function has at least one timestep to execute
 if __name__ == "__main__":
     controller = CleaningController()
     robot, dist_sensors = controller.robot, controller.distance_sensors
     table_check_l, table_check_r = sc.SideCheck(), sc.SideCheck()
-    table_detected, action, clean_step, side = False, 0, 0, 'f'
+    table_length_l, table_length_r = None, None
+    table_detected, side, action, clean_step = False, 'f', 0, 0
 
+
+    # Assume robot is already centered
     while controller.robot.step(controller.time_step) != -1:
-        if not table_detected:  # assume already centered
+        if not table_detected:
             table_length_l = table_check_l.side_check(robot, dist_sensors[2])
             table_length_r = table_check_r.side_check(robot, dist_sensors[3])
+            
             if table_length_r or table_length_r:  # if not None -> table detected
                 table_detected = True
                 table_check_l.stop_scanning()
                 table_check_r.stop_scanning()
-                mc.move_back(robot, table_length_l / 2)  # to back edge of table
-                if table_length_l: side = 'l'
-                else:              side, action = 'r', -2  # extra actions needed
-            elif controller.distance_sensors[0] < STOP_THRESHOLD:  # check front distance sensor
+                if table_length_l:
+                    mc.move_distance(robot, table_length_l / 2, -1)  # to back edge of table
+                    side = 'l'
+                else:
+                    mc.move_distance(robot, table_length_r / 2, 1)  # to front edge of table
+                    side = 'r'
+                    action = -1  # extra action needed
+                
+            elif dist_sensors[0] < STOP_THRESHOLD:  # check front distance sensor
                 mc.stop(robot)
-                if vc.is_carriage_end(controller.camera): pass
-            else:
-                mc.move_forward()  # business as usual
+                if vc.is_carriage_end(controller.camera):
+                    print("End of carriage detected")
+                
+            else:  # business as usual
+                mc.move_forward(robot)
 
         else:
-            if side == 'l':  # left side first
+            # Left side first
+            if side == 'l':
                 if action < ACTION_STEPS-1:
                     controller.clean_table(action, clean_step)
-                else:  # last action concerns moving
+                else:  # last action concerns moving to next step
                     if clean_step < CLEAN_ATTEMPTS-1:
-                        mc.move_forward(table_length_l / CLEAN_ATTEMPTS)
+                        mc.move_distance(robot, table_length / CLEAN_ATTEMPTS, 1)
                     else:  # last action of last cleaning step
                         if table_length_r:  # still cleaning...
-                            mc.turn_angle(180)
+                            mc.turn_angle(robot, 180)
                             side = 'r'
-                        else:  # calling controller.escape_hell()
+                        else:  # call escape_hell()
                             side, table_detected = controller.next_row(table_check_l, table_check_r)
+                    clean_step = (clean_step+1) % CLEAN_ATTEMPTS
                 action = (action+1) % ACTION_STEPS
-                clean_step = (clean_step+1) % CLEAN_ATTEMPTS
             
-            if side == 'r':
-                if action == -2:
-                    mc.move_forward(table_length_l)
-                    action += 1
-                elif action == -1:
-                    mc.turn_angle(180)
-                    action += 1
-                elif action < ACTION_STEPS-1:
-                    controller.clean_table(action, clean_step)
-                    action = (action+1) % ACTION_STEPS
-                    clean_step = (clean_step+1) % CLEAN_ATTEMPTS
+            elif side == 'r':
+                if action == -1:
+                    mc.turn_angle(robot, 180)
                 else:
-                    if clean_step < CLEAN_ATTEMPTS-1:
-                        mc.move_forward(table_length_l / CLEAN_ATTEMPTS)
+                    if action < ACTION_STEPS-1:
+                        controller.clean_table(action, clean_step)
                     else:
-                        mc.turn_angle(180)
-                        side, table_detected = controller.next_row(table_check_l, table_check_r)
-                    action = (action+1) % ACTION_STEPS
-                    clean_step = (clean_step+1) % CLEAN_ATTEMPTS
-
+                        if clean_step < CLEAN_ATTEMPTS-1:
+                            mc.move_distance(robot, table_length / CLEAN_ATTEMPTS, 1)
+                        else:  # escape
+                            mc.turn_angle(robot, 180)
+                            side, table_detected = controller.next_row(table_check_l, table_check_r)
+                        clean_step = (clean_step+1) % CLEAN_ATTEMPTS 
+                action = (action+1) % ACTION_STEPS
 
 # Enter here exit cleanup code.
