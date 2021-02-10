@@ -12,6 +12,6 @@ git commit -m "#2 Add basic movement functions"
 4. Often times, the controller will need to pass its `Robot` instance to the functionality classes and functions it calls.
 5. After integration, files no longer needed for the milestone should be moved to `archive/`.
 6. After testing completes, the milestone branch will be merged into `main`.
-7. The file structure tries to emulate a Webots project directory. Python scripts are either in `controllers/` or `libraries/`.
-8. Webots automatically detects controllers if they follow the following structure `controllers/xyz_controller/xyz_controller.py`.
+7. The file structure tries to emulate a [Webots project directory](https://cyberbotics.com/doc/guide/the-standard-file-hierarchy-of-a-project). Python scripts are either in `controllers/` or `libraries/`.
+8. Webots [automatically detects controllers](https://cyberbotics.com/doc/guide/controller-start-up) if they follow the following structure `controllers/xyz_controller/xyz_controller.py`.
 9. It is recommended to follow [PEP 8](https://www.python.org/dev/peps/pep-0008/) style guide.
