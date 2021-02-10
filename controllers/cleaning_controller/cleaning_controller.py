@@ -6,14 +6,16 @@ import os
 sys.path.append(os.path.abspath(os.path.join("..", "..")))
 from libraries import sticker_detection as vc
 from libraries import side_check as sc
-from libraries import movement as mc  # to change
+from libraries import move_lib as mc  # to change
 from libraries import arm_controller as ac  # to change
 from controller import Robot
 
 
 TIME_STEP = 32  # this or robot.getBasicTimeStep()
 STOP_THRESHOLD = 0.6
-# TABLE_WIDTH = 1
+TABLE_WIDTH = 1
+HEAD_WIDTH = 0.3
+CLEAN_ATTEMPTS = int(TABLE_WIDTH // HEAD_WIDTH)
 
 
 class CleaningController(object):
@@ -60,7 +62,7 @@ class CleaningController(object):
             dist_sensors.append(sensor)
         return dist_sensors
 
-    def clean_table(self, action, clean_step):
+    def clean_table(self):
         mc.stop(self.robot)
         ac.sweep(self.robot)
         ac.wipe(self.robot)
@@ -77,23 +79,24 @@ if __name__ == "__main__":  # assumes functions take care of their own timesteps
     controller = CleaningController()
     robot, dist_sensors = controller.robot, controller.distance_sensors
     table_check_l, table_check_r = sc.SideCheck(), sc.SideCheck()
+    table_length_l, table_length_r = None, None
     table_detected, side = False, 'f'
 
     while controller.robot.step(controller.time_step) != -1:
         if not table_detected:  # assume already centered
             table_length_l = table_check_l.side_check(robot, dist_sensors[2])
             table_length_r = table_check_r.side_check(robot, dist_sensors[3])
-            if table_length_r or table_length_r:  # if not None -> table detected
+            if table_length_l or table_length_r:  # if not None -> table detected
                 table_detected = True
                 table_check_l.stop_scanning()
                 table_check_r.stop_scanning()
-                mc.move_back(robot, table_length_l / 2)  # to back edge of table
+                mc.move_distance(robot, table_length_l / 2, -1)  # to back edge of table
                 if table_length_l:
                     side = 'l'
                 else:
                     side = 'r'
-                    mc.move_forward(table_length_l)
-                    mc.turn_angle(180)
+                    mc.move_distance(robot, table_length_l, 1)
+                    mc.turn_angle(robot, 180)
             elif controller.distance_sensors[0] < STOP_THRESHOLD:  # check front distance sensor
                 mc.stop(robot)
                 if vc.is_carriage_end(controller.camera): pass
@@ -102,16 +105,17 @@ if __name__ == "__main__":  # assumes functions take care of their own timesteps
 
         else:
             for i in range(CLEAN_ATTEMPTS-1):
-                controller.clean_table(action, clean_step)
-                mc.move_forward(table_length_l / CLEAN_ATTEMPTS)
+                controller.clean_table()
+                table_length = table_length_l if table_length_l else table_length_r
+                mc.move_distance(robot, table_length / CLEAN_ATTEMPTS, 1)
             if side == 'l':  # left side first
                 if table_length_r:  # more to clean
-                    mc.turn_angle(180)
+                    mc.turn_angle(robot, 180)
                     side = 'r'
                 else:
                     table_detected, side = CleaningController.next_row(table_check_l, table_check_r)
             elif side == 'r':
-                mc.turn_angle(180)
+                mc.turn_angle(robot, 180)
                 table_detected, side = CleaningController.next_row(table_check_l, table_check_r)
 
 
