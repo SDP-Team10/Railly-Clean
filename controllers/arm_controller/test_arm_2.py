@@ -26,14 +26,10 @@ class ArmController(object):
         self.rotational_motors = self.init_rm()
 
         self.table_top_sec_1 = 0
-        self.table_bottom_sec_1 = 0.84
+        self.table_bottom_sec_1 = 0.84 # The edge of the table
         self.table_top_sec_2 = 0
-        self.table_bottom_sec_2 = 2.3
+        self.table_bottom_sec_2 = 2.3 # The edge of the table
 
-        self.tuck_in = False
-        self.on_table = False
-        self.can_wipe = False
-        
     def init_ps(self):
         position_sensors = []
         for name in self.ps_names:
@@ -48,73 +44,60 @@ class ArmController(object):
             motor = self.robot.getDevice(name)
             rotational_motors.append(motor)
         return rotational_motors
-   
-    def check_on_table(self):
-        if (round(self.position_sensors[1].getValue(),2) == 1.53 and round(self.position_sensors[2].getValue(),1) == 0.5):
-            self.on_table = True
-            self.can_wipe = True
-            self.table_top_sec_1 = self.position_sensors[1].getValue()
-            self.table_top_sec_2 = self.position_sensors[2].getValue()
 
     def sweep_action(self):
-        arm_controller.rotational_motors[1].setPosition(self.table_bottom_sec_1)
-        arm_controller.rotational_motors[2].setPosition(self.table_bottom_sec_2)
-        arm_controller.rotational_motors[1].setVelocity(0.3)
-        arm_controller.rotational_motors[2].setVelocity(0.5)
-        if (round(self.position_sensors[1].getValue(),2) == self.table_bottom_sec_1 and round(self.position_sensors[2].getValue(),2) == self.table_bottom_sec_2):
-            print('Finished sweeping')
-            self.can_wipe = False
-            self.tuck_in = True
+        # Sweep the table from top edge to bottom edge
+        self.rotational_motors[1].setPosition(self.table_bottom_sec_1)
+        self.rotational_motors[2].setPosition(self.table_bottom_sec_2)
+        self.rotational_motors[1].setVelocity(0.3)
+        self.rotational_motors[2].setVelocity(0.5)
+        while self.robot.step(self.time_step) != -1:
+            if (round(self.position_sensors[1].getValue(),2) == self.table_bottom_sec_1 and round(self.position_sensors[2].getValue(),2) == self.table_bottom_sec_2):
+                return
 
     def tuck_in_action(self):
-        self.on_table = False
-        arm_controller.rotational_motors[1].setPosition(0.5)
-        arm_controller.rotational_motors[2].setPosition(2.7)
-        arm_controller.rotational_motors[1].setVelocity(0.3)
-        arm_controller.rotational_motors[2].setVelocity(0.5)
-        if (round(self.position_sensors[1].getValue(),2) == 0.5 and round(self.position_sensors[2].getValue(),2) == 2.7):
-            print('Finished tuck in')
-            self.can_wipe = True
-            self.tuck_in = False
+        # Set the arm to tuck in position
+        self.rotational_motors[1].setPosition(0.5)
+        self.rotational_motors[2].setPosition(2.7)
+        self.rotational_motors[1].setVelocity(0.3)
+        self.rotational_motors[2].setVelocity(0.5)
+        while self.robot.step(self.time_step) != 1:
+            if (round(self.position_sensors[1].getValue(),2) == 0.5 and round(self.position_sensors[2].getValue(),2) == 2.7):
+                print('Finished tuck in')
+                return
 
     def set_sweeping_action(self):
-        arm_controller.rotational_motors[1].setPosition(1.5)
-        arm_controller.rotational_motors[2].setPosition(0.5)
-        arm_controller.rotational_motors[1].setVelocity(0.05)
-        arm_controller.rotational_motors[2].setVelocity(0.6)
-        if (round(self.position_sensors[1].getValue(),2) == 1.5 and round(self.position_sensors[2].getValue(),1) == 0.5):
-            print('Ready to sweep')
-            self.can_wipe = True
-            self.on_table = True
-            
+        # Set the arm from tuck in position to the top edge of the table for upcoming sweep action
+        self.rotational_motors[1].setPosition(1.5)
+        self.rotational_motors[2].setPosition(0.5)
+        self.rotational_motors[1].setVelocity(0.05)
+        self.rotational_motors[2].setVelocity(0.6)
+        while self.robot.step(self.time_step) != -1:
+            if (round(self.position_sensors[1].getValue(),2) == 1.52 and round(self.position_sensors[2].getValue(),1) == 0.5):
+                return
+
+    def sweep(self):
+        # It assumes the arm is tucked in and try to do the sweep action from reaching the 
+        # top end of the table. After it finishes, it returns to tuck in positions
+        self.set_sweeping_action()
+        self.sweep_action()
+        self.tuck_in_action()
+
+
 # Main
 if __name__ == "__main__":
     arm_controller = ArmController()
 
-    while arm_controller.robot.step(64) != -1:
-        
-        print('base_sensor: ', arm_controller.position_sensors[0].getValue())
-        print('sec_1_sensor: ', arm_controller.position_sensors[1].getValue())
-        print('sec_2_sensor: ', arm_controller.position_sensors[2].getValue())
-        print('head_sensor: ', arm_controller.position_sensors[3].getValue())
-        print('------------------------------------------')
-
-        arm_controller.check_on_table()
-        if (arm_controller.on_table and arm_controller.can_wipe):
-            print('sweeping')
-            print('Goal: {} {}'.format(arm_controller.table_bottom_sec_1, arm_controller.table_bottom_sec_2))
-            arm_controller.sweep_action()
-          
-        if (arm_controller.tuck_in):
-            print('tucking in')
+    i = 0
+    while arm_controller.robot.step(arm_controller.time_step) != -1:
+        print(i)
+        if (i == 2):
             arm_controller.tuck_in_action()
-            print(arm_controller.on_table)
-            print(arm_controller.can_wipe)
+        if (i == 100):
+            arm_controller.sweep()
+        i += 1
+        
 
-        if (not arm_controller.on_table and arm_controller.can_wipe):
-            print('setting sweep position')
-            arm_controller.set_sweeping_action()
- 
 
 
 # Enter here exit cleanup code.
