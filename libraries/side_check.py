@@ -4,16 +4,24 @@
 # note to note - that's milestone 3 yous problem - maybe add a boolen is_stopped and substract that time from end?
 
 from collections import deque
+import os
+import sys
+
+# sys.path.append(os.path.abspath(os.path.join("..", "..")))
+# from libraries import move_lib as mc
 
 
 class SideCheck:
     # can import these as json?
-    def __init__(self):
+    def __init__(self, robot_inst):
         self.params = {
             "WHEEL_RADIUS": 0.0985,  # get from webots
-            "SPEED": 4.875,  # get from webots
+            "SPEED": robot_inst.getDevice("wheel_left_joint").getMaxVelocity()
+            * mc.MOVE_MULT,  # from movement library
             "DISTANCE_TO_WALL": 1.7,  # should be setup parameter while installing in carriage
         }
+
+        self._robot = robot_inst
 
         self._current_side_distance = 0
         self._previous_side_distance = 0
@@ -25,16 +33,15 @@ class SideCheck:
         self._enable_updates = True  # once a table is found, set to false to keep distances to help with navigation
         self._distance_morse = deque([], maxlen=7)
 
-    def get_distance_since(self, time, wheel_radius, speed, robot):
+    def get_distance_since(self, time, wheel_radius, speed):
         """Funtion get_distance_since: Returns the distance that the robot has travelled since the given time.
 
         Parameters:
             :param time: time when the distance measure started.
             :param wheel_radius: radius of the wheel in meters - declare as constant in webots controller.
             :param speed: angular velocity of the robot - assumes constant speed.
-            :param robot: robot object in webots.
         """
-        return (wheel_radius * speed) * (robot.getTime() - time)
+        return (wheel_radius * speed) * (self._robot.getTime() - time)
 
     def that_a_table(self, distances):
         """Function that_a_table to check if the thing the robot just passed a table.
@@ -121,7 +128,7 @@ class SideCheck:
         """
         # pls help movement team?
 
-    def side_check(self, robot, side_sensor):
+    def side_check(self, side_sensor):
         # use global variables and hope that state is stored between loops
         # side_sensor = ds[3]  # corresponding distance sensor in seat level
         # passanger_sensor = ds[4]  # distance sensor in passenet butt level - unused
@@ -135,7 +142,7 @@ class SideCheck:
             # if it's a rising edge, distance grows, end of chair/pole
             if self._current_side_distance > self._previous_side_distance:
                 # save start time of empty space
-                self._empty_start = robot.getTime()
+                self._empty_start = self._robot.getTime()
                 print("End of object - Empty space stared")
                 # reset empty space distance
                 self._empty_space = 0
@@ -145,7 +152,6 @@ class SideCheck:
                         self._occupied_start,
                         self.params["WHEEL_RADIUS"],
                         self.params["SPEED"],
-                        robot,
                     )
                     if (self._occupied_start is not None)
                     else 0
@@ -168,7 +174,7 @@ class SideCheck:
                     #     pass
             # falling edge, distance shrinks, start of chair/pole
             else:
-                self._occupied_start = robot.getTime()
+                self._occupied_start = self._robot.getTime()
                 print("End of empty spae - Object started")
                 self._occupied_space = 0
                 # calculate distance if there was a start
@@ -177,7 +183,6 @@ class SideCheck:
                         self._empty_start,
                         self.params["WHEEL_RADIUS"],
                         self.params["SPEED"],
-                        robot,
                     )
                     if (self._occupied_start is not None)
                     else 0
