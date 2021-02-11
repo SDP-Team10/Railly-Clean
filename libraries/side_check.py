@@ -6,9 +6,7 @@
 from collections import deque
 import os
 import sys
-
-# sys.path.append(os.path.abspath(os.path.join("..", "..")))
-# from libraries import move_lib as mc
+import move_lib as mc
 
 
 class SideCheck:
