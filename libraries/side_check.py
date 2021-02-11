@@ -33,7 +33,7 @@ class SideCheck:
         self._enable_updates = True  # once a table is found, set to false to keep distances to help with navigation
         self._distance_morse = deque([], maxlen=7)
 
-    def get_distance_since(self, time, wheel_radius, speed):
+    def get_distance_since(self, time):
         """Funtion get_distance_since: Returns the distance that the robot has travelled since the given time.
 
         Parameters:
@@ -41,7 +41,9 @@ class SideCheck:
             :param wheel_radius: radius of the wheel in meters - declare as constant in webots controller.
             :param speed: angular velocity of the robot - assumes constant speed.
         """
-        return (wheel_radius * speed) * (self._robot.getTime() - time)
+        return (self.params["WHEEL_RADIUS"] * self.params["SPEED"]) * (
+            self._robot.getTime() - time
+        )
 
     def that_a_table(self, distances):
         """Function that_a_table to check if the thing the robot just passed a table.
@@ -143,16 +145,13 @@ class SideCheck:
             if self._current_side_distance > self._previous_side_distance:
                 # save start time of empty space
                 self._empty_start = self._robot.getTime()
+                self.params["DISTANCE_TO_WALL"] = self._current_side_distance
                 print("End of object - Empty space stared")
                 # reset empty space distance
                 self._empty_space = 0
                 # calculate distance if there was a start
                 self._occupied_space = (
-                    self.get_distance_since(
-                        self._occupied_start,
-                        self.params["WHEEL_RADIUS"],
-                        self.params["SPEED"],
-                    )
+                    self.get_distance_since(self._occupied_start)
                     if (self._occupied_start is not None)
                     else 0
                 )
@@ -179,11 +178,7 @@ class SideCheck:
                 self._occupied_space = 0
                 # calculate distance if there was a start
                 self._empty_space = (
-                    self.get_distance_since(
-                        self._empty_start,
-                        self.params["WHEEL_RADIUS"],
-                        self.params["SPEED"],
-                    )
+                    self.get_distance_since(self._empty_start)
                     if (self._occupied_start is not None)
                     else 0
                 )
