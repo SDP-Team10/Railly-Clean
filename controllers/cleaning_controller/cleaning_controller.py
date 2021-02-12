@@ -36,7 +36,7 @@ class CleaningController(object):
             "base_motor",
             "sec_1_motor",
             "sec_1_motor",
-            "rotational motor"
+            "head_motor"
         ]
         self.arm_motors = self.init_arm()
         # arm motors' position sensors?
@@ -66,9 +66,7 @@ class CleaningController(object):
 
     def clean_table(self):
         mc.stop(self.robot)
-        self.arm_controller.set_sweeping_action()
-        self.arm_controller.sweep_action()
-        self.arm_controller.tuck_in_action()
+        self.arm_controller.sweep()
         # ac.wipe(self.robot)
     
     @staticmethod
@@ -104,7 +102,7 @@ if __name__ == "__main__":
                     mc.move_distance(robot, table_length_r / 2)  # to front edge of table
                     mc.turn_angle(robot, 180)
             
-            elif dist_sensors[0] < STOP_THRESHOLD:  # check front distance sensor
+            elif dist_sensors[0].getValue() < STOP_THRESHOLD:  # check front distance sensor
                 mc.stop(robot)
                 if vc.is_carriage_end(controller.camera):
                     print("End of carriage detected")

@@ -6,7 +6,7 @@
 from collections import deque
 import os
 import sys
-import move_lib_step as mc
+from libraries import move_lib_step as mc
 
 
 class SideCheck:
@@ -142,7 +142,7 @@ class SideCheck:
                 # save start time of empty space
                 self._empty_start = self._robot.getTime()
                 self.params["DISTANCE_TO_WALL"] = self._current_side_distance
-                print("End of object - Empty space stared")
+                print("End of object - Empty space started")
                 # reset empty space distance
                 self._empty_space = 0
                 # calculate distance if there was a start
