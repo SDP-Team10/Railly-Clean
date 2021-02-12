@@ -6,7 +6,7 @@ from controller import Robot, Motor, PositionSensor
 
 
 class ArmController(object):
-    def __init__(self, robot=robo):
+    def __init__(self, robot):
         self.robot = robot
         self.time_step = int(self.robot.getBasicTimeStep())
         self.ps_names = [

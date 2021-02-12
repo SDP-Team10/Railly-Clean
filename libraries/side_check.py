@@ -6,7 +6,7 @@
 from collections import deque
 import os
 import sys
-import move_lib as mc
+import move_lib_step as mc
 
 
 class SideCheck:
