@@ -4,10 +4,9 @@
 #  from controller import Robot, Motor, DistanceSensor
 from controller import Robot, Motor, PositionSensor
 
-robot = Robot()
 
 class ArmController(object):
-    def __init__(self, robot=robot):
+    def __init__(self, robot=robo):
         self.robot = robot
         self.time_step = int(self.robot.getBasicTimeStep())
         self.ps_names = [
@@ -26,9 +25,9 @@ class ArmController(object):
         self.rotational_motors = self.init_rm()
 
         self.table_top_sec_1 = 0
-        self.table_bottom_sec_1 = 0.84 # The edge of the table
+        self.table_bottom_sec_1 = 0.84  # The edge of the table
         self.table_top_sec_2 = 0
-        self.table_bottom_sec_2 = 2.3 # The edge of the table
+        self.table_bottom_sec_2 = 2.3  # The edge of the table
 
     def init_ps(self):
         position_sensors = []
@@ -52,7 +51,8 @@ class ArmController(object):
         self.rotational_motors[1].setVelocity(0.3)
         self.rotational_motors[2].setVelocity(0.5)
         while self.robot.step(self.time_step) != -1:
-            if (round(self.position_sensors[1].getValue(),2) == self.table_bottom_sec_1 and round(self.position_sensors[2].getValue(),2) == self.table_bottom_sec_2):
+            if (round(self.position_sensors[1].getValue(), 2) == self.table_bottom_sec_1 and
+                    round(self.position_sensors[2].getValue(), 2) == self.table_bottom_sec_2):
                 return
 
     def tuck_in_action(self):
@@ -62,7 +62,8 @@ class ArmController(object):
         self.rotational_motors[1].setVelocity(0.3)
         self.rotational_motors[2].setVelocity(0.5)
         while self.robot.step(self.time_step) != 1:
-            if (round(self.position_sensors[1].getValue(),2) == 0.5 and round(self.position_sensors[2].getValue(),2) == 2.7):
+            if (round(self.position_sensors[1].getValue(), 2) == 0.5 and
+                    round(self.position_sensors[2].getValue(), 2) == 2.7):
                 print('Finished tuck in')
                 return
 
@@ -73,7 +74,8 @@ class ArmController(object):
         self.rotational_motors[1].setVelocity(0.05)
         self.rotational_motors[2].setVelocity(0.6)
         while self.robot.step(self.time_step) != -1:
-            if (round(self.position_sensors[1].getValue(),2) == 1.52 and round(self.position_sensors[2].getValue(),1) == 0.5):
+            if (round(self.position_sensors[1].getValue(), 2) == 1.52 and
+                    round(self.position_sensors[2].getValue(), 1) == 0.5):
                 return
 
     def sweep(self):
@@ -82,24 +84,3 @@ class ArmController(object):
         self.set_sweeping_action()
         self.sweep_action()
         self.tuck_in_action()
-
-
-# Main
-if __name__ == "__main__":
-    arm_controller = ArmController()
-
-    i = 0
-    while arm_controller.robot.step(arm_controller.time_step) != -1:
-        print(i)
-        if (i == 2):
-            arm_controller.tuck_in_action()
-        if (i == 100):
-            arm_controller.sweep()
-        i += 1
-        
-
-
-
-# Enter here exit cleanup code.
-        
- 
