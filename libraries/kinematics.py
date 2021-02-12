@@ -37,8 +37,6 @@ def kinematics(theta_1, theta_2, length1, length2):
 def jacobian(current_theta_1, current_theta_2, l1, l2):
     sym_theta_1 = sympy.Symbol('theta_1')
     sym_theta_2 = sympy.Symbol('theta_2')
-    sym_length_1 = sympy.Symbol('l1')
-    sym_length_2 = sympy.Symbol('l2')
     k = kinematics(sym_theta_1,sym_theta_2,l1,l2)
     j = Matrix([[diff(k[3], sym_theta_1), diff(k[3], sym_theta_2)], [diff(k[7], sym_theta_1), diff(k[7], sym_theta_2)]])
     j = j.subs(sym_theta_1, current_theta_1)
@@ -49,9 +47,9 @@ def desired_joint_angles(theta1, theta2, l1, l2, theta1_d, theta2_d):
     global error, previous_time
     jac = jacobian(theta1, theta2, l1, l2)
     # P gain
-    K_p = np.array([[0.000005,0],[0,0.000005]])
+    K_p = np.array([[5,0],[0,5]])
     # D gain
-    K_d = np.array([[0.00000001,0],[0,0.00000001]])
+    K_d = np.array([[1,0],[0,1]])
 
     kin = kinematics(theta1,theta2,l1,l2)
     # robot end-effector position
@@ -101,7 +99,7 @@ def big_boi():
     d_ys = []
     threshold = 0.05
     count = 0
-    while (actual_x < desired_x_position - threshold or actual_x > desired_x_position + threshold) or (actual_y < desired_y_position - threshold or actual_y > desired_y_position + threshold) and count < 200:
+    while (actual_x < desired_x_position - threshold or actual_x > desired_x_position + threshold) or (actual_y < desired_y_position - threshold or actual_y > desired_y_position + threshold) and count < 500:
         curr_time = time.time()
         angles = desired_joint_angles(theta_1, theta_2, l1, l2, desired_x_position, desired_y_position)
         k = kinematics(angles[0], angles[1], l1, l2)
@@ -120,10 +118,10 @@ def big_boi():
         print("angle 1 =", angles[0])
         print("angle 2 =", angles[1])
 
-    plt.scatter(times, ac_xs, c='r', s=0.1)
-    plt.scatter(times, ac_ys, c='b', s=0.1)
-    plt.scatter(times, d_xs, c='y', s=0.1)
-    plt.scatter(times, d_ys, c='g', s=0.1)
+    plt.plot(times, ac_xs, c='r')
+    plt.plot(times, ac_ys, c='b')
+    plt.plot(times, d_xs, c='y')
+    plt.plot(times, d_ys, c='g')
     plt.show()
     print("angle 1 =", angles[0])
     print("angle 2 =", angles[1])
@@ -161,6 +159,6 @@ def brute_force():
     return 0
 
 if __name__ == "__main__":
-    brute_force()
+    #brute_force()
     #testy_boi()
-    #big_boi()
+    big_boi()
