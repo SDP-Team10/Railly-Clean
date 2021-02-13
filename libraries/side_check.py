@@ -6,7 +6,7 @@
 from collections import deque
 import os
 import sys
-from libraries import move_lib_step as mc
+import move_lib_step as mc
 
 
 class SideCheck:
@@ -20,7 +20,7 @@ class SideCheck:
         }
 
         self._robot = robot_inst
-        
+
         self._current_side_distance = 0
         self._previous_side_distance = 0
         self._empty_space = 0
@@ -29,8 +29,8 @@ class SideCheck:
         self._occupied_start = None
 
         self._enable_updates = True  # once a table is found, set to false to keep distances to help with navigation
-        self._distance_morse = deque([], maxlen=4)
-        
+        self._distance_morse = deque([], maxlen=3)
+
         self.max_distance_to_wall = 2.0
 
     def get_distance_since(self, time):
@@ -52,16 +52,16 @@ class SideCheck:
         Returns:
             :return boolean: True if it is assumed to be a table, false otherwise
         """
-        if len(distances) != 5:
-            # if there aren't 5 elements, either not enough data to decide or incorrect list passed
+        if len(distances) != 3:
+            # if there aren't 3 elements, either not enough data to decide or incorrect list passed
             return False
         else:
             # if it was a table, the order of distances should be:
-            # {seat, leg-space, table pole, leg-space, seat}
-            seat = (distances[0] + distances[-1]) / 2
-            table_pole = distances[2]
-            if table_pole < (seat / 2) and table_pole < 0.2:
-                print("We just passed a table! Should move back in front of the pole!")
+            # {seat, leg-space, table pole}
+            pole = distances[2]
+            seat = distances[0]
+            if pole < seat and pole < 0.2:
+                print("We just passed a table pole!")
                 self._enable_updates = False
                 return True
             else:
@@ -132,8 +132,9 @@ class SideCheck:
         # use global variables and hope that state is stored between loops
         # side_sensor = ds[3]  # corresponding distance sensor in seat level
         # passenger_sensor = ds[4]  # distance sensor in passenger butt level - unused
-
+        self._previous_side_distance = self._current_side_distance
         self._current_side_distance = side_sensor.getValue()
+        # Check if sensor data is withing expected range - filter out faulty readings
         if self._current_side_distance > self.max_distance_to_wall:
             self._current_side_distance = self._previous_side_distance
         # check if there is a larger than noise variance in the distance sensor
@@ -158,20 +159,10 @@ class SideCheck:
                 print(self._distance_morse)
                 # call self.that_a_table here - based on seat-pole-seat sizes, only needed after solids
                 if self.that_a_table(self._distance_morse):  # if a table is found:
-                    # return estimated table width to the main controller (_distance_morse[1] + _distance_morse[3])
+                    # return estimated table width to the main controller (_distance_morse[1] * 2)
                     print("bazinga bitch")
-                    return self._distance_morse[1] + self._distance_morse[3]
-                    # move back to the center of the pole
-                    # robot should move back distances[3:] + ( distance[2] / 2 ) - half the pole, seat, leg-space
-                    # self.move_distance(
-                    #    sum(self._distance_morse[3:]) + (self._distance_morse[2] / 2),
-                    #    -1,
-                    # )
-                    # if self.unoccupied_table(
-                    #     passenger_sensor, self._distance_morse
-                    # ):  # check if table is unoccupied
-                    #     # do the cleaning
-                    #     pass
+                    return self._distance_morse[1] * 2
+
             # falling edge, distance shrinks, start of chair/pole
             else:
                 self._occupied_start = self._robot.getTime()
@@ -184,5 +175,4 @@ class SideCheck:
                     else 0
                 )
                 self._distance_morse.append(self._empty_space)
-        self._previous_side_distance = self._current_side_distance
         return None
