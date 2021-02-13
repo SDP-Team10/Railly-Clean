@@ -20,7 +20,7 @@ class SideCheck:
         }
 
         self._robot = robot_inst
-
+        
         self._current_side_distance = 0
         self._previous_side_distance = 0
         self._empty_space = 0
@@ -29,7 +29,9 @@ class SideCheck:
         self._occupied_start = None
 
         self._enable_updates = True  # once a table is found, set to false to keep distances to help with navigation
-        self._distance_morse = deque([], maxlen=7)
+        self._distance_morse = deque([], maxlen=4)
+        
+        self.max_distance_to_wall = 2.0
 
     def get_distance_since(self, time):
         """Function get_distance_since: Returns the distance that the robot has travelled since the given time.
@@ -132,6 +134,8 @@ class SideCheck:
         # passenger_sensor = ds[4]  # distance sensor in passenger butt level - unused
 
         self._current_side_distance = side_sensor.getValue()
+        if self._current_side_distance > self.max_distance_to_wall:
+            self._current_side_distance = self._previous_side_distance
         # check if there is a larger than noise variance in the distance sensor
         if (
             abs(self._current_side_distance - self._previous_side_distance) > 0.3
@@ -142,7 +146,6 @@ class SideCheck:
                 # save start time of empty space
                 self._empty_start = self._robot.getTime()
                 self.params["DISTANCE_TO_WALL"] = self._current_side_distance
-                print("End of object - Empty space started")
                 # reset empty space distance
                 self._empty_space = 0
                 # calculate distance if there was a start
@@ -152,9 +155,11 @@ class SideCheck:
                     else 0
                 )
                 self._distance_morse.append(self._occupied_space)
+                print(self._distance_morse)
                 # call self.that_a_table here - based on seat-pole-seat sizes, only needed after solids
                 if self.that_a_table(self._distance_morse):  # if a table is found:
                     # return estimated table width to the main controller (_distance_morse[1] + _distance_morse[3])
+                    print("bazinga bitch")
                     return self._distance_morse[1] + self._distance_morse[3]
                     # move back to the center of the pole
                     # robot should move back distances[3:] + ( distance[2] / 2 ) - half the pole, seat, leg-space
@@ -179,3 +184,5 @@ class SideCheck:
                     else 0
                 )
                 self._distance_morse.append(self._empty_space)
+        self._previous_side_distance = self._current_side_distance
+        return None
