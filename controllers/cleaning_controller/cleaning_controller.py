@@ -1,5 +1,3 @@
-"""arm_control controller."""
-
 import sys
 import os
 import math
@@ -39,7 +37,7 @@ class CleaningController(object):
             "head_motor"
         ]
         self.arm_motors = self.init_arm()
-        # arm motors' position sensors?
+        # Arm motors' position sensors?
         self.left_motor = self.robot.getDevice("wheel_left_joint")
         self.right_motor = self.robot.getDevice("wheel_right_joint")
         self.arm_controller = ac.ArmController(self.robot)
@@ -82,7 +80,7 @@ if __name__ == "__main__":
     robot, dist_sensors = controller.robot, controller.distance_sensors
     table_check_l, table_check_r = sc.SideCheck(robot), sc.SideCheck(robot)
     table_length_l, table_length_r = None, None
-    table_detected, side = False, 'f'
+    table_detected, side = False, 'f'  # control flags
 
     # Assume robot is already centered
     while controller.robot.step(controller.time_step) != -1:
@@ -94,7 +92,7 @@ if __name__ == "__main__":
                 table_detected = True
                 table_check_l.stop_scanning()
                 table_check_r.stop_scanning()
-                if table_length_l:
+                if table_length_l:  # prioritize left side since arm & camera are on the left
                     side = 'l'
                     # mc.move_distance(robot, table_length_l / 2, -1)  # to back edge of table
                 else:
@@ -113,16 +111,18 @@ if __name__ == "__main__":
         else:
             attempts = CLEAN_ATTEMPTS
             if side == 'l':
+                # Since moving backwards hasn't been implemented, robot only cleans from the pole
                 attempts = math.ceil(CLEAN_ATTEMPTS / 2)
             for i in range(attempts - 1):
                 controller.clean_table()
                 table_length = table_length_l if side == 'l' else table_length_r
                 mc.move_distance(robot, table_length / CLEAN_ATTEMPTS)
+            # Last step concerns how to move onto next table
             if side == 'l':
-                if table_length_r:  # more to clean
+                if table_length_r:  # this row still has more to clean
                     mc.turn_angle(robot, 180)
                     side = 'r'
-                else:
+                else:  # can move onto next row, update control flags
                     table_detected, side = CleaningController.next_row(table_check_l, table_check_r)
             elif side == 'r':
                 mc.turn_angle(robot, 180)

@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 # this is a thing
 
 # note to self - what to do when the thing is stopped by something else - obstacle detection?
@@ -6,7 +8,7 @@
 from collections import deque
 import os
 import sys
-import move_lib_step as mc
+from libraries import move_lib_step as mc  # dependent on where script is run
 
 
 class SideCheck:
