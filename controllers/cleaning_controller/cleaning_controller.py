@@ -14,7 +14,7 @@ TIME_STEP = 32  # this or robot.getBasicTimeStep()
 STOP_THRESHOLD = 0.6
 TABLE_WIDTH = 1  # parameter
 HEAD_WIDTH = 0.3  # parameter
-CLEAN_ATTEMPTS = math.ceil(TABLE_WIDTH // HEAD_WIDTH)
+CLEAN_ATTEMPTS = math.floor(TABLE_WIDTH // HEAD_WIDTH)
 
 
 class CleaningController(object):
@@ -85,8 +85,8 @@ if __name__ == "__main__":
     # Assume robot is already centered
     while controller.robot.step(controller.time_step) != -1:
         if not table_detected:
-            table_length_l = table_check_l.side_check(dist_sensors[2])
-            table_length_r = table_check_r.side_check(dist_sensors[3])
+            table_length_l, pole_length = table_check_l.side_check(dist_sensors[2])
+            table_length_r, pole_length = table_check_r.side_check(dist_sensors[3])
             
             if table_length_l or table_length_r:  # if not None -> table detected
                 table_detected = True
@@ -97,7 +97,8 @@ if __name__ == "__main__":
                     # mc.move_distance(robot, table_length_l / 2, -1)  # to back edge of table
                 else:
                     side = 'r'
-                    mc.move_distance(robot, table_length_r / 2)  # to front edge of table
+                    distance = (table_length_r / 2) - (2 * pole_length)
+                    mc.move_distance(robot, distance)  # to front edge of table
                     mc.turn_angle(robot, 180)
             
             elif dist_sensors[0].getValue() < STOP_THRESHOLD:  # check front distance sensor

@@ -163,7 +163,7 @@ class SideCheck:
                 if self.that_a_table(self._distance_morse):  # if a table is found:
                     # return estimated table width to the main controller (_distance_morse[1] * 2)
                     print("bazinga bitch")
-                    return self._distance_morse[1] * 2
+                    return self._distance_morse[1] * 2, self._distance_morse[2]
 
             # falling edge, distance shrinks, start of chair/pole
             else:
