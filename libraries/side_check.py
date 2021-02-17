@@ -177,4 +177,4 @@ class SideCheck:
                     else 0
                 )
                 self._distance_morse.append(self._empty_space)
-        return None
+        return None, None
