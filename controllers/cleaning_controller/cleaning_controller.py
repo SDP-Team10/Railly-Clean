@@ -85,8 +85,8 @@ if __name__ == "__main__":
     # Assume robot is already centered
     while controller.robot.step(controller.time_step) != -1:
         if not table_detected:
-            table_length_l, pole_length = table_check_l.side_check(dist_sensors[2])
-            table_length_r, pole_length = table_check_r.side_check(dist_sensors[3])
+            table_length_l, pole_length_l = table_check_l.side_check(dist_sensors[2])
+            table_length_r, pole_length_r = table_check_r.side_check(dist_sensors[3])
             
             if table_length_l or table_length_r:  # if not None -> table detected
                 table_detected = True
@@ -97,7 +97,7 @@ if __name__ == "__main__":
                     # mc.move_distance(robot, table_length_l / 2, -1)  # to back edge of table
                 else:
                     side = 'r'
-                    distance = (table_length_r / 2) - (2 * pole_length)
+                    distance = (table_length_r / 2) - (2 * pole_length_r)
                     mc.move_distance(robot, distance)  # to front edge of table
                     mc.turn_angle(robot, 180)
             
@@ -120,12 +120,15 @@ if __name__ == "__main__":
                 mc.move_distance(robot, table_length / CLEAN_ATTEMPTS)
             # Last step concerns how to move onto next table
             if side == 'l':
-                if table_length_r:  # this row still has more to clean
+                if table_length_r:  # still need to clean the other side of this row
+                    controller.clean_table()  # last clean on this side
                     mc.turn_angle(robot, 180)
                     side = 'r'
                 else:  # can move onto next row, update control flags
+                    controller.clean_table()
                     table_detected, side = CleaningController.next_row(table_check_l, table_check_r)
             elif side == 'r':
+                controller.clean_table()
                 mc.turn_angle(robot, 180)
                 table_detected, side = CleaningController.next_row(table_check_l, table_check_r)
 
