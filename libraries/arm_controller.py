@@ -3,7 +3,7 @@
 # You may need to import some classes of the controller module. Ex:
 #  from controller import Robot, Motor, DistanceSensor
 from controller import Robot, Motor, PositionSensor
-
+from libraries import kinematics
 
 class ArmController(object):
     def __init__(self, robot):
@@ -46,14 +46,29 @@ class ArmController(object):
 
     def sweep_action(self):
         # Sweep the table from top edge to bottom edge
-        self.rotational_motors[1].setPosition(self.table_bottom_sec_1)
-        self.rotational_motors[2].setPosition(self.table_bottom_sec_2)
-        self.rotational_motors[1].setVelocity(0.3)
-        self.rotational_motors[2].setVelocity(0.5)
-        while self.robot.step(self.time_step) != -1:
-            if (round(self.position_sensors[1].getValue(), 2) == self.table_bottom_sec_1 and
-                    round(self.position_sensors[2].getValue(), 2) == self.table_bottom_sec_2):
-                return
+        dqs = []
+        d_y = 1.4
+        d_x = -0.28
+        y_step = 0.1*d_y
+        x_step = 0.05*d_x
+        while d_y > 0.2:
+            dq= kinematics.brute_force(d_x, d_y, 0.78, 0.7,round(self.position_sensors[1].getValue(), 2), round(self.position_sensors[2].getValue(), 2))
+            d_y -= y_step
+            print(d_y)
+            d_x -= x_step     
+            self.rotational_motors[1].setPosition(dq[0])
+            self.rotational_motors[2].setPosition(dq[1])
+            self.rotational_motors[1].setVelocity(0.2)
+            self.rotational_motors[2].setVelocity(0.6)
+            print(dq[0])
+            print(dq[1])
+            while self.robot.step(self.time_step) != -1:
+                print("1=", self.position_sensors[1].getValue())
+                print("2=",self.position_sensors[2].getValue())
+                if (round(self.position_sensors[1].getValue(), 2) == round(dq[0],2) and
+                        round(self.position_sensors[2].getValue(), 1) == round(dq[1],1)):
+                    break
+        return
 
     def tuck_in_action(self):
         # Set the arm to tuck in position
@@ -69,13 +84,28 @@ class ArmController(object):
 
     def set_sweeping_action(self):
         # Set the arm from tuck in position to the top edge of the table for upcoming sweep action
-        self.rotational_motors[1].setPosition(1.5)
-        self.rotational_motors[2].setPosition(0.5)
-        self.rotational_motors[1].setVelocity(0.05)
-        self.rotational_motors[2].setVelocity(0.6)
+        pos1 = 1.44
+        pos2 = 0.64
+        vel1 = 0.4
+        vel2 = 1
+        self.rotational_motors[1].setPosition(pos1)
+        self.rotational_motors[2].setPosition(pos2)
+        self.rotational_motors[1].setVelocity(vel1)
+        self.rotational_motors[2].setVelocity(vel2)
+        print("TORQUE", self.rotational_motors[1].getAvailableTorque())
+        print("HIGHEST_TORQUE", self.rotational_motors[1].getMaxTorque())
+        print("FORCE", self.rotational_motors[1].getAvailableForce())
+        print("MAX FORCE", self.rotational_motors[1].getAvailableTorque())
         while self.robot.step(self.time_step) != -1:
-            if (round(self.position_sensors[1].getValue(), 2) == 1.52 and
-                    round(self.position_sensors[2].getValue(), 1) == 0.5):
+            print("1",self.position_sensors[1].getValue())
+            print(self.position_sensors[2].getValue())
+            if (round(self.position_sensors[1].getValue(), 2) == round(pos1,2) and
+                    round(self.position_sensors[2].getValue(), 2) == round(pos2,2)):
+                print("bingo")
+                print(self.rotational_motors[1].getVelocity())
+                print(self.rotational_motors[2].getVelocity())
+                self.rotational_motors[1].setVelocity(0.0)
+                self.rotational_motors[2].setVelocity(0.0)
                 return
 
     def sweep(self):
