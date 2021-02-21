@@ -18,7 +18,7 @@ class SideCheck:
             "WHEEL_RADIUS": 0.0985,  # get from Webots
             "SPEED": robot_inst.getDevice("wheel_left_joint").getMaxVelocity()
             * mc.MOVE_MULT,  # from movement library
-            "DISTANCE_TO_WALL": 1.7,  # should be setup parameter while installing in carriage
+            "DISTANCE_TO_WALL": 2.5,  # should be setup parameter while installing in carriage
         }
 
         self._robot = robot_inst
@@ -136,6 +136,7 @@ class SideCheck:
         # passenger_sensor = ds[4]  # distance sensor in passenger butt level - unused
         self._previous_side_distance = self._current_side_distance
         self._current_side_distance = side_sensor.getValue()
+        print(self._current_side_distance)
         # Check if sensor data is withing expected range - filter out faulty readings
         if self._current_side_distance > self.max_distance_to_wall:
             self._current_side_distance = self._previous_side_distance

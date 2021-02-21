@@ -84,8 +84,13 @@ class ArmController(object):
 
     def set_sweeping_action(self):
         # Set the arm from tuck in position to the top edge of the table for upcoming sweep action
-        pos1 = 1.44
-        pos2 = 0.64
+        d_y = 1.4
+        d_x = -0.28
+        k = kinematics.brute_force(d_x, d_y, 0.78, 0.7)
+        #pos1 = 1.44
+        pos1 = k[0]
+        #pos2 = 0.64
+        pos2 = k[1]
         vel1 = 0.4
         vel2 = 1
         self.rotational_motors[1].setPosition(pos1)
