@@ -75,10 +75,8 @@ if __name__ == "__main__":
     # Assume robot is already centered
     while controller.robot.step(controller.time_step) != -1:
         try:
-            img = controller.camera.getImage()
-            print(type(img))
-            image = np.frombuffer(img, np.uint8).reshape((controller.camera.getHeight(), controller.camera.getWidth(), 4))
-            res = ct.classify_trash(image)
+            img = controller.camera.getImageArray()
+            res = ct.classify_trash(img)
             print(res)
         except Exception as e:
             print(traceback.format_exc())
