@@ -1,6 +1,9 @@
 import sys
 import os
 import math
+import traceback
+import numpy as np
+
 
 sys.path.append(os.path.abspath(os.path.join("..", "..")))
 from libraries import side_check as sc
@@ -71,7 +74,12 @@ if __name__ == "__main__":
 
     # Assume robot is already centered
     while controller.robot.step(controller.time_step) != -1:
-        ty = type(controller.camera.getImage())
-        print(ty)
-        print(ct.classify_trash(controller.camera.getImage()))
+        try:
+            img = controller.camera.getImage()
+            print(type(img))
+            image = np.frombuffer(img, np.uint8).reshape((controller.camera.getHeight(), controller.camera.getWidth(), 4))
+            res = ct.classify_trash(image)
+            print(res)
+        except Exception as e:
+            print(traceback.format_exc())
 # Enter here exit cleanup code.
