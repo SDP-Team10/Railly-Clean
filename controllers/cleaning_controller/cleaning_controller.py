@@ -3,10 +3,9 @@ import os
 import math
 
 sys.path.append(os.path.abspath(os.path.join("..", "..")))
-from libraries import sticker_detection as vc
 from libraries import side_check as sc
 from libraries import move_lib_step as mc
-from libraries import arm_controller as ac
+from libraries import classify_trash as ct
 from controller import Robot
 
 
@@ -36,19 +35,7 @@ class CleaningController(object):
             "sec_1_motor",
             "head_motor"
         ]
-        self.arm_motors = self.init_arm()
-        # Arm motors' position sensors?
-        self.left_motor = self.robot.getDevice("wheel_left_joint")
-        self.right_motor = self.robot.getDevice("wheel_right_joint")
-        self.arm_controller = ac.ArmController(self.robot)
 
-    # Arm's motors
-    def init_arm(self):
-        arm_motors = []
-        for name in self.am_names:
-            motor = self.robot.getDevice(name)
-            arm_motors.append(motor)
-        return arm_motors
 
     # Distance sensor initialization
     def init_dist(self):
@@ -84,53 +71,7 @@ if __name__ == "__main__":
 
     # Assume robot is already centered
     while controller.robot.step(controller.time_step) != -1:
-        if not table_detected:
-            table_length_l, pole_length_l = table_check_l.side_check(dist_sensors[2])
-            table_length_r, pole_length_r = table_check_r.side_check(dist_sensors[3])
-            
-            if table_length_l or table_length_r:  # if not None -> table detected
-                table_detected = True
-                table_check_l.stop_scanning()
-                table_check_r.stop_scanning()
-                if table_length_l:  # prioritize left side since arm & camera are on the left
-                    side = 'l'
-                    # mc.move_distance(robot, table_length_l / 2, -1)  # to back edge of table
-                else:
-                    side = 'r'
-                    distance = (table_length_r / 2) - (2 * pole_length_r)
-                    mc.move_distance(robot, distance)  # to front edge of table
-                    mc.turn_angle(robot, 180)
-            
-            elif dist_sensors[0].getValue() < STOP_THRESHOLD:  # check front distance sensor
-                mc.stop(robot)
-                if vc.is_carriage_end(controller.camera):
-                    print("End of carriage detected")
-            
-            else:  # business as usual
-                mc.move_forward(robot)
-
-        else:
-            attempts = CLEAN_ATTEMPTS
-            if side == 'l':
-                # Since moving backwards hasn't been implemented, robot only cleans from the pole
-                attempts = math.ceil(CLEAN_ATTEMPTS / 2)
-            for i in range(attempts - 1):
-                controller.clean_table()
-                table_length = table_length_l if side == 'l' else table_length_r
-                mc.move_distance(robot, table_length / CLEAN_ATTEMPTS)
-            # Last step concerns how to move onto next table
-            if side == 'l':
-                if table_length_r:  # still need to clean the other side of this row
-                    controller.clean_table()  # last clean on this side
-                    mc.turn_angle(robot, 180)
-                    side = 'r'
-                else:  # can move onto next row, update control flags
-                    controller.clean_table()
-                    table_detected, side = CleaningController.next_row(table_check_l, table_check_r)
-            elif side == 'r':
-                controller.clean_table()
-                mc.turn_angle(robot, 180)
-                table_detected, side = CleaningController.next_row(table_check_l, table_check_r)
-
-
+        ty = type(controller.camera.getImage())
+        print(ty)
+        print(ct.classify_trash(controller.camera.getImage()))
 # Enter here exit cleanup code.
