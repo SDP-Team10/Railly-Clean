@@ -12,7 +12,7 @@ from controller import Robot
 
 TIME_STEP = 32  # this or robot.getBasicTimeStep()
 STOP_THRESHOLD = 0.6
-TABLE_WIDTH = 1  # parameter
+TABLE_WIDTH = 1.0  # parameter
 HEAD_WIDTH = 0.3  # parameter
 CLEAN_ATTEMPTS = math.floor(TABLE_WIDTH // HEAD_WIDTH)
 
@@ -62,9 +62,9 @@ class CleaningController(object):
             dist_sensors.append(sensor)
         return dist_sensors
 
-    def clean_table(self):
+    def clean_table(self, distance_to_wall):
         mc.stop(self.robot)
-        self.arm_controller.sweep()
+        self.arm_controller.sweep(distance_to_wall)
         # ac.wipe(self.robot)
     
     @staticmethod
@@ -111,21 +111,23 @@ if __name__ == "__main__":
 
         else:
             attempts = CLEAN_ATTEMPTS
+            print('attempts: ', attempts)
             if side == 'l':
                 # Since moving backwards hasn't been implemented, robot only cleans from the pole
                 attempts = math.ceil(CLEAN_ATTEMPTS / 2)
             for i in range(attempts - 1):
-                controller.clean_table()
+                print('In checking distance to wall: ', table_check_l.params['DISTANCE_TO_WALL'])
+                controller.clean_table(table_check_l.params['DISTANCE_TO_WALL'])
                 table_length = table_length_l if side == 'l' else table_length_r
                 mc.move_distance(robot, table_length / CLEAN_ATTEMPTS)
             # Last step concerns how to move onto next table
             if side == 'l':
                 if table_length_r:  # still need to clean the other side of this row
-                    controller.clean_table()  # last clean on this side
+                    controller.clean_table(table_check_l.params['DISTANCE_TO_WALL'])  # last clean on this side
                     mc.turn_angle(robot, 180)
                     side = 'r'
                 else:  # can move onto next row, update control flags
-                    controller.clean_table()
+                    controller.clean_table(table_check_r.params['DISTANCE_TO_WALL'])
                     table_detected, side = CleaningController.next_row(table_check_l, table_check_r)
             elif side == 'r':
                 controller.clean_table()
