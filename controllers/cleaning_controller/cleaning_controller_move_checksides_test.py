@@ -94,7 +94,7 @@ if __name__ == "__main__":
                 table_check_r.stop_scanning()
                 if table_length_l:  # prioritize left side since arm & camera are on the left
                     side = 'l'
-                    distance = (table_length_l / 2)
+                    distance = (table_length_l / 2) - (2 * pole_length_l)
                     mc.move_distance(robot, - distance)  # to back edge of table
                 else:
                     side = 'r'
@@ -113,22 +113,33 @@ if __name__ == "__main__":
         else:
             attempts = CLEAN_ATTEMPTS
             print('attempts: ', attempts)
-            temp_table_length_l, temp_pole_length_l, temp_table_length_r, temp_pole_length_r = None, None, None, None
+            temp_table_length, temp_pole_length = None, None
+            if side == 'l':
+                table_check_r.done_cleaning()
+                table_check = table_check_r
+                dist_sensor = dist_sensors[3]
+                table_length = table_length_l
+            else:
+                table_check_l.done_cleaning()
+                table_check = table_check_l
+                dist_sensor = dist_sensors[2]
+                table_length = table_length_r
             for i in range(attempts - 1):
                 print('In checking distance to wall: ', table_check_l.params['DISTANCE_TO_WALL'])
                 controller.clean_table(table_check_l.params['DISTANCE_TO_WALL'])
-                table_length = table_length_l if side == 'l' else table_length_r
-                if not temp_table_length_l and not temp_table_length_r:
-                    temp_table_length_l, temp_pole_length_l, temp_table_length_r, temp_pole_length_r = mc.move_distance_check_sides(robot, table_length / CLEAN_ATTEMPTS, table_check_l, table_check_r, dist_sensors[2], dist_sensors[3])
-                    print(temp_table_length_l, temp_pole_length_l, temp_table_length_r, temp_pole_length_r)
-                    table_check_l.stop_scanning()
-                    table_check_r.stop_scanning()
+                if not temp_table_length:
+                    temp_table_length, temp_pole_length = mc.move_distance_check_sides(robot, table_length / CLEAN_ATTEMPTS, table_check, dist_sensor)
+                    print(temp_table_length, temp_pole_length)
                 else:
                     mc.move_distance(robot, table_length / CLEAN_ATTEMPTS)
 
             # If found a new table while cleaing then set values
-            if temp_table_length_l or temp_table_length_r:
-                table_length_l, pole_length_l, table_length_r, pole_length_r = temp_table_length_l, temp_pole_length_l, temp_table_length_r, temp_pole_length_r
+            table_check.stop_scanning()
+            if temp_table_length:
+                if side == 'l':
+                    table_length_r, pole_length_r = temp_table_length, temp_pole_length
+                else:
+                    table_length_l, pole_length_l = temp_table_length, temp_pole_length
             # Last step concerns how to move onto next table
             if side == 'l':
                 if table_length_r:  # still need to clean the other side of this row
