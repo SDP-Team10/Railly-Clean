@@ -1,6 +1,7 @@
 from numpy import inf
 from controller import Robot, Keyboard
 import math
+from libraries import side_check as sc
 
 MAX_SPEED = 0       ### maximum velocity of the turtlebot motors ( set to motors max velocity in setup() )
 TURN_MULT = 0.25    ### constant to slow down turn speed ( too high and turning will be inaccurate)
@@ -137,9 +138,10 @@ def check_move(robot, left_start, right_start, pos):
         prev_right_pos = right_pos
         left_pos = gleft_motor.getPositionSensor().getValue()
         right_pos = gright_motor.getPositionSensor().getValue()
-        close_to_pos = abs(abs(left_pos-left_start) + abs(right_pos-right_start) - pos*2) < eps
-        slowing_down = abs(abs(prev_left_pos-left_pos) + abs(prev_right_pos-right_pos)) < eps/5
+        close_to_pos = abs(abs(left_pos-left_start) + abs(right_pos-right_start) - abs(pos)*2) < eps
+        slowing_down = abs(abs(prev_left_pos-left_pos) + abs(prev_right_pos-right_pos)) < eps/2
         if  close_to_pos and slowing_down:
+            print('STOPPING')
             stop(robot)
             return True
 
@@ -181,6 +183,44 @@ def move_distance(robot, dist=1):
     gright_motor.setPosition(right_offset + pos)
     limit_vel(MAX_SPEED*MOVE_MULT,MAX_SPEED*MOVE_MULT)
     return check_move(robot, left_offset, right_offset, pos)
+
+def check_move_side_check(robot, left_start, right_start, pos, table_check_l, table_check_r, dist_sensor_l, dist_sensor_r):
+    left_pos = 0
+    right_pos = 0
+    table_length_l, pole_length_l, table_length_r, pole_length_r = None, None, None, None
+    while True:
+        robot.step(TIME_STEP)
+
+        table_length_l, pole_length_l = table_check_l.side_check(dist_sensor_l)
+        table_length_r, pole_length_r = table_check_r.side_check(dist_sensor_r)
+
+        prev_left_pos = left_pos
+        prev_right_pos = right_pos
+        left_pos = gleft_motor.getPositionSensor().getValue()
+        right_pos = gright_motor.getPositionSensor().getValue()
+        close_to_pos = abs(abs(left_pos-left_start) + abs(right_pos-right_start) - pos*2) < eps
+        slowing_down = abs(abs(prev_left_pos-left_pos) + abs(prev_right_pos-right_pos)) < eps/2
+        if  close_to_pos and slowing_down:
+            stop(robot)
+            print('STOPPING SIDE CHECK MOVE')
+            return table_length_l, pole_length_l, table_length_r, pole_length_r
+
+
+def move_distance_check_sides(robot, dist, table_check_l, table_check_r, dist_sensor_l, dist_sensor_r):
+    global left_offset
+    global right_offset
+    if robot != grobot or grobot is None:
+        if not setup(robot):
+            print('Error in setting up robot')
+            return False
+    left_offset = gleft_motor.getPositionSensor().getValue()
+    right_offset = gright_motor.getPositionSensor().getValue()
+    pos = dist / wheel_radius
+    gleft_motor.setPosition(left_offset + pos)
+    gright_motor.setPosition(right_offset + pos)
+    limit_vel(MAX_SPEED*MOVE_MULT,MAX_SPEED*MOVE_MULT)
+    return check_move_side_check(robot, left_offset, right_offset, pos, table_check_l, table_check_r, dist_sensor_l, dist_sensor_r)
+
 
 #############################################################
 
