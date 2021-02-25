@@ -184,15 +184,15 @@ def move_distance(robot, dist=1):
     limit_vel(MAX_SPEED*MOVE_MULT,MAX_SPEED*MOVE_MULT)
     return check_move(robot, left_offset, right_offset, pos)
 
-def check_move_side_check(robot, left_start, right_start, pos, table_check_l, table_check_r, dist_sensor_l, dist_sensor_r):
+def check_move_side_check(robot, left_start, right_start, pos, table_check, dist_sensor):
     left_pos = 0
     right_pos = 0
-    table_length_l, pole_length_l, table_length_r, pole_length_r = None, None, None, None
+    table_length, pole_length = None, None
     while True:
         robot.step(TIME_STEP)
 
-        table_length_l, pole_length_l = table_check_l.side_check(dist_sensor_l)
-        table_length_r, pole_length_r = table_check_r.side_check(dist_sensor_r)
+        if not table_length:
+            table_length, pole_length = table_check.side_check(dist_sensor)
 
         prev_left_pos = left_pos
         prev_right_pos = right_pos
@@ -203,10 +203,10 @@ def check_move_side_check(robot, left_start, right_start, pos, table_check_l, ta
         if  close_to_pos and slowing_down:
             stop(robot)
             print('STOPPING SIDE CHECK MOVE')
-            return table_length_l, pole_length_l, table_length_r, pole_length_r
+            return table_length, pole_length
 
 
-def move_distance_check_sides(robot, dist, table_check_l, table_check_r, dist_sensor_l, dist_sensor_r):
+def move_distance_check_sides(robot, dist, table_check, dist_sensor):
     global left_offset
     global right_offset
     if robot != grobot or grobot is None:
@@ -219,7 +219,7 @@ def move_distance_check_sides(robot, dist, table_check_l, table_check_r, dist_se
     gleft_motor.setPosition(left_offset + pos)
     gright_motor.setPosition(right_offset + pos)
     limit_vel(MAX_SPEED*MOVE_MULT,MAX_SPEED*MOVE_MULT)
-    return check_move_side_check(robot, left_offset, right_offset, pos, table_check_l, table_check_r, dist_sensor_l, dist_sensor_r)
+    return check_move_side_check(robot, left_offset, right_offset, pos, table_check, dist_sensor)
 
 
 #############################################################
