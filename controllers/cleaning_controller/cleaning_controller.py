@@ -90,7 +90,8 @@ if __name__ == "__main__":
                 table_detected = True
                 table_check.stop_scanning()
                 table_length = table_length if table_length < 1 else 1
-                attempts = int(table_length // HEAD_WIDTH)
+                print("Table Length:", table_length)
+                attempts = math.ceil(table_length / HEAD_WIDTH)
                 print("TOTAL ATTEMPTS:", attempts)
                 distance = (table_length / 2) + pole_length
                 mc.move_distance(robot, -distance)  # to back edge of table
