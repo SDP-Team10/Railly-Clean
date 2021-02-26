@@ -234,8 +234,10 @@ def stop(robot):
         if not setup(robot):
             print('Error in setting up robot')
             return False
-    enable_speed_control(gleft_motor)
-    enable_speed_control(gright_motor)
+    gleft_motor.setVelocity(0)
+    gright_motor.setVelocity(0)
+    while gleft_motor.getVelocity() > 0 and gright_motor.getVelocity() > 0:
+        robot.step(TIME_STEP)
 
 
 def enable_speed_control(motor):
