@@ -154,7 +154,7 @@ def turn_angle(robot, angle):
             return False
     left_offset = gleft_motor.getPositionSensor().getValue()
     right_offset = gright_motor.getPositionSensor().getValue()
-    rads = abs(angle) * deg_to_rad * 1.1
+    rads = abs(angle) * deg_to_rad * 1.07
     sector_len = rads * distance_between_wheels / 2
     pos = sector_len / wheel_radius
     turn_sign = angle/abs(angle)
