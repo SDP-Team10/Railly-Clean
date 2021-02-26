@@ -12,9 +12,9 @@ from controller import Robot
 
 TIME_STEP = 32  # this or robot.getBasicTimeStep()
 STOP_THRESHOLD = 0.6
-TABLE_WIDTH = 1.0  # parameter
+TABLE_WIDTH = 1  # parameter
 HEAD_WIDTH = 0.3  # parameter
-CLEAN_ATTEMPTS = math.floor(TABLE_WIDTH // HEAD_WIDTH)
+CLEAN_ATTEMPTS = int(TABLE_WIDTH // HEAD_WIDTH)
 
 
 class CleaningController(object):
@@ -65,74 +65,58 @@ class CleaningController(object):
     def clean_table(self, distance_to_wall):
         mc.stop(self.robot)
         self.arm_controller.sweep(distance_to_wall)
-        # ac.wipe(self.robot)
     
     @staticmethod
-    def next_row(table_check_l, table_check_r):
-        table_check_l.done_cleaning()
-        table_check_r.done_cleaning()
-        return False, 'f'
+    def next_row(table_check):  # NOT USED
+        table_check.done_cleaning()
+        return False
 
 
-# Controller assumes library functions handle their own time steps
+# Controller assumes library functions handle their own timesteps
 if __name__ == "__main__":
     controller = CleaningController()
     robot, dist_sensors = controller.robot, controller.distance_sensors
-    table_check_l, table_check_r = sc.SideCheck(robot), sc.SideCheck(robot)
-    table_length_l, table_length_r = None, None
-    table_detected, side = False, 'f'  # control flags
+    table_check, table_length, table_detected, left_side = sc.SideCheck(robot), None, False, True
+    attempts = CLEAN_ATTEMPTS
 
     # Assume robot is already centered
-    while controller.robot.step(controller.time_step) != -1:
+    while robot.step(controller.time_step) != -1:
         if not table_detected:
-            table_length_l, pole_length_l = table_check_l.side_check(dist_sensors[2])
-            table_length_r, pole_length_r = table_check_r.side_check(dist_sensors[3])
+            print(dist_sensors[0].getValue())
+            table_length, pole_length = table_check.side_check(dist_sensors[2])
             
-            if table_length_l or table_length_r:  # if not None -> table detected
+            if table_length:  # if not None -> table detected
+                print("Table detected")
                 table_detected = True
-                table_check_l.stop_scanning()
-                table_check_r.stop_scanning()
-                if table_length_l:  # prioritize left side since arm & camera are on the left
-                    side = 'l'
-                    # mc.move_distance(robot, table_length_l / 2, -1)  # to back edge of table
-                else:
-                    side = 'r'
-                    distance = (table_length_r / 2) - (2 * pole_length_r)
-                    mc.move_distance(robot, distance)  # to front edge of table
-                    mc.turn_angle(robot, 180)
+                table_check.stop_scanning()
+                table_length = table_length if table_length < 1 else 1
+                attempts = int(table_length // HEAD_WIDTH)
+                print("TOTAL ATTEMPTS:", attempts)
+                distance = (table_length / 2) + pole_length
+                mc.move_distance(robot, -distance)  # to back edge of table
             
             elif dist_sensors[0].getValue() < STOP_THRESHOLD:  # check front distance sensor
+                print("Detected wall in front")
                 mc.stop(robot)
-                if vc.is_carriage_end(controller.camera):
-                    print("End of carriage detected")
+                # if vc.is_carriage_end(controller.camera):
+                #     print("End of carriage detected")
+                if left_side:
+                    mc.turn_angle(robot, 180)
+                    left_side = False
             
             else:  # business as usual
+                print("Moving forward")
                 mc.move_forward(robot)
 
         else:
-            attempts = CLEAN_ATTEMPTS
-            print('attempts: ', attempts)
-            if side == 'l':
-                # Since moving backwards hasn't been implemented, robot only cleans from the pole
-                attempts = math.ceil(CLEAN_ATTEMPTS / 2)
-            for i in range(attempts - 1):
-                print('In checking distance to wall: ', table_check_l.params['DISTANCE_TO_WALL'])
-                controller.clean_table(table_check_l.params['DISTANCE_TO_WALL'])
-                table_length = table_length_l if side == 'l' else table_length_r
-                mc.move_distance(robot, table_length / CLEAN_ATTEMPTS)
-            # Last step concerns how to move onto next table
-            if side == 'l':
-                if table_length_r:  # still need to clean the other side of this row
-                    controller.clean_table(table_check_l.params['DISTANCE_TO_WALL'])  # last clean on this side
-                    mc.turn_angle(robot, 180)
-                    side = 'r'
-                else:  # can move onto next row, update control flags
-                    controller.clean_table(table_check_r.params['DISTANCE_TO_WALL'])
-                    table_detected, side = CleaningController.next_row(table_check_l, table_check_r)
-            elif side == 'r':
-                controller.clean_table()
-                mc.turn_angle(robot, 180)
-                table_detected, side = CleaningController.next_row(table_check_l, table_check_r)
+            print("Attempts:", attempts)
+            for i in range(attempts-1):
+                print("Attempt #", i)
+                controller.clean_table(table_check.params['DISTANCE_TO_WALL'])
+                mc.move_distance(robot, HEAD_WIDTH)
+            controller.clean_table(table_check.params['DISTANCE_TO_WALL'])
+            table_check.done_cleaning()
+            table_detected = False
 
 
 # Enter here exit cleanup code.
