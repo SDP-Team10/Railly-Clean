@@ -12,14 +12,14 @@ from typing import Tuple
 # image = camera.getImageArray();
 def classify_trash(image) -> Tuple[str, float]:
     curr_dir = Path(__file__).absolute()
-    model_path = curr_dir.parent.parent / "ml_models" / "model_quant.tflite"
+    model_path = curr_dir.parent.parent / "ml_models" / "model.tflite"
     print(model_path)
     labels = ("not_trash", "trash")
     interpreter = tfl.Interpreter(model_path=str(model_path))
     interpreter.allocate_tensors()
     _, height, width, _ = interpreter.get_input_details()[0]["shape"]
     image = tf.image.resize(image, [height, width])
-    input_img = np.expand_dims(image, axis=0).astype(np.uint8)
+    input_img = np.expand_dims(image, axis=0).astype(np.float32)
 
     output_details = interpreter.get_output_details()[0]
     input_index = interpreter.get_input_details()[0]["index"]
@@ -29,6 +29,4 @@ def classify_trash(image) -> Tuple[str, float]:
     interpreter.invoke()
 
     predictions = np.squeeze(interpreter.get_tensor(output_index))
-    scale, zero_point = output_details["quantization"]
-    predictions = scale * (predictions - zero_point)
     return max(zip(labels, predictions), key=lambda x: x[1])
