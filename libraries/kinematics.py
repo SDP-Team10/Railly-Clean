@@ -17,6 +17,28 @@ def translation(theta, d , a, alpha):
     A_alpha = Matrix([[1,0,0,0],[0,cos(alpha), -sin(alpha), 0], [0,sin(alpha), cos(alpha), 0], [0,0,0,1]])
     return A_theta * T_a * T_d * A_alpha
 
+
+def kinematics3joint(theta_1, theta_2,theta_3,length1, length2, length3):
+    d_1 = 0
+    d_2 = 0
+    d_3 = 0
+
+    a_1 = length1
+    a_2 = length2
+    a_3 = length3
+
+    alpha_1 = 0
+    alpha_2 = 0
+    alpha_3 = 0
+
+    A_10 = translation(theta_1,d_1,a_1,alpha_1)
+    A_21 = translation(theta_2,d_2,a_2,alpha_2)
+    A_32 = translation(theta_3,d_3,a_3,alpha_3)
+
+    fk = A_10*A_21*A_32
+    return fk
+
+
 def kinematics(theta_1, theta_2, length1, length2):
 
     d_1 = 0
@@ -144,8 +166,55 @@ def big_boi():
 
 def testy_boi():
     k = kinematics(-PI, PI,0.6,0.6)
+    print(k)
+    k = kinematics3joint(-PI, PI, -0.5, 0.6, 0.3, 0.3)
+    print(k)
     print(jacobian(-PI, PI,0.6,0.6))
     print(k)
+
+def brute_force3(d_x, d_y, l1, l2,l3, curr_theta_1 = None, curr_theta_2 = None, curr_theta_3 = None):
+    print("i made it to brute force 3")
+    desired_x_position = d_x
+    desired_y_position = d_y
+    # Lengths of arms sections
+    l1 = l1
+    l2 = l2
+    l3 = l3
+    # Starting angle
+    if curr_theta_1 is not None:
+        start_theta_1 = curr_theta_1
+        end_theta_1 = curr_theta_1
+    else:
+        start_theta_1 = 0.0
+        end_theta_1 = PI/2
+    if curr_theta_2 is not None:
+        start_theta_2 = curr_theta_2
+        end_theta_2 = curr_theta_2
+    else:
+        start_theta_2 = 0.0
+        end_theta_2 = PI
+    if curr_theta_3 is not None:
+        start_theta_3 = curr_theta_3 - PI/6
+        end_theta_3 = curr_theta_3 + PI/6
+    else:
+        start_theta_3 = 0.0
+        end_theta_3 = PI
+    threshold_x = 0.05
+    threshold_y = 0.05
+    incrementer = 0.08
+    for theta3 in np.arange(start_theta_3, end_theta_3, incrementer):
+        print("hola")
+        k = kinematics3joint(curr_theta_1, curr_theta_2, theta3, l1, l2, l3)
+        actual_x = k[3]
+        actual_y = k[7]
+        print(actual_x)
+        print(actual_y)
+        if (actual_x > desired_x_position and actual_x < desired_x_position + threshold_x):
+            if (actual_y > desired_y_position - threshold_y and actual_y < desired_y_position + threshold_y):
+                print(curr_theta_1)
+                print(curr_theta_2)
+                print(theta3)
+                return [curr_theta_1,curr_theta_2,theta3]
 
 def brute_force(d_x, d_y, l1, l2, curr_theta_1 = None, curr_theta_2 = None):
     desired_x_position = d_x
@@ -184,6 +253,6 @@ def brute_force(d_x, d_y, l1, l2, curr_theta_1 = None, curr_theta_2 = None):
 
 
 if __name__ == "__main__":
-    brute_force(-0.28,1.4,0.78,0.7)
+    brute_force3(-0.28,0.98,0.78,0.7, 0.1,1.36,0.7,1.7)
     #testy_boi()
     #big_boi()
