@@ -14,7 +14,7 @@ def classify_trash(image) -> Tuple[str, float]:
     curr_dir = Path(__file__).absolute()
     model_path = curr_dir.parent.parent / "ml_models" / "model.tflite"
     print(model_path)
-    labels = ("not_trash", "trash")
+    labels = ("cleanable", "valuable")
     interpreter = tfl.Interpreter(model_path=str(model_path))
     interpreter.allocate_tensors()
     _, height, width, _ = interpreter.get_input_details()[0]["shape"]
