@@ -199,9 +199,9 @@ def brute_force3(d_x, d_y, l1, l2,l3, curr_theta_1 = None, curr_theta_2 = None, 
     else:
         start_theta_3 = 0.0
         end_theta_3 = PI
-    threshold_x = 0.05
-    threshold_y = 0.05
-    incrementer = 0.08
+    threshold_x = 0.02
+    threshold_y = 0.02
+    incrementer = 0.04
     for theta3 in np.arange(start_theta_3, end_theta_3, incrementer):
         print("hola")
         k = kinematics3joint(curr_theta_1, curr_theta_2, theta3, l1, l2, l3)
@@ -235,9 +235,9 @@ def brute_force(d_x, d_y, l1, l2, curr_theta_1 = None, curr_theta_2 = None):
     else:
         start_theta_2 = 0.0
         end_theta_2 = PI
-    threshold_x = 0.05
-    threshold_y = 0.05
-    incrementer = 0.08
+    threshold_x = 0.01
+    threshold_y = 0.08
+    incrementer = 0.04
     for theta1 in np.arange(start_theta_1, end_theta_1, incrementer):
         for theta2 in np.arange(start_theta_2, end_theta_2, incrementer):
             k = kinematics(theta1, theta2, l1, l2)
