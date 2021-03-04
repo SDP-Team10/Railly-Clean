@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import sys
 import os
 import math
@@ -42,6 +43,9 @@ class CleaningController(object):
         self.right_motor = self.robot.getDevice("wheel_right_joint")
         self.arm_controller = ac.ArmController(self.robot)
 
+    def check_camera(self):
+        print(type(self.camera))
+
     # Arm's motors
     def init_arm(self):
         arm_motors = []
@@ -65,6 +69,17 @@ class CleaningController(object):
     def clean_table(self, distance_to_wall):
         mc.stop(self.robot)
         self.arm_controller.sweep(distance_to_wall)
+
+    
+    def centroid_value(self):
+        print(vc.centroid_detection(self.camera))
+
+
+    def vision_centering(self):
+        field_of_view = self.camera.getFov()
+        image_width = self.camera.getWidth()
+        print(field_of_view)
+        print(image_width)
     
     @staticmethod
     def next_row(table_check):  # NOT USED
@@ -75,6 +90,7 @@ class CleaningController(object):
 # Controller assumes library functions handle their own timesteps
 if __name__ == "__main__":
     controller = CleaningController()
+    controller.vision_centering()
     robot, dist_sensors = controller.robot, controller.distance_sensors
     table_check, table_length, table_detected, left_side = sc.SideCheck(robot), None, False, True
     attempts = CLEAN_ATTEMPTS
@@ -83,6 +99,9 @@ if __name__ == "__main__":
     while robot.step(controller.time_step) != -1:
         if not table_detected:
             print(dist_sensors[0].getValue())
+            print("****")
+            controller.centroid_value()
+            print("****")
             table_length, pole_length = table_check.side_check(dist_sensors[2])
             
             if table_length:  # if not None -> table detected
