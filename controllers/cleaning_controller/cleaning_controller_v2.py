@@ -70,7 +70,8 @@ class CleaningController(object):
 
     def clean_table(self, distance_to_wall):
         # TODO
-        #  if controller.check_valuable(): return
+        #  if controller.check_valuable():
+        #      return
         #  self.bin_controller.open_bin()
         mc.stop(self.robot)
         self.arm_controller.sweep(distance_to_wall)
@@ -110,9 +111,9 @@ if __name__ == "__main__":
                 distance = (table_length / 2) + pole_length
                 mc.move_distance(robot, -distance)  # to back edge of table
                 # TODO
-                #  turn_angle(robot, -90)
+                #  mc.turn_angle(robot, -90)
                 #  move_distance() given bin's length and distance to wall
-                #  turn_angle(robot, 90)
+                #  mc.turn_angle(robot, 90)
             
             elif dist_sensors[0].getValue() < STOP_THRESHOLD:  # check front distance sensor
                 print("Detected wall in front")
@@ -133,18 +134,22 @@ if __name__ == "__main__":
                 print("Attempt #", i)
                 controller.clean_table(table_check.params['DISTANCE_TO_WALL'])
                 # TODO
-                #  if bin_controller.is_full(): set flag to stop cleaning (action TBD)
+                #  if bin_controller.is_full():
+                #      set flag to stop cleaning (action TBD)
+                #      bin_controller.close_bin()
                 mc.move_distance(robot, HEAD_WIDTH)
             controller.clean_table(table_check.params['DISTANCE_TO_WALL'])
             table_check.done_cleaning()
             # TODO
-            #  if bin_controller.is_full(): set flag to stop cleaning (action TBD)
+            #  if bin_controller.is_full():
+            #      set flag to stop cleaning (action TBD)
+            #      bin_controller.close_bin()
             #  else:
-            #      turn_angle(90)
+            #      bin_controller.close_bin()
+            #      mc.turn_angle(robot, -90)
             #      move_distance() given bin's length and distance to wall
-            #      turn_angle(-90)
+            #      mc.turn_angle(robot, 90)
             #      move_while_centering() until next row of chairs
             table_detected = False
-
 
 # Enter here exit cleanup code.

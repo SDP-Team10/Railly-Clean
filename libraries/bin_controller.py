@@ -1,5 +1,6 @@
 from controller import Robot, Motor, PositionSensor
 
+
 class BinController(object):
     def __init__(self, robot):
         self.robot = robot
