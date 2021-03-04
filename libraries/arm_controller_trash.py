@@ -157,7 +157,7 @@ class ArmController(object):
         vel3 = 1
         self.rotational_motors[1].setPosition(pos1)
         self.rotational_motors[2].setPosition(0.0)
-        self.rotational_motors[3].setPosition(pos2+1.57)
+        self.rotational_motors[3].setPosition(pos2)
         self.rotational_motors[4].setPosition(pos3)
         self.rotational_motors[1].setVelocity(vel1)
         self.rotational_motors[2].setVelocity(1)
