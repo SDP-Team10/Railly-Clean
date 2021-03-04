@@ -57,12 +57,12 @@ class CleaningController(object):
         """ function init_dist
         :return: list of enabled distance sensor objects
         """
-        dist_sensors = []
+        ds = []
         for name in self.ds_names:
             sensor = self.robot.getDevice(name)
             sensor.enable(self.time_step)
-            dist_sensors.append(sensor)
-        return dist_sensors
+            ds.append(sensor)
+        return ds
 
     def clean_table(self, distance_to_wall):
         mc.stop(self.robot)
@@ -87,16 +87,21 @@ if __name__ == "__main__":
             print(dist_sensors[0].getValue())
             table_length, pole_length = table_check.side_check(dist_sensors[2])
             
-            if table_length:  # if not None -> table detected
+            if table_length:  # if not None or 0 -> table detected
                 print("Table detected")
                 table_detected = True
                 table_check.stop_scanning()
-                table_length = table_length if table_length < 1 else 1
+                table_length = table_length if table_length < 1 else 1  # TODO: remove
                 print("Table Length:", table_length)
                 attempts = math.ceil(table_length / HEAD_WIDTH)
                 print("TOTAL ATTEMPTS:", attempts)
                 distance = (table_length / 2) + pole_length
                 mc.move_distance(robot, -distance)  # to back edge of table
+                # TODO
+                #  turn_angle(robot, -90)
+                #  move_distance() given bin's length and distance to wall
+                #  turn_angle(robot, 90)
+                #  open_bin()
             
             elif dist_sensors[0].getValue() < STOP_THRESHOLD:  # check front distance sensor
                 print("Detected wall in front")
@@ -119,6 +124,14 @@ if __name__ == "__main__":
                 mc.move_distance(robot, HEAD_WIDTH)
             controller.clean_table(table_check.params['DISTANCE_TO_WALL'])
             table_check.done_cleaning()
+            # TODO
+            #  close_bin()
+            #  if bin's full (pressure plate) -> set flag to stop cleaning (action TBD)
+            #  else:
+            #      turn_angle(90)
+            #      move_distance() given bin's length and distance to wall
+            #      turn_angle(-90)
+            #      move_while_centering() until next row of chairs
             table_detected = False
 
 
