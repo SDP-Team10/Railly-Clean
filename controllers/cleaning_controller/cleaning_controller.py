@@ -8,8 +8,9 @@ sys.path.append(os.path.abspath(os.path.join("..", "..")))
 from libraries import sticker_detection as vc
 from libraries import side_check as sc
 from libraries import move_lib_step as mc
-from libraries import arm_controller as ac
+from libraries import arm_controller_trash as ac
 from controller import Robot
+from libraries import bin_controller as bc
 
 
 TIME_STEP = 32  # this or robot.getBasicTimeStep()
@@ -35,7 +36,8 @@ class CleaningController(object):
         self.am_names = [
             "base_motor",
             "sec_1_motor",
-            "sec_1_motor",
+            "sec_2_motor",
+            "sec_3_motor",
             "head_motor"
         ]
         self.arm_motors = self.init_arm()
@@ -80,10 +82,12 @@ if __name__ == "__main__":
     robot, dist_sensors = controller.robot, controller.distance_sensors
     table_check, table_length, table_detected, left_side = sc.SideCheck(robot), None, False, True
     attempts = CLEAN_ATTEMPTS
-
+    bin_controller = bc.BinController(robot)
+    bin_controller.close_bin()
     # Assume robot is already centered
     while robot.step(controller.time_step) != -1:
         if not table_detected:
+
             print(dist_sensors[0].getValue())
             table_length, pole_length = table_check.side_check(dist_sensors[2])
             
@@ -112,6 +116,7 @@ if __name__ == "__main__":
                 mc.move_forward(robot)
 
         else:
+            bin_controller.open_bin()
             print("Attempts:", attempts)
             for i in range(attempts-1):
                 print("Attempt #", i)
