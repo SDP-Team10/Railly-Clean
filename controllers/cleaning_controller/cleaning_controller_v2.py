@@ -7,8 +7,10 @@ import math
 sys.path.append(os.path.abspath(os.path.join("..", "..")))
 from libraries import sticker_detection as vc
 from libraries import side_check as sc
+# from libraries import classify_trash
 from libraries import move_lib_step as mc
-from libraries import arm_controller as ac
+from libraries import arm_controller as ac  # arm_controller_trash
+from libraries import bin_controller as bc
 from controller import Robot
 
 
@@ -23,8 +25,9 @@ class CleaningController(object):
     def __init__(self):
         self.robot = Robot()
         self.time_step = int(self.robot.getBasicTimeStep())
-        self.camera = self.robot.getDevice("front_camera")
-        self.camera.enable(self.time_step)
+        self.front_camera = self.robot.getDevice("front_camera")
+        self.front_camera.enable(self.time_step)
+        # TODO get and enable side camera
         self.ds_names = [
             "front distance sensor",
             "back distance sensor",
@@ -43,6 +46,7 @@ class CleaningController(object):
         self.left_motor = self.robot.getDevice("wheel_left_joint")
         self.right_motor = self.robot.getDevice("wheel_right_joint")
         self.arm_controller = ac.ArmController(self.robot)
+        self.bin_controller = bc.BinController(self.robot)
 
     # Arm's motors
     def init_arm(self):
@@ -65,19 +69,27 @@ class CleaningController(object):
         return ds
 
     def clean_table(self, distance_to_wall):
+        # TODO
+        #  if controller.check_valuable(): return
+        #  self.bin_controller.open_bin()
         mc.stop(self.robot)
         self.arm_controller.sweep(distance_to_wall)
+        #  self.bin_controller.close_bin()
     
     @staticmethod
     def next_row(table_check):  # NOT USED
         table_check.done_cleaning()
         return False
 
+    def check_valuable(self):
+        # take image with side camera
+        return  # classifier.classify_valuable(img)
+
 
 # Controller assumes library functions handle their own timesteps
 if __name__ == "__main__":
     controller = CleaningController()
-    robot, dist_sensors = controller.robot, controller.distance_sensors
+    robot, bin_controller, dist_sensors = controller.robot, controller.bin_controller, controller.distance_sensors
     table_check, table_length, table_detected, left_side = sc.SideCheck(robot), None, False, True
     attempts = CLEAN_ATTEMPTS
 
@@ -91,7 +103,7 @@ if __name__ == "__main__":
                 print("Table detected")
                 table_detected = True
                 table_check.stop_scanning()
-                table_length = table_length if table_length < 1 else 1  # TODO: remove
+                table_length = table_length if table_length < 1 else 1  # TODO remove
                 print("Table Length:", table_length)
                 attempts = math.ceil(table_length / HEAD_WIDTH)
                 print("TOTAL ATTEMPTS:", attempts)
@@ -101,12 +113,11 @@ if __name__ == "__main__":
                 #  turn_angle(robot, -90)
                 #  move_distance() given bin's length and distance to wall
                 #  turn_angle(robot, 90)
-                #  open_bin()
             
             elif dist_sensors[0].getValue() < STOP_THRESHOLD:  # check front distance sensor
                 print("Detected wall in front")
                 mc.stop(robot)
-                # if vc.is_carriage_end(controller.camera):
+                # if vc.is_carriage_end(controller.front_camera):
                 #     print("End of carriage detected")
                 if left_side:
                     mc.turn_angle(robot, 180)
@@ -121,12 +132,13 @@ if __name__ == "__main__":
             for i in range(attempts-1):
                 print("Attempt #", i)
                 controller.clean_table(table_check.params['DISTANCE_TO_WALL'])
+                # TODO
+                #  if bin_controller.is_full(): set flag to stop cleaning (action TBD)
                 mc.move_distance(robot, HEAD_WIDTH)
             controller.clean_table(table_check.params['DISTANCE_TO_WALL'])
             table_check.done_cleaning()
             # TODO
-            #  close_bin()
-            #  if bin's full (pressure plate) -> set flag to stop cleaning (action TBD)
+            #  if bin_controller.is_full(): set flag to stop cleaning (action TBD)
             #  else:
             #      turn_angle(90)
             #      move_distance() given bin's length and distance to wall
