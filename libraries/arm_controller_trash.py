@@ -34,6 +34,12 @@ class ArmController(object):
         self.table_top_sec_2 = 0
         self.table_bottom_sec_2 = 2.3  # The edge of the table
         self.last_4_positions = deque([], maxlen=4)
+        self.sec_1_length = 0.5
+        self.sec_2_length = 0.5
+        self.sec_3_length = 0.5
+        self.head_length = 0.1
+
+        self.target_table_height = -0.15
 
     def init_ps(self):
         position_sensors = []
@@ -51,6 +57,7 @@ class ArmController(object):
         return rotational_motors
 
     def sweep_action(self, distance_to_wall, height=-0.26):
+        print("start sweep action")
         # Sweep the table from top edge to bottom edge
         dqs = []
         # Robot upper body has width = 0.3
@@ -63,11 +70,10 @@ class ArmController(object):
         self.rotational_motors[2].setPosition(0.0)
         self.rotational_motors[2].setVelocity(0.0)
         while d_y > 0.2:
-            print("kine boi")
-            dq = kinematics.brute_force(d_x + 0.1, d_y, 1.0, 0.5, round(self.position_sensors[1].getValue(), 2),
+            dq = kinematics.brute_force(d_x + 0.1, d_y, self.sec_1_length+self.sec_2_length, self.sec_3_length, round(self.position_sensors[1].getValue(), 2),
                                         round(self.position_sensors[3].getValue(), 2))
             new_desired = kinematics.kinematics(dq[0],dq[1], 0.78, 0.7)
-            dq = kinematics.brute_force3(new_desired[3]-0.1, new_desired[7], 1.0, 0.5, 0.1, dq[0], dq[1],
+            dq = kinematics.brute_force3(new_desired[3]-self.head_length, new_desired[7], self.sec_1_length+self.sec_2_length, self.head_length, dq[0], dq[1],
                                          round(self.position_sensors[4].getValue(), 2))
             d_y -= y_step
             print(d_y)
@@ -120,9 +126,7 @@ class ArmController(object):
         temp = last_4_joint_positions.copy()
         if len(temp) == 4:
             last_joints = temp.pop()
-            print("testing")
             while len(temp) > 0:
-                print("woo")
                 next_joints = temp.pop()
                 if round(last_joints[0], 3) != round(next_joints[0], 3) or round(last_joints[1],3) != round(next_joints[1],3) or round(last_joints[2],3) != round(next_joints[2],3):
                     return False
@@ -130,7 +134,7 @@ class ArmController(object):
             return True
         return False
 
-    def set_sweeping_action(self, distance_to_wall, height=-0.26):
+    def set_sweeping_action(self, distance_to_wall, height=-0.15):
         # Set the arm from tuck in position to the top edge of the table for upcoming sweep action
         print('Detected distance to wall is {} and setting it to be d_y'.format(distance_to_wall))
         # Robot upper body has width = 0.3
@@ -149,7 +153,7 @@ class ArmController(object):
         pos1 = k[0]
         # pos2 = 0.64
         pos2 = k[1]
-
+        print("head rotation at start is = ", self.position_sensors[4].getValue())
         pos3 = k[2]
         # pos2 = 0.5
         vel1 = 0.25
@@ -168,8 +172,6 @@ class ArmController(object):
         # # print("FORCE", self.rotational_motors[1].getAvailableForce())
         # # print("MAX FORCE", self.rotational_motors[1].getAvailableTorque())
         while self.robot.step(self.time_step) != -1:
-            print("1", self.position_sensors[1].getValue())
-            print("2", self.position_sensors[3].getValue())
             self.last_4_positions.append([self.position_sensors[1].getValue(),self.position_sensors[2].getValue(), self.position_sensors[3].getValue()])
             if (round(self.position_sensors[1].getValue(), 2) == round(pos1, 2) and
                     round(self.position_sensors[3].getValue(), 2) == round(pos2, 2) and
@@ -178,15 +180,17 @@ class ArmController(object):
                 print("bingo, Setting done")
                 print(self.rotational_motors[1].getVelocity())
                 print(self.rotational_motors[2].getVelocity())
+                print("head rotation is = ", self.position_sensors[4].getValue())
                 self.rotational_motors[1].setVelocity(0.0)
                 self.rotational_motors[3].setVelocity(0.0)
                 self.rotational_motors[4].setVelocity(0.0)
-                return kinematics.kinematics3joint(self.position_sensors[1].getValue(),self.position_sensors[3].getValue(),self.position_sensors[4].getValue(),1.0, 0.5, 0.1,)[3]
+                return kinematics.kinematics3joint(self.position_sensors[1].getValue(),self.position_sensors[3].getValue(),self.position_sensors[4].getValue(),self.sec_1_length+self.sec_2_length, self.sec_3_length, self.head_length)[3]
 
     def sweep(self, distance_to_wall):
         # It assumes the arm is tucked in and try to do the sweep action from reaching the
         # top end of the table. After it finishes, it returns to tuck in positions
         height = self.set_sweeping_action(distance_to_wall)
+        print("sweeping action about to begin with height = ", height)
         self.sweep_action(distance_to_wall, height)
         self.tuck_in_action()
 

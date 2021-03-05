@@ -174,6 +174,9 @@ def testy_boi():
 
 def brute_force3(d_x, d_y, l1, l2,l3, curr_theta_1 = None, curr_theta_2 = None, curr_theta_3 = None):
     print("i made it to brute force 3")
+    print("desired x = ",d_x)
+    print("desired y = ", d_y)
+    print("curr_theta_3 = ", curr_theta_3)
     desired_x_position = d_x
     desired_y_position = d_y
     # Lengths of arms sections
@@ -203,20 +206,15 @@ def brute_force3(d_x, d_y, l1, l2,l3, curr_theta_1 = None, curr_theta_2 = None, 
     threshold_y = 0.02
     incrementer = 0.04
     for theta3 in np.arange(start_theta_3, end_theta_3, incrementer):
-        print("hola")
         k = kinematics3joint(curr_theta_1, curr_theta_2, theta3, l1, l2, l3)
         actual_x = k[3]
         actual_y = k[7]
-        print(actual_x)
-        print(actual_y)
         if (actual_x > desired_x_position and actual_x < desired_x_position + threshold_x):
             if (actual_y > desired_y_position - threshold_y and actual_y < desired_y_position + threshold_y):
-                print(curr_theta_1)
-                print(curr_theta_2)
-                print(theta3)
                 return [curr_theta_1,curr_theta_2,theta3]
 
 def brute_force(d_x, d_y, l1, l2, curr_theta_1 = None, curr_theta_2 = None):
+    print("brute force 1")
     desired_x_position = d_x
     desired_y_position = d_y
     # Lengths of arms sections
