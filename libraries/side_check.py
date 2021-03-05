@@ -31,7 +31,8 @@ class SideCheck:
         self._occupied_start = None
 
         self._enable_updates = True  # once a table is found, set to false to keep distances to help with navigation
-        self._distance_morse = deque([], maxlen=3)
+        self._length_morse = deque([], maxlen=3)
+        self._distance_morse = deque([], maxlen=2)
 
         self.max_distance_to_wall = 2.0
 
@@ -45,7 +46,7 @@ class SideCheck:
             self._robot.getTime() - time
         )
 
-    def that_a_table(self, distances):
+    def that_a_table(self):
         """Function that_a_table to check if the thing the robot just passed a table.
 
         Parameters:
@@ -54,15 +55,15 @@ class SideCheck:
         Returns:
             :return boolean: True if it is assumed to be a table, false otherwise
         """
-        if len(distances) != 3:
+        if len(self._length_morse) != 3:
             # if there aren't 3 elements, either not enough data to decide or incorrect list passed
             return False
         else:
             # if it was a table, the order of distances should be:
             # {seat, leg-space, table pole}
-            pole = distances[2]
-            seat = distances[0]
-            if pole < seat and pole < 0.2:
+            pole = self._length_morse[2]
+            seat = self._length_morse[0]
+            if pole < seat:  # and pole < 0.2
                 print("We just passed a table pole!")
                 self._enable_updates = False
                 return True
@@ -158,13 +159,14 @@ class SideCheck:
                     if (self._occupied_start is not None)
                     else 0
                 )
-                self._distance_morse.append(self._occupied_space)
-                print(self._distance_morse)
+                self._length_morse.append(self._occupied_space)
+                print(self._length_morse)
                 # call self.that_a_table here - based on seat-pole-seat sizes, only needed after solids
-                if self.that_a_table(self._distance_morse):  # if a table is found:
-                    # return estimated table width to the main controller (_distance_morse[1] * 2)
+                if self.that_a_table():  # if a table is found:
+                    # return estimated table width to the main controller (_length_morse[1] * 2)
+                    # also return estimated length of table pole and recorded distance to last chair
                     print("bazinga bitch")
-                    return self._distance_morse[1] * 2, self._distance_morse[2]
+                    return self._length_morse[1] * 2, self._length_morse[2], self._distance_morse[1]
 
             # falling edge, distance shrinks, start of chair/pole
             else:
@@ -177,5 +179,6 @@ class SideCheck:
                     if (self._occupied_start is not None)
                     else 0
                 )
-                self._distance_morse.append(self._empty_space)
+                self._length_morse.append(self._empty_space)
+                self._distance_morse.append(self._current_side_distance)
         return None, None

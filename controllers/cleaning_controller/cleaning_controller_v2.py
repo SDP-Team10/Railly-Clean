@@ -19,6 +19,7 @@ STOP_THRESHOLD = 0.6
 TABLE_WIDTH = 1  # parameter
 HEAD_WIDTH = 0.3  # parameter
 CLEAN_ATTEMPTS = int(TABLE_WIDTH // HEAD_WIDTH)
+BIN_LENGTH = 0.34
 
 
 class CleaningController(object):
@@ -85,20 +86,25 @@ class CleaningController(object):
     def check_valuable(self):
         # take image with side camera
         return  # classifier.classify_valuable(img)
+    
+    @staticmethod
+    def move_distance_to_table(dist_to_table):
+        return 
+
 
 
 # Controller assumes library functions handle their own timesteps
 if __name__ == "__main__":
     controller = CleaningController()
     robot, bin_controller, dist_sensors = controller.robot, controller.bin_controller, controller.distance_sensors
-    table_check, table_length, table_detected, left_side = sc.SideCheck(robot), None, False, True
+    table_check, table_length, move_dist_to_table, table_detected, left_side = sc.SideCheck(robot), None, None, False, True
     attempts = CLEAN_ATTEMPTS
 
     # Assume robot is already centered
     while robot.step(controller.time_step) != -1:
         if not table_detected:
             print(dist_sensors[0].getValue())
-            table_length, pole_length = table_check.side_check(dist_sensors[2])
+            table_length, pole_length, distance_to_table = table_check.side_check(dist_sensors[2])
             
             if table_length:  # if not None or 0 -> table detected
                 print("Table detected")
@@ -110,9 +116,10 @@ if __name__ == "__main__":
                 print("TOTAL ATTEMPTS:", attempts)
                 distance = (table_length / 2) + pole_length
                 mc.move_distance(robot, -distance)  # to back edge of table
+                move_dist_to_table = distance_to_table - BIN_LENGTH
                 # TODO
                 #  mc.turn_angle(robot, -90)
-                #  move_distance() given bin's length and distance to wall
+                #  mc.move_distance(robot, move_dist_to_table)  # move bin closer to table
                 #  mc.turn_angle(robot, 90)
             
             elif dist_sensors[0].getValue() < STOP_THRESHOLD:  # check front distance sensor
@@ -147,7 +154,7 @@ if __name__ == "__main__":
             #  else:
             #      bin_controller.close_bin()
             #      mc.turn_angle(robot, -90)
-            #      move_distance() given bin's length and distance to wall
+            #      mc.move_distance(robot, move_dist_to_table)
             #      mc.turn_angle(robot, 90)
             #      move_while_centering() until next row of chairs
             table_detected = False
