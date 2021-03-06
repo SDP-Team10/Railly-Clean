@@ -129,7 +129,7 @@ left_offset = 0
 right_offset = 0
 ###
 
-def check_move(robot, left_start, right_start, pos):
+def check_move(robot, left_start, right_start, pos, stop_at_end=True):
     left_pos = 0
     right_pos = 0
     while True:
@@ -141,11 +141,15 @@ def check_move(robot, left_start, right_start, pos):
         close_to_pos = abs(abs(left_pos-left_start) + abs(right_pos-right_start) - abs(pos)*2) < eps
         slowing_down = abs(abs(prev_left_pos-left_pos) + abs(prev_right_pos-right_pos)) < eps/2
         if  close_to_pos and slowing_down:
-            print('STOPPING')
-            stop(robot)
+            if stop_at_end:
+                print('STOPPING')
+                stop(robot)
+            else:
+                enable_speed_control(gleft_motor)
+                enable_speed_control(gright_motor)
             return True
 
-def turn_angle(robot, angle):
+def turn_angle(robot, angle, stop_at_end=True):
     global left_offset
     global right_offset
     if robot != grobot or grobot is None:
@@ -154,7 +158,7 @@ def turn_angle(robot, angle):
             return False
     left_offset = gleft_motor.getPositionSensor().getValue()
     right_offset = gright_motor.getPositionSensor().getValue()
-    rads = abs(angle) * deg_to_rad * 1.075
+    rads = abs(angle) * deg_to_rad #* 1.075
     sector_len = rads * distance_between_wheels / 2
     pos = sector_len / wheel_radius
     turn_sign = angle/abs(angle)
@@ -162,12 +166,12 @@ def turn_angle(robot, angle):
         gright_motor.setPosition(right_offset + pos)
         gleft_motor.setPosition(left_offset - pos)
         limit_vel(MAX_SPEED*TURN_MULT, MAX_SPEED*TURN_MULT)
-        check_move(robot, left_offset, right_offset, pos)
+        check_move(robot, left_offset, right_offset, pos, stop_at_end)
     else:
         gright_motor.setPosition(right_offset - pos)
         gleft_motor.setPosition(left_offset + pos)
         limit_vel(MAX_SPEED*TURN_MULT, MAX_SPEED*TURN_MULT)
-        check_move(robot, left_offset, right_offset, pos)
+        check_move(robot, left_offset, right_offset, pos, stop_at_end)
 
 def move_distance(robot, dist=1):
     global left_offset
@@ -220,6 +224,18 @@ def move_distance_check_sides(robot, dist, table_check, dist_sensor):
     gright_motor.setPosition(right_offset + pos)
     limit_vel(MAX_SPEED*MOVE_MULT,MAX_SPEED*MOVE_MULT)
     return check_move_side_check(robot, left_offset, right_offset, pos, table_check, dist_sensor)
+
+centering_strength = 10 ### strength of centering effect (changes amount of turning)
+
+def fix_centering(robot, sticker_image_offset):
+    if robot != grobot or grobot is None:
+        if not setup(robot):
+            print('Error in setting up robot')
+            return False
+    turn_dir = -1 if sticker_image_offset < 0.5 else 1
+    turn_diff = abs(sticker_image_offset - 0.5)
+    turn_amount = centering_strength * turn_diff * turn_dir
+    turn_angle(robot, turn_amount, False)
 
 
 #############################################################
