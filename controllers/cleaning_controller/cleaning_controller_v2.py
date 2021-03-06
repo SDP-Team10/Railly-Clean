@@ -69,9 +69,13 @@ class CleaningController(object):
             ds.append(sensor)
         return ds
 
+    def check_valuable(self):
+        # take image with side camera
+        return  # classifier.classify_valuable(img)
+
     def clean_table(self, distance_to_wall):
         # TODO
-        #  if controller.check_valuable():
+        #  if self.check_valuable():
         #      return
         #  self.bin_controller.open_bin()
         mc.stop(self.robot)
@@ -82,27 +86,39 @@ class CleaningController(object):
     def next_row(table_check):  # NOT USED
         table_check.done_cleaning()
         return False
-
-    def check_valuable(self):
-        # take image with side camera
-        return  # classifier.classify_valuable(img)
     
-    @staticmethod
-    def move_distance_to_table(dist_to_table):
-        return 
-
+    def wall_in_front(self, turn_around):
+        if self.distance_sensors[0].getValue() < STOP_THRESHOLD:  # check front sensor
+            print("Detected wall in front")
+            mc.stop(self.robot)
+            # if vc.is_carriage_end(controller.front_camera):
+            #     print("End of carriage detected")
+            if turn_around:
+                mc.turn_angle(self.robot, 180)
+                return True
+            else:
+                # 
+        return False
 
 
 # Controller assumes library functions handle their own timesteps
 if __name__ == "__main__":
     controller = CleaningController()
     robot, bin_controller, dist_sensors = controller.robot, controller.bin_controller, controller.distance_sensors
-    table_check, table_length, move_dist_to_table, table_detected, left_side = sc.SideCheck(robot), None, None, False, True
+    table_check, table_length, move_dist_to_table = sc.SideCheck(robot), None, None
+    table_detected, left_side, done_cleaning = False, True, False
     attempts = CLEAN_ATTEMPTS
 
     # Assume robot is already centered
     while robot.step(controller.time_step) != -1:
-        if not table_detected:
+        if done_cleaning:
+            mc.move_forward(robot)
+            if check_front_sensor(False):
+                # detect, clean, push button
+                # move to the side and dock
+                # wait for rubbish to be cleared
+
+        elif not table_detected:
             print(dist_sensors[0].getValue())
             table_length, pole_length, distance_to_table = table_check.side_check(dist_sensors[2])
             
@@ -122,19 +138,13 @@ if __name__ == "__main__":
                 #  mc.move_distance(robot, move_dist_to_table)  # move bin closer to table
                 #  mc.turn_angle(robot, 90)
             
-            elif dist_sensors[0].getValue() < STOP_THRESHOLD:  # check front distance sensor
-                print("Detected wall in front")
-                mc.stop(robot)
-                # if vc.is_carriage_end(controller.front_camera):
-                #     print("End of carriage detected")
-                if left_side:
-                    mc.turn_angle(robot, 180)
-                    left_side = False
+            elif controller.wall_in_front(left_side):
+                left_side = False
             
             else:  # business as usual
                 print("Moving forward")
                 mc.move_forward(robot)
-
+        
         else:
             print("Attempts:", attempts)
             for i in range(attempts-1):
@@ -144,18 +154,19 @@ if __name__ == "__main__":
                 #  if bin_controller.is_full():
                 #      set flag to stop cleaning (action TBD)
                 #      bin_controller.close_bin()
+                #      done_cleaning = True
                 mc.move_distance(robot, HEAD_WIDTH)
             controller.clean_table(table_check.params['DISTANCE_TO_WALL'])
             table_check.done_cleaning()
             # TODO
             #  if bin_controller.is_full():
-            #      set flag to stop cleaning (action TBD)
             #      bin_controller.close_bin()
+            #      done_cleaning = True
             #  else:
             #      bin_controller.close_bin()
-            #      mc.turn_angle(robot, -90)
-            #      mc.move_distance(robot, move_dist_to_table)
             #      mc.turn_angle(robot, 90)
+            #      mc.move_distance(robot, move_dist_to_table)
+            #      mc.turn_angle(robot, -90)
             #      move_while_centering() until next row of chairs
             table_detected = False
 
