@@ -54,7 +54,7 @@ def centroid_detection(cam):
 def camera_point_angle(field_of_view, image_width,point_coordinates):
     angle_pixel_ratio = field_of_view/image_width
     centre_point_x_value = image_width/2
-    angle = (abs(point_coordinates[1] - centre_point_x_value)) * angle_pixel_ratio
+    angle = (point_coordinates[1] - centre_point_x_value) * angle_pixel_ratio #negative values are returned if the camera points to the right of the sticker and vice versa
     return angle
 
 

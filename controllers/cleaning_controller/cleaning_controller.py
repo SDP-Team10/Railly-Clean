@@ -23,6 +23,7 @@ class CleaningController(object):
         self.robot = Robot()
         self.time_step = int(self.robot.getBasicTimeStep())
         self.camera = self.robot.getDevice("front_camera")
+        self.sticker_offset = 0
         self.camera.enable(self.time_step)
         self.ds_names = [
             "front distance sensor",
@@ -71,8 +72,16 @@ class CleaningController(object):
         self.arm_controller.sweep(distance_to_wall)
 
     
-    def centroid_value(self):
-        print(vc.centroid_detection(self.camera))
+    def off_centre_value(self):
+        try:
+            field_of_view = self.camera.getFov()
+            image_width = self.camera.getWidth()
+            sticker_centroid = vc.centroid_detection(self.camera)
+            print(vc.camera_point_angle(field_of_view, image_width,sticker_centroid))
+            print(sticker_centroid)
+            self.sticker_offset = vc.camera_point_angle(field_of_view, image_width,sticker_centroid)
+        except:
+            print(self.sticker_offset)
 
 
     def vision_centering(self):
@@ -100,7 +109,7 @@ if __name__ == "__main__":
         if not table_detected:
             print(dist_sensors[0].getValue())
             print("****")
-            controller.centroid_value()
+            controller.off_centre_value()
             print("****")
             table_length, pole_length = table_check.side_check(dist_sensors[2])
             
