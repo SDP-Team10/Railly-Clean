@@ -24,6 +24,7 @@ class CleaningController(object):
         self.time_step = int(self.robot.getBasicTimeStep())
         self.camera = self.robot.getDevice("front_camera")
         self.sticker_offset = 0
+        self.sticker_image_offset = 0
         self.camera.enable(self.time_step)
         self.ds_names = [
             "front distance sensor",
@@ -71,15 +72,17 @@ class CleaningController(object):
         mc.stop(self.robot)
         self.arm_controller.sweep(distance_to_wall)
 
-    
+
     def off_centre_value(self):
         try:
             field_of_view = self.camera.getFov()
             image_width = self.camera.getWidth()
             sticker_centroid = vc.centroid_detection(self.camera)
-            print(vc.camera_point_angle(field_of_view, image_width,sticker_centroid))
-            print(sticker_centroid)
-            self.sticker_offset = vc.camera_point_angle(field_of_view, image_width,sticker_centroid)
+            cpa = vc.camera_point_angle(field_of_view, image_width,sticker_centroid)
+            print(cpa)
+            print(sticker_centroid[0]/image_width)
+            self.sticker_image_offset = sticker_centroid[0]/image_width
+            self.sticker_offset = cpa
         except:
             print(self.sticker_offset)
 
@@ -89,7 +92,7 @@ class CleaningController(object):
         image_width = self.camera.getWidth()
         print(field_of_view)
         print(image_width)
-    
+
     @staticmethod
     def next_row(table_check):  # NOT USED
         table_check.done_cleaning()
@@ -104,15 +107,24 @@ if __name__ == "__main__":
     table_check, table_length, table_detected, left_side = sc.SideCheck(robot), None, False, True
     attempts = CLEAN_ATTEMPTS
 
+    centering_eps = 0.035 ### threshold value for centering
+    steps_until_sticker_check = 50 ### webots goes veery slow if it checks every frame
+
     # Assume robot is already centered
     while robot.step(controller.time_step) != -1:
+        print('-----------------------')
         if not table_detected:
-            print(dist_sensors[0].getValue())
-            print("****")
-            controller.off_centre_value()
-            print("****")
+            if robot.step(controller.time_step)%steps_until_sticker_check == 0:
+                print(dist_sensors[0].getValue())
+                print("****")
+                controller.off_centre_value()
+                if abs(controller.sticker_image_offset-0.5) > centering_eps:
+                    print('Adjusting Centering')
+                    mc.fix_centering(robot, controller.sticker_image_offset)
+                print("****")
+
             table_length, pole_length = table_check.side_check(dist_sensors[2])
-            
+
             if table_length:  # if not None -> table detected
                 print("Table detected")
                 table_detected = True
@@ -123,7 +135,7 @@ if __name__ == "__main__":
                 print("TOTAL ATTEMPTS:", attempts)
                 distance = (table_length / 2) + pole_length
                 mc.move_distance(robot, -distance)  # to back edge of table
-            
+
             elif dist_sensors[0].getValue() < STOP_THRESHOLD:  # check front distance sensor
                 print("Detected wall in front")
                 mc.stop(robot)
@@ -132,9 +144,9 @@ if __name__ == "__main__":
                 if left_side:
                     mc.turn_angle(robot, 180)
                     left_side = False
-            
+
             else:  # business as usual
-                print("Moving forward")
+                #print("Moving forward")
                 mc.move_forward(robot)
 
         else:
@@ -146,6 +158,7 @@ if __name__ == "__main__":
             controller.clean_table(table_check.params['DISTANCE_TO_WALL'])
             table_check.done_cleaning()
             table_detected = False
+        print('-----------------------\n')
 
 
 # Enter here exit cleanup code.
