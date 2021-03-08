@@ -62,37 +62,29 @@ class ArmController(object):
         dqs = []
         # Robot upper body has width = 0.3
         d_y = distance_to_wall + 0.15
-        if (d_y > 1.4):
-            d_y = 1.4
+        if (d_y > 1.45):
+            d_y = 1.45
         d_x = height
         print("d_x is", d_x)
         y_step = 0.1 * d_y
         x_step = 0.05 * d_x
-        while d_y > 0.35:
-            dq = kinematics.brute4joint(d_x, d_y, self.sec_1_length,self.sec_2_length,self.sec_3_length, self.head_length, round(self.position_sensors[1].getValue(), 2),
+        while d_y > 0.3:
+            dq = kinematics.all_joints(d_x, d_y, self.sec_1_length,self.sec_2_length,self.sec_3_length, self.head_length, round(self.position_sensors[1].getValue(), 2),
                                         round(self.position_sensors[2].getValue(), 2), round(self.position_sensors[3].getValue(),2),round(self.position_sensors[4].getValue(),2))
 
-            d_y -= y_step
+            d_y -= 0.03
             print(d_y)
             print(d_x)
             self.rotational_motors[1].setPosition(dq[0])
             self.rotational_motors[2].setPosition(dq[1])
             self.rotational_motors[3].setPosition(dq[2])
             self.rotational_motors[4].setPosition(dq[3])
-            self.rotational_motors[1].setVelocity(0.2)
-            self.rotational_motors[2].setVelocity(0.8)
-            self.rotational_motors[3].setVelocity(0.8)
+            self.rotational_motors[1].setVelocity(0.6)
+            self.rotational_motors[2].setVelocity(0.5)
+            self.rotational_motors[3].setVelocity(0.5)
             self.rotational_motors[4].setVelocity(0.8)
-            print('dqw[0]: ', dq[0])
-            print('dqw[1]: ', dq[1])
+
             while self.robot.step(self.time_step) != -1:
-                print('starting with')
-                print("1=", self.position_sensors[1].getValue())
-                print("2=", self.position_sensors[3].getValue())
-                print('want')
-                print("1=", dq[0])
-                print("2=", dq[1])
-                print('-------------------------------')
                 self.last_4_positions.append([self.position_sensors[1].getValue(), self.position_sensors[2].getValue(),
                                               self.position_sensors[3].getValue(), self.position_sensors[4].getValue()])
                 if self.is_stationary(self.last_4_positions):
@@ -104,9 +96,10 @@ class ArmController(object):
                         round(self.position_sensors[3].getValue(),1) == round(dq[2],1) and
                         round(self.position_sensors[4].getValue(), 1) == round(dq[3], 1)):
 
-                    print('Goal1: ', round(self.position_sensors[1].getValue(), 2))
-                    print('Goal2: ', round(self.position_sensors[2].getValue(), 1))
-                    print('Goal3: ', round(self.position_sensors[4].getValue(), 1))
+                    print('Curr1: ', round(self.position_sensors[1].getValue(), 2))
+                    print('Curr2: ', round(self.position_sensors[2].getValue(), 1))
+                    print('Curr3: ', round(self.position_sensors[3].getValue(), 1))
+                    print('Curr4: ', round(self.position_sensors[4].getValue(), 1))
                     break
         return
 
@@ -118,7 +111,7 @@ class ArmController(object):
         self.rotational_motors[1].setPosition(pos1)
         self.rotational_motors[2].setPosition(pos2)
         self.rotational_motors[3].setPosition(pos3)
-        self.rotational_motors[1].setVelocity(0.3)
+        self.rotational_motors[1].setVelocity(1)
         self.rotational_motors[2].setVelocity(0.5)
         self.rotational_motors[3].setVelocity(1)
         while self.robot.step(self.time_step) != 1:
@@ -145,13 +138,14 @@ class ArmController(object):
         # Robot upper body has width = 0.3
         d_y = distance_to_wall + 0.15
         print('real d_y after adding half body width', d_y)
-        if (d_y > 1.4):
+        if (d_y > 1.45):
             print('The distance is longer than the arm')
             print('d_y now set to 1.4')
-            d_y = 1.4
+            d_y = 1.45
         d_x = height
-        k = kinematics.brute4joint(d_x, d_y, self.sec_1_length, self.sec_2_length,self.sec_3_length,self.head_length)
+        k = kinematics.all_joints(d_x, d_y, self.sec_1_length, self.sec_2_length,self.sec_3_length,self.head_length)
         print('k: ', k)
+        print("type is: ", k.dtype)
         # pos1 = 1.44
         pos1 = k[0]
         # pos2 = 0.64
@@ -164,6 +158,7 @@ class ArmController(object):
         vel2 = 0.8
         vel3 = 1
         vel4 = 1
+        print(type(pos1))
         self.rotational_motors[1].setPosition(pos1)
         self.rotational_motors[2].setPosition(pos2)
         self.rotational_motors[3].setPosition(pos3)
@@ -187,10 +182,7 @@ class ArmController(object):
                 print(self.rotational_motors[1].getVelocity())
                 print(self.rotational_motors[2].getVelocity())
                 print("head rotation is = ", self.position_sensors[4].getValue())
-                self.rotational_motors[1].setVelocity(0.0)
-                self.rotational_motors[2].setVelocity(0.0)
-                self.rotational_motors[3].setVelocity(0.0)
-                self.rotational_motors[4].setVelocity(0.0)
+
                 return kinematics.kinematics4joint(self.position_sensors[1].getValue(),self.position_sensors[2].getValue(), self.position_sensors[3].getValue(),self.position_sensors[4].getValue(),self.sec_1_length,self.sec_2_length,self.sec_3_length, self.head_length)[3]
 
     def sweep(self, distance_to_wall):

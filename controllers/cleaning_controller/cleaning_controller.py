@@ -86,10 +86,11 @@ if __name__ == "__main__":
     bin_controller.close_bin()
     # Assume robot is already centered
     while robot.step(controller.time_step) != -1:
+        
         if not table_detected:
 
             print(dist_sensors[0].getValue())
-            table_length, pole_length = table_check.side_check(dist_sensors[2])
+            table_length, pole_length, chair_dist = table_check.side_check(dist_sensors[2])
             
             if table_length:  # if not None -> table detected
                 print("Table detected")

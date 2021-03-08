@@ -63,24 +63,27 @@ def jacobian(current_theta_1, current_theta_2, l1, l2):
     print(k[3])
     print(k[7])
     j = Matrix([[diff(k[3], sym_theta_1), diff(k[3], sym_theta_2)], [diff(k[7], sym_theta_1), diff(k[7], sym_theta_2)]])
+    print(j)
+    print(current_theta_1)
+    print(current_theta_2)
     j = j.subs(sym_theta_1, current_theta_1)
     j = j.subs(sym_theta_2, current_theta_2)
     return np.array(j).astype(np.float64)
 
-def desired_joint_angles(theta1, theta2, l1, l2, theta1_d, theta2_d):
+def desired_joint_angles(theta1, theta2, l1, l2, x_d, y_d):
     global error, previous_time
     jac = jacobian(theta1, theta2, l1, l2)
     # P gain
-    K_p = np.array([[0.001,0],[0,0.001]])
+    K_p = np.array([[0.1,0],[0,0.1]])
     # D gain
-    K_d = np.array([[0.00001,0],[0,0.00001]])
-
+    K_d = np.array([[0.001,0],[0,0.001]])
+    print("current joint vals = ", theta1, "and", theta2)
     kin = kinematics(theta1,theta2,l1,l2)
     # robot end-effector position
-    pos = np.array([kin[0], kin[1]])
+    pos = np.array([kin[3], kin[7]])
     print("curr_pos = ", pos)
     # desired trajectory
-    pos_d = np.array([theta1_d,theta2_d])
+    pos_d = np.array([x_d,y_d])
     print("desired_pos = ", pos_d)
     # estimate derivative of error
     error_d = ((pos_d - pos) - error)
@@ -110,8 +113,14 @@ def desired_joint_angles(theta1, theta2, l1, l2, theta1_d, theta2_d):
     #
     # dq_d = dt * np.dot(J_inv, ((x-curr_pos)/dt).transpose())
     # print(dq_d)
+    for i in range(len(q_d)):
+        if q_d[i] < 0:
+            q_d[i] = abs(q_d[i]) % PI
+            q_d[i] = -q_d[i]
+        else:
+            q_d[i] = q_d[i] % PI
 
-    return q_d % 2*PI
+    return q_d
 
 def big_boi():
     # Position you want it to go
@@ -123,19 +132,19 @@ def big_boi():
     l2 = 0.6
     # Starting angle
     theta_1 = 0.0
-    theta_2 = 0.0
+    theta_2 = 0.5
 
     k = kinematics(theta_1, theta_2, l1, l2)
-    actual_x = k[0]
-    actual_y = k[1]
+    actual_x = k[3]
+    actual_y = k[7]
     times = []
     ac_xs = []
     ac_ys = []
     d_xs = []
     d_ys = []
-    threshold = 0.005
+    threshold = 0.05
     count = 0
-    while (actual_x < desired_x_position - threshold or actual_x > desired_x_position + threshold) or (actual_y < desired_y_position - threshold or actual_y > desired_y_position + threshold) and count < 1000:
+    while ((actual_x < desired_x_position - threshold or actual_x > desired_x_position + threshold) or (actual_y < desired_y_position - threshold or actual_y > desired_y_position + threshold)) and count < 2000:
         curr_time = time.time()
         angles = desired_joint_angles(theta_1, theta_2, l1, l2, desired_x_position, desired_y_position)
         k = kinematics(angles[0], angles[1], l1, l2)
@@ -165,12 +174,8 @@ def big_boi():
     print(actual_y)
 
 def testy_boi():
-    k = kinematics(-PI, PI,0.6,0.6)
-    print(k)
-    k = kinematics3joint(-PI, PI, -0.5, 0.6, 0.3, 0.3)
-    print(k)
-    print(jacobian(-PI, PI,0.6,0.6))
-    print(k)
+
+    print(desired_joint_angles(-PI/2, PI/4,0.7,0.6, PI/2, -PI/4))
 
 def brute_force3(d_x, d_y, l1, l2,l3, curr_theta_1 = None, curr_theta_2 = None, curr_theta_3 = None):
     print("i made it to brute force 3")
@@ -251,6 +256,6 @@ def brute_force(d_x, d_y, l1, l2, curr_theta_1 = None, curr_theta_2 = None):
 
 
 if __name__ == "__main__":
-    brute_force3(-0.28,0.98,0.78,0.7, 0.1,1.36,0.7,1.7)
+    #brute_force3(-0.28,0.98,0.78,0.7, 0.1,1.36,0.7,1.7)
     #testy_boi()
-    #big_boi()
+    big_boi()
