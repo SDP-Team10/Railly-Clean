@@ -26,6 +26,10 @@ class CleaningController(object):
         self.time_step = int(self.robot.getBasicTimeStep())
         self.camera = self.robot.getDevice("front_camera")
         self.camera.enable(self.time_step)
+        self.side_camera = self.robot.getDevice("side_camera")
+        if self.side_camera.hasRecognition():
+            self.side_camera.enable(self.time_step)
+            self.side_camera.recognitionEnable(self.time_step)
         self.ds_names = [
             "front distance sensor",
             "back distance sensor",
