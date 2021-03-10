@@ -185,6 +185,63 @@ class ArmController(object):
 
                 return kinematics.kinematics4joint(self.position_sensors[1].getValue(),self.position_sensors[2].getValue(), self.position_sensors[3].getValue(),self.position_sensors[4].getValue(),self.sec_1_length,self.sec_2_length,self.sec_3_length, self.head_length)[3]
 
+    def set_button_click(self, d_height, d_length,d_z):
+        # Set the arm from tuck in position to the top edge of the table for upcoming sweep action
+        print('Detected distance to wall is {} and setting it to be d_y'.format(d_length))
+        # Robot upper body has width = 0.3
+        d_y = d_length
+        print('real d_y after adding half body width', d_y)
+        if (d_y > 1.45):
+            print('The distance is longer than the arm')
+            print('d_y now set to 1.4')
+            d_y = 1.45
+        d_x = d_height
+        d_z = d_z
+        k = kinematics.joints_button(d_x, d_y,d_z,0.0,self.sec_1_length, self.sec_2_length,self.sec_3_length)
+        print('k: ', k)
+        print("type is: ", k.dtype)
+        # pos1 = 1.44
+        pos0 = k[0]
+        pos1 = k[1]
+        # pos2 = 0.64
+        pos2 = k[2]
+        print("head rotation at start is = ", self.position_sensors[4].getValue())
+        pos3 = k[3]
+        pos4 = 0.0
+        # pos2 = 0.5
+        vel0 = 0.5
+        vel1 = 0.25
+        vel2 = 0.8
+        vel3 = 1
+        vel4 = 1
+        print(type(pos1))
+        self.rotational_motors[0].setPosition(pos0)
+        self.rotational_motors[1].setPosition(pos1)
+        self.rotational_motors[2].setPosition(pos2)
+        self.rotational_motors[3].setPosition(pos3)
+        self.rotational_motors[4].setPosition(pos4)
+        self.rotational_motors[0].setVelocity(vel0)
+        self.rotational_motors[1].setVelocity(vel1)
+        self.rotational_motors[2].setVelocity(vel2)
+        self.rotational_motors[3].setVelocity(vel3)
+        self.rotational_motors[4].setVelocity(vel4)
+        # # print("TORQUE", self.rotational_motors[1].getAvailableTorque())
+        # # print("HIGHEST_TORQUE", self.rotational_motors[1].getMaxTorque())
+        # # print("FORCE", self.rotational_motors[1].getAvailableForce())
+        # # print("MAX FORCE", self.rotational_motors[1].getAvailableTorque())
+        while self.robot.step(self.time_step) != -1:
+            self.last_4_positions.append([self.position_sensors[1].getValue(),self.position_sensors[2].getValue(), self.position_sensors[3].getValue()])
+            if (round(self.position_sensors[1].getValue(), 2) == round(pos1, 2) and
+                    round(self.position_sensors[2].getValue(), 2) == round(pos2, 2) and
+                    round(self.position_sensors[3].getValue(), 2) == round(pos3,2) and
+                    round(self.position_sensors[4].getValue(), 2) == round(pos4, 2)) or \
+                    self.is_stationary(self.last_4_positions):
+                print("bingo, Setting done")
+                print(self.rotational_motors[1].getVelocity())
+                print(self.rotational_motors[2].getVelocity())
+                print("head rotation is = ", self.position_sensors[4].getValue())
+
+                return
     def sweep(self, distance_to_wall):
         # It assumes the arm is tucked in and try to do the sweep action from reaching the
         # top end of the table. After it finishes, it returns to tuck in positions

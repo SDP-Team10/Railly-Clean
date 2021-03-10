@@ -26,6 +26,10 @@ class CleaningController(object):
         self.time_step = int(self.robot.getBasicTimeStep())
         self.camera = self.robot.getDevice("front_camera")
         self.camera.enable(self.time_step)
+        self.side_camera = self.robot.getDevice("side_camera")
+        if self.side_camera.hasRecognition():
+            self.side_camera.enable(self.time_step)
+            self.side_camera.recognitionEnable(self.time_step)
         self.ds_names = [
             "front distance sensor",
             "back distance sensor",
@@ -69,6 +73,10 @@ class CleaningController(object):
     def clean_table(self, distance_to_wall):
         mc.stop(self.robot)
         self.arm_controller.sweep(distance_to_wall)
+
+    def press_button(self, height, length, distance_to_door):
+        mc.stop(self.robot)
+        self.arm_controller.set_button_click(height, length,distance_to_door)
     
     @staticmethod
     def next_row(table_check):  # NOT USED
@@ -86,7 +94,7 @@ if __name__ == "__main__":
     bin_controller.close_bin()
     # Assume robot is already centered
     while robot.step(controller.time_step) != -1:
-        
+        controller.press_button(0.10,0.5,0.30)
         if not table_detected:
 
             print(dist_sensors[0].getValue())
