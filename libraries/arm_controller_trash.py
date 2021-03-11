@@ -120,17 +120,26 @@ class ArmController(object):
         pos1 = 0.0
         pos2 = 3.0
         pos3 = -2.9
-        self.rotational_motors[1].setPosition(pos1)
-        self.rotational_motors[2].setPosition(pos2)
+        last_joint_set = False
         self.rotational_motors[3].setPosition(pos3)
-        self.rotational_motors[1].setVelocity(1)
-        self.rotational_motors[2].setVelocity(0.5)
         self.rotational_motors[3].setVelocity(1)
         while self.robot.step(self.time_step) != 1:
-            if (round(self.position_sensors[1].getValue(), 2) == round(pos1,2) and
-                    round(self.position_sensors[2].getValue(), 2) == round(pos2,2) and round(self.position_sensors[3].getValue(), 2) == round(pos3,2)):
-                print('Finished tuck in')
-                return
+            if last_joint_set:
+                if (round(self.position_sensors[1].getValue(), 2) == round(pos1, 2) and
+                        round(self.position_sensors[2].getValue(), 2) == round(pos2, 2) and round(
+                            self.position_sensors[3].getValue(), 2) == round(pos3, 2)):
+                    print('Finished tuck in')
+                    return
+                else:
+                    continue
+
+            if round(self.position_sensors[3].getValue(), 2) > -0.1 and round(self.position_sensors[3].getValue(), 2) < 0.1:
+                self.rotational_motors[1].setPosition(pos1)
+                self.rotational_motors[2].setPosition(pos2)
+                self.rotational_motors[1].setVelocity(1)
+                self.rotational_motors[2].setVelocity(0.5)
+                last_joint_set = True
+
 
     def is_stationary(self, last_4_joint_positions):
         temp = last_4_joint_positions.copy()

@@ -551,7 +551,7 @@ def desired_joint_angles3(theta1, theta2, theta3, l1, l2, l3, x_d, y_d):
     jac = jacobian3(theta1, theta2, theta3, l1, l2, l3)
     print("TYPE = ", jac.dtype)
     # P gain
-    K_p = np.array([[0.5,0],[0,0.5]])
+    K_p = np.array([[0.3,0],[0,0.3]])
     # D gain
     K_d = np.array([[0.001,0],[0,0.001]])
     kin = kinematics3joint(theta1,theta2, theta3,l1,l2,l3)
@@ -598,7 +598,7 @@ def desired_joint_angles_just_head(theta1, theta2, theta3, theta4, l1, l2, l3,l4
     print("TYPE = ", jac.dtype)
     print("jaccy = ", jac)
     # P gain
-    K_p = np.array([[0.5,0],[0,0.5]])
+    K_p = np.array([[0.3,0],[0,0.3]])
     # D gain
     K_d = np.array([[0.001,0],[0,0.001]])
     kin = kinematics4joint(theta1,theta2, theta3,theta4,l1,l2,l3,l4)
