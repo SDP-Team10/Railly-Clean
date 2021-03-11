@@ -277,25 +277,32 @@ def big_boi_3(d_x, d_y,len1,len2,len3,theta1=0.0,theta2=0.0,theta3=0.0):
     threshold = 0.005
     count = 0
     angles = np.array([theta_1,theta_2,theta_3]).astype(np.float64)
-    while (actual_x < desired_x_position - threshold or actual_x > desired_x_position + threshold) or (actual_y < desired_y_position - threshold or actual_y > desired_y_position + threshold):
-        angles = desired_joint_angles3(theta_1, theta_2,theta_3, l1, l2, l3, desired_x_position, desired_y_position)
-        k = kinematics3joint(angles[0], angles[1],angles[2], l1, l2,l3)
-        actual_x = k[3]
-        actual_y = k[7]
-        theta_1 = angles[0]
-        theta_2 = angles[1]
-        theta_3 = angles[2]
+    for desired_x_position in np.arange(d_x, d_x+1.0, 0.1):
+        for desired_y_position in np.arange(d_y, d_y-1.0, -0.1):
+            count = 0
+            while count < 15:
+                if (actual_x < desired_x_position - threshold or actual_x > desired_x_position + threshold) or (actual_y < desired_y_position - threshold or actual_y > desired_y_position + threshold):
+                    angles = desired_joint_angles3(theta_1, theta_2,theta_3, l1, l2, l3, desired_x_position, desired_y_position)
+                    k = kinematics3joint(angles[0], angles[1],angles[2], l1, l2,l3)
+                    actual_x = k[3]
+                    actual_y = k[7]
+                    theta_1 = angles[0]
+                    theta_2 = angles[1]
+                    theta_3 = angles[2]
+                else:
+                    print("angle 1 =", angles[0])
+                    print("angle 2 =", angles[1])
+                    print(actual_x)
+                    print(actual_y)
+                    return angles
 
-        count += 1
-        #print("ac x = ", actual_x)
-        #print("ac y = ", actual_y)
-        #print("angle 1 =", angles[0])
-        #print("angle 2 =", angles[1])
-    print("angle 1 =", angles[0])
-    print("angle 2 =", angles[1])
-    print(actual_x)
-    print(actual_y)
-    return angles
+                count += 1
+                #print("ac x = ", actual_x)
+                #print("ac y = ", actual_y)
+                #print("angle 1 =", angles[0])
+                #print("angle 2 =", angles[1])
+
+    return None
 
 def big_boi_button(d_x, d_y,d_z, len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,theta4=0.0):
     # Position you want it to go
@@ -349,7 +356,7 @@ def big_boi_button(d_x, d_y,d_z, len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta
     print(actual_y)
     return angles
 
-def big_boi_head(d_x, d_y,len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,theta4=0.0):
+def big_boi_head(d_x,d_y,len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,theta4=0.0):
     # Position you want it to go
     desired_x_position = d_x
     desired_y_position = d_y
@@ -376,7 +383,9 @@ def big_boi_head(d_x, d_y,len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,t
     d_ys = []
     threshold = 0.005
     count = 0
-    angles = np.array([theta_1,theta_2,theta_3,theta_4]).astype(np.float64)
+    angles = np.array([theta_1, theta_2, theta_3, theta_4]).astype(np.float64)
+    print("actual x, y = ",actual_x, " | ", actual_y)
+    print("desired x, y = ",desired_x_position, " | ", desired_y_position)
     while (actual_x < desired_x_position - threshold or actual_x > desired_x_position + threshold) or (actual_y < desired_y_position - threshold or actual_y > desired_y_position + threshold):
         angles = desired_joint_angles_just_head(theta_1, theta_2,theta_3,theta_4, l1, l2, l3, l4, desired_x_position, desired_y_position)
         k = kinematics4joint(angles[0], angles[1],angles[2],angles[3], l1, l2,l3,l4)
@@ -400,7 +409,8 @@ def big_boi_head(d_x, d_y,len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,t
 
 def all_joints(d_x, d_y,len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,theta4=0.0):
     first_3_angles = big_boi_3(d_x+len4, d_y,len1,len2,len3,theta1,theta2,theta3)
-    angles = big_boi_head(d_x, d_y,len1,len2,len3,len4,first_3_angles[0],first_3_angles[1],first_3_angles[2],theta4)
+    kine = kinematics3joint(first_3_angles[0],first_3_angles[1],first_3_angles[2], len1, len2, len3)
+    angles = big_boi_head(kine[3]-len4,kine[7],len1,len2,len3,len4,first_3_angles[0],first_3_angles[1],first_3_angles[2],theta4)
     return angles
 def joints_button(d_x, d_y, d_z,len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,theta4=0.0):
     return big_boi_button(d_x,d_y,d_z,len1,len2,len3,len4,theta1,theta2,theta3,theta4)
