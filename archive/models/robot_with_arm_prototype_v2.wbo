@@ -1,0 +1,287 @@
+#VRML_OBJ R2021a utf8
+TiagoBase {
+  translation -0.919223 0.15749 -4.58251
+  rotation 0.575959287963825 0.5758867545431998 0.5801942300212094 -2.090945801968646
+  name "RaillyClean"
+  controller "tiagoController"
+  bodySlot [
+    Solid {
+      translation 0 0 0.57
+      children [
+        Robot {
+          translation 0 0 0.5
+        }
+        DistanceSensor {
+          translation -0.155 0 0.15
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "back distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+          lookupTable [
+            0 0 0
+            0.04 0 0.01
+            10 10 0.1
+          ]
+          type "sonar"
+        }
+        DistanceSensor {
+          translation -0.00500018 -0.155 0.15
+          rotation 0 0 1 1.5708
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "right distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+          lookupTable [
+            0 0 0
+            0.04 0 0.01
+            10 10 0.1
+          ]
+          type "sonar"
+        }
+        DistanceSensor {
+          translation -0.00499949 0.155 0.15
+          rotation -0.5773542691637779 -0.5773542691637779 0.5773422691581833 2.09441
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "left distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+          lookupTable [
+            0 0 0
+            0.04 0 0.01
+            10 10 0.1
+          ]
+          type "sonar"
+        }
+        DistanceSensor {
+          translation 0.155 0 0.15
+          rotation 0 0 1 -5.307179586466759e-06
+          children [
+            DEF dSensorShape Shape {
+              appearance PBRAppearance {
+                baseColor 0 1 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.01 0.05 0.05
+              }
+            }
+          ]
+          name "front distance sensor"
+          boundingObject USE dSensorShape
+          physics Physics {
+          }
+          lookupTable [
+            0 0 0
+            0.04 0 0.01
+            10 10 0.1
+          ]
+          type "sonar"
+        }
+        Camera {
+          translation 0.17 0 0
+          rotation -0.577349935856137 0.577349935856137 0.5773509358560258 -2.094395307179586
+          children [
+            DEF camerashape Shape {
+              appearance PBRAppearance {
+                baseColor 1 0 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.05 0.05 0.05
+              }
+            }
+          ]
+          name "front_camera"
+          boundingObject USE camerashape
+          physics Physics {
+          }
+        }
+        Camera {
+          translation -0.17 0 0
+          children [
+            DEF camerashape Shape {
+              appearance PBRAppearance {
+                baseColor 1 0 0
+                metalness 0
+              }
+              geometry Box {
+                size 0.05 0.05 0.05
+              }
+            }
+          ]
+          name "rear_camera"
+          boundingObject USE camerashape
+          physics Physics {
+          }
+        }
+        DEF Stack Shape {
+          appearance PBRAppearance {
+            metalness 0
+          }
+          geometry Box {
+            size 0.3 0.3 0.7
+          }
+        }
+        HingeJoint {
+          jointParameters HingeJointParameters {
+            position 0.6999709987588559
+            axis 0 0 1
+          }
+          device [
+            PositionSensor {
+              name "base_sensor"
+            }
+            RotationalMotor {
+              name "base_motor"
+            }
+          ]
+          endPoint Solid {
+            translation 7.850764585820313e-07 8.951660483458168e-06 0.3799548292562518
+            rotation 0.9981782940902377 -0.042524382812309344 -0.04279918309425037 1.572370065935103
+            children [
+              DEF base_shape Shape {
+                appearance PBRAppearance {
+                  baseColor 1 0 0
+                }
+                geometry Cylinder {
+                  height 0.08
+                  radius 0.05
+                }
+              }
+              HingeJoint {
+                jointParameters HingeJointParameters {
+                  position 1.352749164373521
+                }
+                device [
+                  RotationalMotor {
+                    name "sec_1_motor"
+                  }
+                  PositionSensor {
+                    name "sec_1_sensor"
+                  }
+                ]
+                endPoint Solid {
+                  translation 9.285910000000004e-06 0.0691871609024006 0.31242921365415804
+                  rotation 0.9999999999800117 5.284596780834479e-06 -3.471252787062966e-06 1.352749171436571
+                  children [
+                    DEF sec_1 Shape {
+                      appearance PBRAppearance {
+                        baseColor 0 0 1
+                        metalness 0
+                      }
+                      geometry Cylinder {
+                        height 0.6
+                        radius 0.02
+                      }
+                    }
+                    HingeJoint {
+                      jointParameters HingeJointParameters {
+                        position 0.500000762034257
+                        anchor 0 0.29 0
+                      }
+                      device [
+                        RotationalMotor {
+                          name "sec_2_motor"
+                        }
+                        PositionSensor {
+                          name "sec_2_pos"
+                        }
+                      ]
+                      endPoint Solid {
+                        translation 7.4021999999999865e-06 0.544500013400422 0.13903979005624245
+                        rotation 0.9999999999729988 2.068805307028445e-06 -7.0513882845727275e-06 0.5000005184815868
+                        children [
+                          HingeJoint {
+                            jointParameters HingeJointParameters {
+                              position -0.3
+                              anchor 0 0.3 0
+                            }
+                            device [
+                              RotationalMotor {
+                              }
+                              PositionSensor {
+                              }
+                            ]
+                            endPoint Solid {
+                              translation 0 0.33821345956502424 -0.011820808266453592
+                              rotation -0.9999999999999999 0 0 0.3000000000000006
+                              children [
+                                DEF cleaning_head Shape {
+                                  appearance PBRAppearance {
+                                  }
+                                  geometry Box {
+                                    size 0.3 0.1 0.01
+                                  }
+                                }
+                              ]
+                              boundingObject USE cleaning_head
+                              physics Physics {
+                              }
+                            }
+                          }
+                          DEF sec_2 Shape {
+                            appearance PBRAppearance {
+                            }
+                            geometry Cylinder {
+                              height 0.6
+                              radius 0.02
+                            }
+                          }
+                        ]
+                        boundingObject USE sec_2
+                        physics Physics {
+                        }
+                      }
+                    }
+                  ]
+                  boundingObject USE sec_1
+                  physics Physics {
+                  }
+                }
+              }
+            ]
+            boundingObject USE base_shape
+            physics Physics {
+            }
+          }
+        }
+      ]
+      boundingObject USE Stack
+      physics Physics {
+      }
+    }
+  ]
+}
