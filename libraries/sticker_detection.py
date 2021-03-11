@@ -33,6 +33,30 @@ def blob_detection(img):
     cv2.destroyAllWindows()
     return mask
 
+def centroid_detection(cam):
+    img = cam.getImageArray()
+    gbr_img = []
+    for a in range(len(img)):
+        temp = []
+        for b in range(len(img[0])):
+            temp.append([img[b][a][2], img[b][a][1], img[b][a][0]])
+        gbr_img.append(temp)
+    img = np.array(gbr_img, np.uint8)
+    img = remove_illumination(img)
+    mask = cv2.inRange(img, (0.5, 0, 0), (0.9, 0.3, 0.2))
+    kernel = np.ones((1, 1), np.uint8)
+    mask = cv2.dilate(mask, kernel, iterations=3)
+    M = cv2.moments(mask)
+    cx = int(M['m10'] / M['m00'])
+    cy = int(M['m01'] / M['m00'])
+    return(cx,cy)
+
+def camera_point_angle(field_of_view, image_width,point_coordinates):
+    angle_pixel_ratio = field_of_view/image_width
+    centre_point_x_value = image_width/2
+    angle = (point_coordinates[1] - centre_point_x_value) * angle_pixel_ratio #negative values are returned if the camera points to the right of the sticker and vice versa
+    return angle
+
 
 def matchsticker(image):
     template = cv2.imread("../../images/sticker.png")
