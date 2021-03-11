@@ -84,7 +84,7 @@ class ArmController(object):
             dq = kinematics.all_joints(d_x, d_y, self.sec_1_length,self.sec_2_length,self.sec_3_length, self.head_length, round(self.position_sensors[1].getValue(), 2),
                                         round(self.position_sensors[2].getValue(), 2), round(self.position_sensors[3].getValue(),2),round(self.position_sensors[4].getValue(),2))
 
-            d_y -= 0.001
+            d_y -= 0.01
             print(d_y)
             print(d_x)
             self.rotational_motors[1].setPosition(dq[0])
