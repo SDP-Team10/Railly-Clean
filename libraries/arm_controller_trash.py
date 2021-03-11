@@ -222,7 +222,7 @@ class ArmController(object):
         return kin[7], kin[3]
 
 
-    def set_sweeping_action(self, distance_to_wall, height=-0.07):
+    def set_sweeping_action(self, distance_to_wall, height=-0.20):
         # Set the arm from tuck in position to the top edge of the table for upcoming sweep action
         print('Detected distance to wall is {} and setting it to be d_y'.format(distance_to_wall))
         # Robot upper body has width = 0.3
@@ -332,7 +332,7 @@ class ArmController(object):
                 print("head rotation is = ", self.position_sensors[4].getValue())
 
                 return
-    def sweep(self, distance_to_wall, table_height = -1.0):
+    def sweep(self, distance_to_wall, table_height = -0.20):
         # It assumes the arm is tucked in and try to do the sweep action from reaching the
         # top end of the table. After it finishes, it returns to tuck in positions
         print("heeeeeeyaaaaaaaaaaa")
