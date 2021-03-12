@@ -219,12 +219,13 @@ class ArmController(object):
             while self.robot.step(self.time_step) != -1:
                 print("pressure is", self.pressure_sensors[0].getValue())
                 self.last_4_positions.append([self.position_sensors[1].getValue(),self.position_sensors[2].getValue(), self.position_sensors[3].getValue()])
-                if self.pressure_sensors[0].getValue() > 0.02:
+                if self.pressure_sensors[0].getValue() > 1.0:
                     kin = kinematics.kinematics4joint(self.position_sensors[1].getValue(),
                                                       self.position_sensors[2].getValue(),
                                                       self.position_sensors[3].getValue(),
                                                       self.position_sensors[4].getValue(), self.sec_1_length,
                                                       self.sec_2_length, self.sec_3_length, self.head_length)
+                    print("pressure sensor value above 0.02")
                     return kin[7], kin[3]
                 if (round(self.position_sensors[1].getValue(), 2) == round(pos1, 2) and
                         round(self.position_sensors[2].getValue(), 2) == round(pos2, 2) and
@@ -366,6 +367,7 @@ class ArmController(object):
         # top end of the table. After it finishes, it returns to tuck in positions
         print("heeeeeeyaaaaaaaaaaa")
         distance_to_wall, height = self.set_sweeping_action_sensor(distance_to_wall, table_height)
+        print("pumpkin: ", self.pressure_sensors[0].getValue())
         print("sweeping action about to begin with height = ", height)
         self.sweep_action(distance_to_wall, height)
         self.tuck_in_action()

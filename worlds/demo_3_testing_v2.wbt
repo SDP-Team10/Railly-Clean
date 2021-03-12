@@ -6,7 +6,7 @@ WorldInfo {
     "The robot can be equiped with various sensors (including the Microsoft Kinect) and configured with zero, one or two arms."
   ]
   title "KUKA youBot"
-  basicTimeStep 64
+  basicTimeStep 60
   coordinateSystem "NUE"
   contactProperties [
     ContactProperties {
@@ -93,7 +93,7 @@ DEF robot_3_3 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation 0.28020780420480795 -0.1991821521010392 -0.024545165087027632
+            translation 0.28020780420480795 -0.1991821521010392 -0.024545165087027646
             rotation 0.7069244586373861 -0.7069485691932741 0.021943798573199173 3.0978275929965933
             children [
               Shape {
@@ -287,7 +287,7 @@ DEF robot_3_3 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation -0.27971938936073126 0.1993638948798198 -0.025970877047267117
-            rotation 0.7069106311452793 -0.7069355212986386 0.022793163448833708 3.0961320468359235
+            rotation 0.7069106311452796 -0.7069355212986382 0.022793163448833736 3.096132046835924
             children [
               DEF wheel_shape Shape {
                 appearance PBRAppearance {
@@ -479,8 +479,8 @@ DEF robot_3_3 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation 0.27965327393055395 0.19855986572738854 -0.02469329403013175
-            rotation 0.7069118669221497 -0.706934536004049 0.022785394650542214 3.0961456659538857
+            translation 0.27965327393055395 0.19855986572738854 -0.024693294030131752
+            rotation 0.7069118669221497 -0.7069345360040491 0.02278539465054227 3.0961456659538853
             children [
               Shape {
                 appearance PBRAppearance {
@@ -673,7 +673,7 @@ DEF robot_3_3 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation -0.2802746763172137 -0.19992155903002964 -0.026225819805867287
-            rotation 0.706910444019864 -0.706935697869022 0.02279349060757271 3.0961246827998505
+            rotation 0.706910444019864 -0.7069356978690219 0.022793490607572683 3.0961246827998505
             children [
               Shape {
                 appearance PBRAppearance {
@@ -1180,7 +1180,7 @@ DEF robot_3_3 Robot {
       ]
       endPoint Solid {
         translation -1.2880800000000045e-06 0.1538973241083047 0.7200118667825146
-        rotation -0.9999713968648919 -0.007252020216989101 -0.0021479420031683717 0.001998315814114131
+        rotation -0.9999713968649122 -0.0072520202144303195 -0.0021479420024104984 0.001998315814114131
         children [
           DistanceSensor {
             translation -2.97284e-07 0.0099999 0.09
@@ -1269,8 +1269,8 @@ DEF robot_3_3 Robot {
         }
       ]
       endPoint DEF arm_base Solid {
-        translation 0.0002098589787352415 1.7455855652493457e-05 0.9599999999999937
-        rotation -0.026859174457944782 0.7068501517649675 0.7068532009528429 3.195295674146304
+        translation 0.00020985897873524172 1.7455855652493474e-05 0.9599999999999937
+        rotation -0.02685917445794479 0.7068501517649672 0.7068532009528431 3.195295674146304
         children [
           Gyro {
           }
@@ -1296,8 +1296,8 @@ DEF robot_3_3 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504449940995563e-06 0.3000062241100131 2.9757877674185433e-07
-              rotation 0.9337038032167237 0.03473512812681708 -0.3563575153306567 1.1972969428659062e-06
+              translation 1.0504449940995542e-06 0.3000062241100128 2.9757877674185406e-07
+              rotation 0.9339250331950429 0.03467910785086226 -0.3557827874564849 1.19581238315935e-06
               children [
                 DEF sec_1 Shape {
                   appearance PBRAppearance {
@@ -1323,7 +1323,7 @@ DEF robot_3_3 Robot {
                     }
                   ]
                   endPoint DEF sec_2 Solid {
-                    translation 0 -0.007598467771328915 0.033868269275634834
+                    translation 0 -0.007598467771328915 0.033868269275634855
                     rotation 0.9999999999999999 0 0 3.0000007042476278
                     children [
                       HingeJoint {
@@ -1341,7 +1341,7 @@ DEF robot_3_3 Robot {
                         ]
                         endPoint DEF sec_3 Solid {
                           translation 1.5298890438941565e-06 0.0036594658945944825 -0.055739888230764874
-                          rotation -0.99999999999596 -1.516515839326056e-06 2.4042153963239157e-06 2.8999996607748617
+                          rotation -0.99999999999596 -1.5165158393260568e-06 2.4042153963239153e-06 2.8999996607748617
                           children [
                             HingeJoint {
                               jointParameters HingeJointParameters {
@@ -1357,7 +1357,7 @@ DEF robot_3_3 Robot {
                                 }
                               ]
                               endPoint DEF head Solid {
-                                translation 8.913590000000025e-07 0.2744234493035298 0.05789887688553219
+                                translation 8.913590000000025e-07 0.2744234493035298 0.057898876885532184
                                 rotation 1 0 0 1.092338679551305
                                 children [
                                   TouchSensor {
@@ -1374,6 +1374,13 @@ DEF robot_3_3 Robot {
                                     ]
                                     name "head_touch_sensor"
                                     boundingObject USE head_sensor_shape
+                                    physics Physics {
+                                    }
+                                    type "force"
+                                    lookupTable [
+                                      0 0 0
+                                      5000 5000 0
+                                    ]
                                   }
                                   DEF Pointer_head Solid {
                                     translation -0.175 1.46928e-07 0.03
@@ -1537,27 +1544,14 @@ KukaBox {
   rotation 0.8118968561765394 -0.0397255545543948 -0.582447744648391 7.156895054409308e-16
 }
 Youbot {
-  hidden translation_2 0 0 0.077
-  hidden rotation_2 0 0 -1 5.0535811342127465e-06
-  hidden translation_3 0.033 0 0.07
-  hidden rotation_3 0 1 0 4.380028979986637e-07
-  hidden translation_4 0 0 0.155
-  hidden rotation_4 0 0.9999999999999999 0 7.208220137624675e-07
-  hidden translation_5 0 0 0.135
-  hidden rotation_5 0 -1 0 0
-  hidden translation_6 0 0 0.081
-  hidden rotation_6 0 0 1 0
+  hidden rotation_2 0 0 -0.9999999999999999 5.0535811342127465e-06
+  hidden rotation_3 0 0.9999999999999999 0 4.380028979986637e-07
+  hidden rotation_4 0 1 0 7.208220137624675e-07
   hidden translation_7 0 5.102498691628021e-11 0.09
-  hidden rotation_7 1 0 0 4.71239
   hidden translation_8 0 5.1849384182840714e-11 0.09
-  hidden rotation_8 0 -0.7071067811865476 0.7071067811865476 3.14159
-  hidden translation_9 0.228 -0.158 -0.055
-  hidden rotation_9 0 0.9999999999999999 0 4.2146848510894035e-08
-  hidden translation_10 0.228 0.158 -0.055
+  hidden rotation_9 0 1 0 4.2146848510894035e-08
   hidden rotation_10 0 -1 0 4.2146848510894035e-08
-  hidden translation_11 -0.228 -0.158 -0.055
-  hidden rotation_11 0 -0.9999999999999999 0 5.16191365590357e-08
-  hidden translation_12 -0.228 0.158 -0.055
+  hidden rotation_11 0 -1 0 5.16191365590357e-08
   hidden rotation_12 0 -1 0 4.2146848510894035e-08
   translation 0.0008925521348548656 0.09281357024612782 -1.7265954353364014e-05
   rotation 0.9999819390900133 -0.004249916424506039 0.004249671065133624 -1.5709824981501475
@@ -1588,8 +1582,8 @@ Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation 0.2801675403355208 -0.20093300760891714 -0.025632543496977318
-            rotation -1.6397861658971297e-06 1.6397921890355052e-06 0.9999999999973112 1.570800000002688
+            translation 0.2801675403355208 -0.20093300760891714 -0.025632543496977328
+            rotation -1.6397861658971297e-06 1.639792188996253e-06 0.9999999999973112 1.570800000002688
             children [
               Shape {
                 appearance PBRAppearance {
@@ -1782,7 +1776,7 @@ Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation -0.2796833067674722 0.20040199714479753 -0.023839534045356815
-            rotation 1.739620906708339e-06 -1.7396272965411348e-06 0.9999999999969738 1.5708000000030231
+            rotation 1.7396209068260958e-06 -1.7396272966196393e-06 0.9999999999969738 1.5708000000030231
             children [
               DEF wheel_shape Shape {
                 appearance PBRAppearance {
@@ -1974,8 +1968,8 @@ Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation 0.27968858253980233 0.20128850237512486 -0.025064661059566302
-            rotation 1.790695436447546e-06 -1.7907020137097849e-06 0.9999999999967935 1.5708000000032065
+            translation 0.27968858253980233 0.20128850237512486 -0.02506466105956631
+            rotation 1.790695436133528e-06 -1.7907020137097849e-06 0.9999999999967935 1.5708000000032065
             children [
               Shape {
                 appearance PBRAppearance {
@@ -2168,7 +2162,7 @@ Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation -0.2803058691816851 -0.20032247320894067 -0.023895432298149954
-            rotation -1.537032898699766e-06 1.5370385442708512e-06 0.9999999999976377 1.5708000000023612
+            rotation -1.5370328986212612e-06 1.537038544310103e-06 0.9999999999976376 1.5708000000023612
             children [
               Shape {
                 appearance PBRAppearance {
@@ -2616,8 +2610,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -1.197779364581249e-06 0.15405631136404643 0.7199955114692898
-        rotation -0.9999846221100499 -0.005317863999537607 -0.0015734884502475027 0.0027234307174702596
+        translation -1.1977793645812472e-06 0.15405631136404643 0.7199955114692893
+        rotation -0.9999846221100536 -0.005317863998938238 -0.0015734884500701563 0.0027234307174702596
         children [
           Solid {
             translation 0.13 -0.05 0
@@ -2682,8 +2676,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.00020998130597163709 1.7058027955153127e-05 0.964972097527425
-        rotation 0.026859955654888155 -0.7068502019114747 -0.7068531211220084 3.0878880263162336
+        translation 0.0002099813059716372 1.705802795515314e-05 0.964972097527425
+        rotation 0.02685995565488817 -0.7068502019114747 -0.7068531211220084 3.0878880263162336
         children [
           DEF base_shape Shape {
             appearance PBRAppearance {
@@ -2768,8 +2762,8 @@ Robot {
                                 }
                               ]
                               endPoint Solid {
-                                translation 7.60871000000012e-07 0.27258894521379 -0.045000027501418634
-                                rotation -0.9999999999981907 1.6156629634855024e-06 -1.004014673638184e-06 1.4707865325617733
+                                translation 7.608710000000112e-07 0.27258894521379 -0.045000027501418606
+                                rotation -0.9999999999981907 1.6156629634855052e-06 -1.004014673638184e-06 1.4707865325617733
                                 children [
                                   DEF left_part Transform {
                                     translation -0.1535 -0.0282999 0
