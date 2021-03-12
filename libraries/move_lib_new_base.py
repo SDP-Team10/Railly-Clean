@@ -7,6 +7,8 @@ MAX_SPEED = 0       ### maximum velocity of the turtlebot motors ( set to motors
 TURN_MULT = 0.25    ### constant to slow down turn speed ( too high and turning will be inaccurate)
 MOVE_MULT = 0.25    ### constant to slow down move speed ( too high and moving will be inaccurate)
 TIME_STEP = 0       ### constant to control time step ( set to robots basic time step in setup() )
+NORM_SPEED = 0
+WHEEL_RADIUS = 0.05
 
 motor_names = ['wheel_1_motor', # top left
                'wheel_3_motor', # back left
@@ -38,13 +40,14 @@ def setup(robot):
     global gback_left_motor
     global gback_right_motor
     global MAX_SPEED
+    global NORM_SPEED
     global TIME_STEP
     grobot = robot
     TIME_STEP = int(robot.getBasicTimeStep())
 
     gtop_left_motor = grobot.getDevice(motor_names[0])
-    gtop_right_motor = grobot.getDevice(motor_names[2])
     gback_left_motor = grobot.getDevice(motor_names[1])
+    gtop_right_motor = grobot.getDevice(motor_names[2])
     gback_right_motor = grobot.getDevice(motor_names[3])
 
     gtop_left_motor.getPositionSensor().enable(TIME_STEP)
@@ -69,6 +72,7 @@ def setup(robot):
         return False
 
     MAX_SPEED = gtop_left_motor.getMaxVelocity() ### arbitary motor selection for max speed
+    NORM_SPEED = MAX_SPEED * MOVE_MULT
     enable_speed_control()
 
     return True
@@ -122,7 +126,7 @@ def move_forward(robot, speed=-1):
             print('Error in setting up robot')
             return False
     new_speed = MAX_SPEED if speed == -1 else speed
-    limit_vel(new_speed*MOVE_MULT, new_speed*MOVE_MULT)
+    limit_vel(new_speed*MOVE_MULT)
 
 
 def move_back(robot, speed=-1):
@@ -131,7 +135,7 @@ def move_back(robot, speed=-1):
             print('Error in setting up robot')
             return False
     new_speed = MAX_SPEED if speed == -1 else speed
-    limit_vel(-new_speed*MOVE_MULT, -new_speed*MOVE_MULT)
+    limit_vel(-new_speed*MOVE_MULT)
 
 ##############################################################
 
@@ -161,15 +165,17 @@ def check_move(robot, start_positions, pos, stop_at_end=True):
                        abs(positions[0]-start_positions[0]) +
                        abs(positions[1]-start_positions[1]) +
                        abs(positions[2]-start_positions[2]) +
-                       abs(positions[3]-start_positions[3]) - abs(pos)*4) < eps
+                       abs(positions[3]-start_positions[3]) - 
+                       abs(pos)*4) < eps
 
         slowing_down = abs(
-                       abs(positions[0]-start_positions[0]) +
-                       abs(positions[1]-start_positions[1]) +
-                       abs(positions[2]-start_positions[2]) +
-                       abs(positions[3]-start_positions[3]) - abs(pos)*4) < eps/2
+                        abs(positions[0]-start_positions[0]) +
+                        abs(positions[1]-start_positions[1]) +
+                        abs(positions[2]-start_positions[2]) +
+                        abs(positions[3]-start_positions[3]) - 
+                        abs(pos)*4) < eps/2
 
-        if  close_to_pos and slowing_down:
+        if close_to_pos and slowing_down:
             if stop_at_end:
                 print('STOPPING')
                 stop(robot)
@@ -212,16 +218,22 @@ def move_distance(robot, dir, dist=1):
             return False
     offsets = get_offsets()
     pos = dist / wheel_radius
-    if dir=='forward':
+    if dir == 'forward':
         gtop_left_motor.setPosition(offsets[0] + pos)
         gtop_right_motor.setPosition(offsets[1] + pos)
         gback_left_motor.setPosition(offsets[2] + pos)
         gback_right_motor.setPosition(offsets[3] + pos)
-    if dir=='side':
+    if dir == 'side':  # positive distance is moving rightward
         gtop_left_motor.setPosition(offsets[0] + pos)
         gtop_right_motor.setPosition(offsets[1] - pos)
         gback_left_motor.setPosition(offsets[2] - pos)
         gback_right_motor.setPosition(offsets[3] + pos)
+        # enable_speed_control()
+        # new_vel = MAX_SPEED * MOVE_MULT
+        # gtop_left_motor.setVelocity(-new_vel)
+        # gtop_right_motor.setVelocity(new_vel)
+        # gback_left_motor.setVelocity(new_vel)
+        # gback_right_motor.setVelocity(-new_vel)
     limit_vel(MAX_SPEED*MOVE_MULT)
     return check_move(robot, offsets, pos)
 
