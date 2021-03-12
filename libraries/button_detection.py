@@ -1,10 +1,11 @@
+import os
 from pathlib import Path
 from typing import Tuple, Union
 
 import cv2
 import numpy as np
 
-# image = camera.getImageArray()
+#image = camera.getImageArray()
 def button_match(image: np.ndarray) -> Union[Tuple[float, float], None]:
     curr_dir = Path(__file__).absolute()
     template_file_loc = curr_dir.parent.parent / "images" / "button_template_1.jpg"
@@ -42,9 +43,9 @@ def button_match(image: np.ndarray) -> Union[Tuple[float, float], None]:
         pts = np.array([ [0,0],[0,h-1],[w-1,h-1],[w-1,0] ], dtype=np.float32).reshape(-1,1,2)
         dst = cv2.perspectiveTransform(pts,M)
         image_gray = cv2.polylines(image_gray, dst.astype(np.int32), True, 255, 3, cv2.LINE_AA)
-        # cv2.imshow("match", image_gray)
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
+        cv2.imshow("match", image_gray)
+        cv2.waitKey(10000)
+        cv2.destroyAllWindows()
     else:
         print(f"Not enough matches are found - {len(good)}/{4}")
         return None
@@ -52,5 +53,7 @@ def button_match(image: np.ndarray) -> Union[Tuple[float, float], None]:
     return tuple((dst[0][0] + dst[3][0]) / 2)
 
 if __name__ == "__main__":
-    img = cv2.imread(filename="/home/apurv/Railly-Clean/images/one_pt_5_m_button.png")
+    absolute_path = os.path.abspath(os.path.join("..","images","button_img_128.png"));
+    print(absolute_path)
+    img = cv2.imread(filename=absolute_path)
     print(button_match(img))
