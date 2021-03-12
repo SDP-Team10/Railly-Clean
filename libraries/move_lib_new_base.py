@@ -7,6 +7,8 @@ MAX_SPEED = 0       ### maximum velocity of the turtlebot motors ( set to motors
 TURN_MULT = 0.25    ### constant to slow down turn speed ( too high and turning will be inaccurate)
 MOVE_MULT = 0.25    ### constant to slow down move speed ( too high and moving will be inaccurate)
 TIME_STEP = 0       ### constant to control time step ( set to robots basic time step in setup() )
+NORM_SPEED = 0
+WHEEL_RADIUS = 0.05
 
 motor_names = ['wheel_1_motor', # top left
                'wheel_3_motor', # back left
@@ -38,6 +40,7 @@ def setup(robot):
     global gback_left_motor
     global gback_right_motor
     global MAX_SPEED
+    global NORM_SPEED
     global TIME_STEP
     grobot = robot
     TIME_STEP = int(robot.getBasicTimeStep())
@@ -69,6 +72,7 @@ def setup(robot):
         return False
 
     MAX_SPEED = gtop_left_motor.getMaxVelocity() ### arbitary motor selection for max speed
+    NORM_SPEED = MAX_SPEED * MOVE_MULT
     enable_speed_control()
 
     return True
