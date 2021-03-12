@@ -94,6 +94,8 @@ if __name__ == "__main__":
     desired_x = -0.20
 
     # Assume robot is already centered
+    # mc.move_distance(robot, 'forward', 1)
+    mc.move_distance(robot, 'side', 0.5)
     while robot.step(controller.time_step) != -1:
         # TODO next week
         # if not centred:
