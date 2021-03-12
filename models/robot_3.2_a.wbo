@@ -1299,6 +1299,12 @@ DEF robot_3_2 Robot {
                                     name "head_touch_sensor"
                                     boundingObject USE head_sensor_shape
                                   }
+                                  Pen {
+                                    translation 1.3268e-07 0.05 0
+                                    rotation 0 0 1 3.14159
+                                    leadSize 0.2
+                                    maxDistance 0.02
+                                  }
                                   DEF Pointer_head Solid {
                                     translation -0.175 1.46928e-07 0.03
                                     rotation 0 0 1 1.5708
