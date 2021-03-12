@@ -107,9 +107,9 @@ class ArmController(object):
                 if not tuck_in:
                     if self.pressure_sensors[0].getValue() < 0.2:
                         d_x = d_x - 0.005
-                        if d_x < height - 0.1:
+                        if d_x < height - 0.05:
                             tuck_in = True
-                            d_x = height+0.1
+                            d_x = height+0.3
                         dq = kinematics.all_joints(d_x, d_y, self.sec_1_length, self.sec_2_length, self.sec_3_length,
                                                    self.head_length, round(self.position_sensors[1].getValue(), 2),
                                                    round(self.position_sensors[2].getValue(), 2),

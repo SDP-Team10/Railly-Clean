@@ -18,7 +18,7 @@ TIME_STEP = 32  # this or robot.getBasicTimeStep()
 STOP_THRESHOLD = 0.6
 TABLE_WIDTH = 1  # param
 HEAD_WIDTH = 0.3  # param
-BIN_LENGTH = 0.34  # param
+BIN_LENGTH = 0.35  # param
 CLEAN_ATTEMPTS = int(TABLE_WIDTH // HEAD_WIDTH)
 
 
@@ -40,8 +40,6 @@ class CleaningController(object):
             "right distance sensor"
         ]
         self.distance_sensors = self.init_dist()
-        self.left_motor = self.robot.getDevice("wheel_left_joint")
-        self.right_motor = self.robot.getDevice("wheel_right_joint")
 
         self.arm_controller = ac.ArmController(self.robot)
         self.bin_controller = bc.BinController(self.robot)
@@ -118,17 +116,15 @@ if __name__ == "__main__":
             mc.move_forward(robot)
 
         elif not table_detected:  # still cleaning
-            print(dist_sensors[0].getValue())
             table_length, pole_length, distance_to_table = table_check.side_check(dist_sensors[2])
             
             if table_length:  # if not None or 0 -> table detected
-                print("Table detected")
                 table_detected = True
                 table_check.stop_scanning()
                 table_length = table_length if table_length < 1 else 1  # TODO remove
-                print("Table Length:", table_length)
+                # print("Table Length:", table_length)
+                print("To table:", distance_to_table)
                 attempts = math.ceil(table_length / HEAD_WIDTH)
-                print("TOTAL ATTEMPTS:", attempts)
                 distance = (table_length / 2) + pole_length
                 mc.move_distance(robot, 'forward', -distance)  # to back edge of table
                 move_dist_to_table = distance_to_table - BIN_LENGTH
@@ -144,10 +140,10 @@ if __name__ == "__main__":
                     left_side = True  # on left side after turning -> straight to carriage's end
             
             else:  # business as usual
-                print("Moving forward")
                 mc.move_forward(robot)
         
         else:
+            bin_controller.open_bin()
             print("Attempts:", attempts)
             for i in range(attempts):
                 print("Attempt #", i)
