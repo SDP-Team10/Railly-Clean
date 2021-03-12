@@ -290,10 +290,6 @@ def big_boi_3(d_x, d_y,len1,len2,len3,theta1=0.0,theta2=0.0,theta3=0.0):
                     theta_2 = angles[1]
                     theta_3 = angles[2]
                 else:
-                    print("angle 1 =", angles[0])
-                    print("angle 2 =", angles[1])
-                    print(actual_x)
-                    print(actual_y)
                     return angles
 
                 count += 1
@@ -350,10 +346,6 @@ def big_boi_button(d_x, d_y,d_z, len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta
         #print("ac y = ", actual_y)
         #print("angle 1 =", angles[0])
         #print("angle 2 =", angles[1])
-    print("angle 1 =", angles[0])
-    print("angle 2 =", angles[1])
-    print(actual_x)
-    print(actual_y)
     return angles
 
 def big_boi_head(d_x,d_y,len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,theta4=0.0):
@@ -401,10 +393,6 @@ def big_boi_head(d_x,d_y,len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,th
         #print("ac y = ", actual_y)
         #print("angle 1 =", angles[0])
         #print("angle 2 =", angles[1])
-    print("angle 1 =", angles[0])
-    print("angle 2 =", angles[1])
-    print(actual_x)
-    print(actual_y)
     return angles
 
 def all_joints(d_x, d_y,len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,theta4=0.0):
@@ -549,15 +537,13 @@ def desired_joint_angles_button(theta1, theta2, theta3, theta4, l1, l2, l3,l4, x
 def desired_joint_angles3(theta1, theta2, theta3, l1, l2, l3, x_d, y_d):
     global error, previous_time
     jac = jacobian3(theta1, theta2, theta3, l1, l2, l3)
-    print("TYPE = ", jac.dtype)
     # P gain
-    K_p = np.array([[0.3,0],[0,0.3]])
+    K_p = np.array([[0.5,0],[0,0.5]])
     # D gain
     K_d = np.array([[0.001,0],[0,0.001]])
     kin = kinematics3joint(theta1,theta2, theta3,l1,l2,l3)
     # robot end-effector position
     pos = np.array([kin[3], kin[7]]).astype(np.float64)
-    print("TYPEPOS = ", pos.dtype)
     print(pos)
     # desired trajectory
     pos_d = np.array([x_d,y_d]).astype(np.float64)
@@ -567,12 +553,10 @@ def desired_joint_angles3(theta1, theta2, theta3, l1, l2, l3, x_d, y_d):
     error = pos_d-pos
     q = np.array([theta1, theta2,theta3]) # estimate initial value of joints'
     J_inv = np.linalg.pinv(jac)  # calculating the psudeo inverse of Jacobian
-    print("TYPINV= ", J_inv.dtype)
     e_d_dot = np.dot(K_d, error_d.transpose())
     e_dot = np.dot(K_p, error.transpose())
     dq_d =np.dot(J_inv, ( np.dot(K_d,error_d.transpose()) + np.dot(K_p, error.transpose()) ) )  # control input (angular velocity of joints)
     q_d = q + dq_d  # control input (angular position of joints)
-    print("TYPEQD", q_d.dtype)
     # q = np.array([theta1,theta2])
     # x = np.array([theta1_d,theta2_d])
     # dt = 0.00002
@@ -595,17 +579,13 @@ def desired_joint_angles_just_head(theta1, theta2, theta3, theta4, l1, l2, l3,l4
     global error, previous_time
     print("t1: ", theta1, "t2: ", theta2, "t3: ", theta3, "t4: ", theta4)
     jac = jacobian_just_head(theta1, theta2, theta3, theta4, l1, l2, l3, l4)
-    print("TYPE = ", jac.dtype)
-    print("jaccy = ", jac)
     # P gain
-    K_p = np.array([[0.3,0],[0,0.3]])
+    K_p = np.array([[0.9,0],[0,0.9]])
     # D gain
     K_d = np.array([[0.001,0],[0,0.001]])
     kin = kinematics4joint(theta1,theta2, theta3,theta4,l1,l2,l3,l4)
     # robot end-effector position
     pos = np.array([kin[3], kin[7]]).astype(np.float64)
-    print("TYPEPOS = ", pos.dtype)
-    print(pos)
     # desired trajectory
     pos_d = np.array([x_d,y_d]).astype(np.float64)
     # estimate derivative of error
@@ -614,12 +594,10 @@ def desired_joint_angles_just_head(theta1, theta2, theta3, theta4, l1, l2, l3,l4
     error = pos_d-pos
     q = np.array([theta1, theta2,theta3,theta4]) # estimate initial value of joints'
     J_inv = np.linalg.pinv(jac)  # calculating the psudeo inverse of Jacobian
-    print("TYPINV= ", J_inv.dtype)
     e_d_dot = np.dot(K_d, error_d.transpose())
     e_dot = np.dot(K_p, error.transpose())
     dq_d =np.dot(J_inv, ( np.dot(K_d,error_d.transpose()) + np.dot(K_p, error.transpose()) ) )  # control input (angular velocity of joints)
     q_d = q + dq_d  # control input (angular position of joints)
-    print("TYPEQD", q_d.dtype)
     # q = np.array([theta1,theta2])
     # x = np.array([theta1_d,theta2_d])
     # dt = 0.00002

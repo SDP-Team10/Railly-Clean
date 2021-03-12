@@ -77,6 +77,7 @@ class ArmController(object):
         # Robot upper body has width = 0.3
         d_y = distance_to_wall
         d_x = height
+        tuck_in = False
         print("d_x is", d_x)
         y_step = 0.1 * d_y
         x_step = 0.05 * d_x
@@ -95,19 +96,38 @@ class ArmController(object):
             self.rotational_motors[2].setVelocity(0.5)
             self.rotational_motors[3].setVelocity(0.5)
             self.rotational_motors[4].setVelocity(0.8)
-
             while self.robot.step(self.time_step) != -1:
+                print("UNDER PRESSURE: ",self.pressure_sensors[0].getValue())
                 self.last_4_positions.append([self.position_sensors[1].getValue(), self.position_sensors[2].getValue(),
                                               self.position_sensors[3].getValue(), self.position_sensors[4].getValue()])
                 if self.is_stationary(self.last_4_positions):
-                    d_x = height + 0.01
+                    d_x = d_x + 0.005
                     print("stationary")
                     break
+                if not tuck_in:
+                    if self.pressure_sensors[0].getValue() < 0.2:
+                        d_x = d_x - 0.005
+                        if d_x < height - 0.1:
+                            tuck_in = True
+                            d_x = height+0.1
+                        dq = kinematics.all_joints(d_x, d_y, self.sec_1_length, self.sec_2_length, self.sec_3_length,
+                                                   self.head_length, round(self.position_sensors[1].getValue(), 2),
+                                                   round(self.position_sensors[2].getValue(), 2),
+                                                   round(self.position_sensors[3].getValue(), 2),
+                                                   round(self.position_sensors[4].getValue(), 2))
+                        print(d_y)
+                        print(d_x)
+                        self.rotational_motors[1].setPosition(dq[0])
+                        self.rotational_motors[2].setPosition(dq[1])
+                        self.rotational_motors[3].setPosition(dq[2])
+                        self.rotational_motors[4].setPosition(dq[3])
+                        continue
                 if (round(self.position_sensors[1].getValue(), 2) == round(dq[0], 2) and
                         round(self.position_sensors[2].getValue(), 1) == round(dq[1], 1) and
                         round(self.position_sensors[3].getValue(),1) == round(dq[2],1) and
                         round(self.position_sensors[4].getValue(), 1) == round(dq[3], 1)):
-
+                    if tuck_in:
+                        return
                     print('Curr1: ', round(self.position_sensors[1].getValue(), 2))
                     print('Curr2: ', round(self.position_sensors[2].getValue(), 1))
                     print('Curr3: ', round(self.position_sensors[3].getValue(), 1))
@@ -137,7 +157,7 @@ class ArmController(object):
                 self.rotational_motors[1].setPosition(pos1)
                 self.rotational_motors[2].setPosition(pos2)
                 self.rotational_motors[1].setVelocity(1)
-                self.rotational_motors[2].setVelocity(0.5)
+                self.rotational_motors[2].setVelocity(0.8)
                 last_joint_set = True
 
 
