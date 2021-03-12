@@ -566,12 +566,13 @@ def desired_joint_angles3(theta1, theta2, theta3, l1, l2, l3, x_d, y_d):
     #
     # dq_d = dt * np.dot(J_inv, ((x-curr_pos)/dt).transpose())
     # print(dq_d)
+    max_joint_angles = [PI/2, PI, PI]
     for i in range(len(q_d)):
         if q_d[i] < 0:
-            q_d[i] = abs(q_d[i]) % PI
+            q_d[i] = abs(q_d[i]) % max_joint_angles[i]
             q_d[i] = -q_d[i]
         else:
-            q_d[i] = q_d[i] % PI
+            q_d[i] = q_d[i] % max_joint_angles[i]
 
     return q_d
 
