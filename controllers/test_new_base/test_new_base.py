@@ -5,7 +5,7 @@ import os
 import math
 
 sys.path.append(os.path.abspath(os.path.join("..", "..")))
-from libraries import arm_controller_trash as ac
+from libraries import arm_controller as ac
 from libraries import bin_controller as bc
 from libraries import move_lib_new_base as mc
 from libraries import side_check as sc
@@ -28,11 +28,7 @@ class CleaningController(object):
         self.time_step = int(self.robot.getBasicTimeStep())
 
         self.front_camera = self.robot.getDevice("front_camera")
-        self.side_camera = self.robot.getDevice("side_camera")
         self.front_camera.enable(self.time_step)
-        if self.side_camera.hasRecognition():
-            self.side_camera.enable(self.time_step)
-            self.side_camera.recognitionEnable(self.time_step)
         self.ds_names = [
             "front distance sensor",
             "back distance sensor",
@@ -40,8 +36,6 @@ class CleaningController(object):
             "right distance sensor"
         ]
         self.distance_sensors = self.init_dist()
-        self.left_motor = self.robot.getDevice("wheel_left_joint")
-        self.right_motor = self.robot.getDevice("wheel_right_joint")
 
         self.arm_controller = ac.ArmController(self.robot)
         self.bin_controller = bc.BinController(self.robot)
