@@ -70,9 +70,13 @@ class CleaningController(object):
             dist_sensors.append(sensor)
         return dist_sensors
 
-    def clean_table(self, distance_to_wall):
+    def clean_table(self, distance_to_wall, desired_x):
         mc.stop(self.robot)
-        self.arm_controller.sweep(distance_to_wall)
+        self.arm_controller.sweep(distance_to_wall, desired_x)
+
+    def press_button(self, height, length, distance_to_door):
+        mc.stop(self.robot)
+        self.arm_controller.set_button_click(height, length,distance_to_door)
     
     @staticmethod
     def next_row(table_check):  # NOT USED
@@ -88,9 +92,9 @@ if __name__ == "__main__":
     attempts = CLEAN_ATTEMPTS
     bin_controller = bc.BinController(robot)
     bin_controller.close_bin()
+    desired_x = -0.20
     # Assume robot is already centered
     while robot.step(controller.time_step) != -1:
-        
         if not table_detected:
 
             print(dist_sensors[0].getValue())
@@ -125,9 +129,9 @@ if __name__ == "__main__":
             print("Attempts:", attempts)
             for i in range(attempts-1):
                 print("Attempt #", i)
-                controller.clean_table(table_check.params['DISTANCE_TO_WALL'])
+                controller.clean_table(table_check.params['DISTANCE_TO_WALL'], desired_x)
                 mc.move_distance(robot, HEAD_WIDTH)
-            controller.clean_table(table_check.params['DISTANCE_TO_WALL'])
+            controller.clean_table(table_check.params['DISTANCE_TO_WALL'], desired_x)
             table_check.done_cleaning()
             table_detected = False
 

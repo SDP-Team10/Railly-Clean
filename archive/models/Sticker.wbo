@@ -1,0 +1,25 @@
+#VRML_OBJ R2021a utf8
+Solid {
+  translation 0 0.15 0
+  rotation 1 0 0 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.05 0.01 0.2
+      }
+    }
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.2 0.01 0.05
+      }
+    }
+  ]
+}

@@ -8,17 +8,16 @@
 from collections import deque
 import os
 import sys
-from libraries import move_lib_step as mc  # dependent on where script is run
+from libraries import move_lib_new_base as mc  # dependent on where script is run
 
 
 class SideCheck:
     # can import these as json?
     def __init__(self, robot_inst):
         self.params = {
-            "WHEEL_RADIUS": 0.0985,  # get from Webots
-            "SPEED": robot_inst.getDevice("wheel_left_joint").getMaxVelocity()
-            * mc.MOVE_MULT,  # from movement library
-            "DISTANCE_TO_WALL": 2.5,  # should be setup parameter while installing in carriage
+            "WHEEL_RADIUS": mc.WHEEL_RADIUS,  # from movement library
+            "SPEED": mc.NORM_SPEED,  # from movement library
+            "DISTANCE_TO_WALL": 2.5  # should be setup parameter while installing in carriage
         }
 
         self._robot = robot_inst
