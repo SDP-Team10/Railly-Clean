@@ -8,5 +8,5 @@ centralWidgetVisible: 1
 orthographicViewHeight: 1
 textFiles: 0 "controllers/cleaning_controller/cleaning_controller.py"
 consoles: Console:All:All
-renderingDevicePerspectives: RaillyClean:front_camera;1;1.33594;0;0
+renderingDevicePerspectives: RaillyClean:front_camera;1;1;0;0
 renderingDevicePerspectives: RaillyClean:rear_camera;1;1;0;0

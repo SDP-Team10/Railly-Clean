@@ -80,8 +80,6 @@ class CleaningController(object):
             sticker_centroid = vc.centroid_detection(self.camera)
             cpa = vc.camera_point_angle(field_of_view, image_width,sticker_centroid)
             print(cpa)
-            print(sticker_centroid[0]/image_width)
-            self.sticker_image_offset = sticker_centroid[0]/image_width
             self.sticker_offset = cpa
         except:
             print(self.sticker_offset)
@@ -111,17 +109,19 @@ if __name__ == "__main__":
     steps_until_sticker_check = 50 ### webots goes veery slow if it checks every frame
 
     # Assume robot is already centered
+    time_step_count = 0
     while robot.step(controller.time_step) != -1:
-        print('-----------------------')
+        print('-----------------------' + str(time_step_count))
         if not table_detected:
             if robot.step(controller.time_step)%steps_until_sticker_check == 0:
                 print(dist_sensors[0].getValue())
-                print("****")
-                controller.off_centre_value()
-                if abs(controller.sticker_image_offset-0.5) > centering_eps:
-                    print('Adjusting Centering')
-                    mc.fix_centering(robot, controller.sticker_image_offset)
-                print("****")
+                if time_step_count == 29:
+                    print("****")
+                    controller.off_centre_value()
+                    if abs(controller.sticker_offset) > centering_eps:
+                        print('Adjusting Centering')
+                        mc.fix_centering(robot, controller.sticker_offset)
+                    print("****")
 
             table_length, pole_length = table_check.side_check(dist_sensors[2])
 
@@ -159,6 +159,11 @@ if __name__ == "__main__":
             table_check.done_cleaning()
             table_detected = False
         print('-----------------------\n')
+
+        if time_step_count == 29:
+            time_step_count = 0
+        else:
+            time_step_count+=1
 
 
 # Enter here exit cleanup code.
