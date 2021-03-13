@@ -7,7 +7,7 @@ MAX_SPEED = 0       ### maximum velocity of the turtlebot motors ( set to motors
 TURN_MULT = 0.45    ### constant to slow down turn speed ( too high and turning will be inaccurate)
 MOVE_MULT = 0.45    ### constant to slow down move speed ( too high and moving will be inaccurate)
 TIME_STEP = 0       ### constant to control time step ( set to robots basic time step in setup() )
-NORM_SPEED = 0
+NORM_SPEED = 14.8 * MOVE_MULT
 WHEEL_RADIUS = 0.05
 
 motor_names = ['wheel_1_motor', # top left
