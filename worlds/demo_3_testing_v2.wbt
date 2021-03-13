@@ -34,8 +34,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.020303545932461916 0.8046695437301292 0.593375674775866 3.0865397784654607
-  position -15.944760573826917 8.265541771710753 -13.18663076471527
+  orientation 0.0003103963256101414 0.9209058245042543 0.38978502542845417 3.143059337604155
+  position -16.71457070182746 23.480816503466308 -27.199906410990902
   follow "youBot"
 }
 TexturedBackground {
@@ -80,28 +80,6 @@ KukaBox {
   rotation 0.9444042269146717 0.2043551701607063 -0.2575647891585531 2.3908691336933736e-16
 }
 Youbot {
-  hidden translation_2 0 0 0.077
-  hidden rotation_2 0 0 -1 5.053493257307393e-06
-  hidden translation_3 0.033 0 0.07
-  hidden rotation_3 0 1 0 4.380028979986637e-07
-  hidden translation_4 0 0 0.155
-  hidden rotation_4 0 1 0 7.208220137624675e-07
-  hidden translation_5 0 0 0.135
-  hidden rotation_5 0 -1 0 0
-  hidden translation_6 0 0 0.081
-  hidden rotation_6 0 0 1 0
-  hidden translation_7 0 5.102498691628021e-11 0.09
-  hidden rotation_7 1 0 0 4.71239
-  hidden translation_8 0 5.1849384182840714e-11 0.09
-  hidden rotation_8 0 -0.7071067811865476 0.7071067811865476 3.14159
-  hidden translation_9 0.228 -0.158 -0.055
-  hidden rotation_9 0 1 0 4.2146848510894035e-08
-  hidden translation_10 0.228 0.158 -0.055
-  hidden rotation_10 0 -1 0 4.2146848510894035e-08
-  hidden translation_11 -0.228 -0.158 -0.055
-  hidden rotation_11 0 -1 0 5.16191365590357e-08
-  hidden translation_12 -0.228 0.158 -0.055
-  hidden rotation_12 0 -0.9999999999999999 0 4.2146848510894035e-08
   translation 0.0008834197805468206 0.09294556495383166 -1.7092874518177636e-05
   rotation 0.999982309218966 -0.004206142814418854 0.004205902011319175 -1.5709804745336375
   controller ""
@@ -131,8 +109,8 @@ Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation 0.2801675403355208 -0.2009330079724967 -0.025632542960693734
-            rotation -1.9271801380442317e-06 1.9271872167538286e-06 0.9999999999962862 1.5708000000037132
+            translation 0.2801675403355208 -0.2009330079724967 -0.025632542960693738
+            rotation -1.9271801375339524e-06 1.927187216753828e-06 0.999999999996286 1.5708000000037132
             children [
               Shape {
                 appearance PBRAppearance {
@@ -710,7 +688,7 @@ Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation -0.2803058691816851 -0.20032247260643515 -0.023895432122251557
+            translation -0.2803058691816851 -0.20032247260643515 -0.02389543212225156
             rotation -1.8097655094621784e-06 1.8097721569466735e-06 0.9999999999967248 1.570800000003274
             children [
               Shape {
@@ -1160,7 +1138,7 @@ Robot {
       ]
       endPoint Solid {
         translation -1.197779364581247e-06 0.1540562363524388 0.7199955060329759
-        rotation -0.9999846182587878 -0.005318529591411746 -0.0015736863765434238 0.0027230897538572814
+        rotation -0.9999846182587879 -0.00531852959141308 -0.0015736863765438186 0.0027230897538572814
         children [
           Solid {
             translation 0.13 -0.05 0
@@ -1225,8 +1203,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.0002099812994275516 1.705810851149615e-05 0.9649720975274246
-        rotation 0.026860091339222292 -0.7068501993333859 -0.7068531185441579 3.0878877551420785
+        translation 0.00020998129942755074 1.7058108511496092e-05 0.9649720975274222
+        rotation 0.026860091339222295 -0.7068501993333852 -0.7068531185441584 3.0878877551420776
         children [
           DEF base_shape Shape {
             appearance PBRAppearance {
@@ -1250,7 +1228,7 @@ Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 0 0.2999999999815908 3.323017572905904e-06
+              translation 0 0.29999999998159144 3.323017572905906e-06
               rotation 1 0 0 1.1076725828335222e-05
               children [
                 DEF sec_1 Shape {
@@ -1277,7 +1255,7 @@ Robot {
                     }
                   ]
                   endPoint DEF sec_2 Solid {
-                    translation 0 -0.007598801550758455 0.03386592760657
+                    translation 0 -0.007598801550758455 0.03386592760657001
                     rotation 0.9999999999999999 0 0 3.0000105598137945
                     children [
                       HingeJoint {
@@ -1294,7 +1272,7 @@ Robot {
                           }
                         ]
                         endPoint Solid {
-                          translation 0 0.0037004454146512544 -0.05576146738091578
+                          translation 0 0.0037004454146512544 -0.05576146738091583
                           rotation -1 0 0 2.8999976410914683
                           children [
                             HingeJoint {
@@ -1311,8 +1289,8 @@ Robot {
                                 }
                               ]
                               endPoint Solid {
-                                translation 7.608710000000117e-07 0.272588943379363 -0.045000028422257414
-                                rotation -0.9999999999981907 1.6156629066200492e-06 -1.004014683948856e-06 1.470786573326793
+                                translation 7.608710000000163e-07 0.2725889433793636 -0.04500002842225764
+                                rotation -0.9999999999981908 1.6156629066200497e-06 -1.004014683948856e-06 1.4707865733267893
                                 children [
                                   DEF left_part Transform {
                                     translation -0.1535 -0.0282999 0
@@ -1496,7 +1474,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.01
+            radius 0.02
           }
         }
       ]
@@ -1511,7 +1489,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.01
+            radius 0.02
           }
         }
       ]
@@ -1536,18 +1514,18 @@ DEF chair_transform Transform {
       boundingObject USE table_shape
     }
     PaperBoat {
-      translation -15.117699999730894 0.9447192632007907 -9.427881884853912
+      translation -14.8198 0.944719 -11.8059
       rotation 0.9999999953888139 9.205514473368748e-05 2.7353654946140023e-05 8.315431241550574e-06
     }
     Apple {
-      translation -15.2463 0.9929715656922711 -9.07985
+      translation -14.9445 0.992972 -11.9743
     }
     BeerBottle {
-      translation -15.0087 0.9450155847037471 -9.70816
+      translation -14.5483 0.945016 -11.8428
       rotation -0.19045087276064718 0.4507744076887336 0.8720842266877548 -3.2639258234958626e-16
     }
     Can {
-      translation -15.2916 1.0058087339708923 -9.35049
+      translation -15.1448 1.00581 -11.9994
       rotation -0.21780289782062554 0.2603071323821453 -0.9406391946606959 4.255544617497894e-16
     }
     Solid {
@@ -1558,7 +1536,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.01
+            radius 0.02
           }
         }
       ]
@@ -1590,7 +1568,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.01
+            radius 0.02
           }
         }
       ]
@@ -1605,7 +1583,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.01
+            radius 0.02
           }
         }
       ]
@@ -1654,7 +1632,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.01
+            radius 0.02
           }
         }
       ]
@@ -1686,7 +1664,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.01
+            radius 0.02
           }
         }
       ]
@@ -1718,7 +1696,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.01
+            radius 0.02
           }
         }
       ]
@@ -1926,7 +1904,7 @@ Wall {
   size 5 2.4 0.2
 }
 DEF robot_3_4 Robot {
-  translation -16.1101 0.0592777 -10.6692
+  translation -16.1001 0.0592777 -10.4892
   rotation 0.577349935856137 0.577349935856137 0.5773509358560258 -2.094395307179586
   children [
     DEF base_solid Solid {
@@ -2802,8 +2780,8 @@ DEF robot_3_4 Robot {
               boundingObject USE camerashape
               physics Physics {
               }
-              width 128
-              height 128
+              width 600
+              height 600
             }
             Shape {
               appearance PBRAppearance {
@@ -3150,8 +3128,8 @@ DEF robot_3_4 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504449940995474e-06 0.30000622411001193 2.975787767418532e-07
-              rotation 0.9339283506244953 0.034678267015290205 -0.35577416108625176 1.19581238315935e-06
+              translation 1.0504449940995394e-06 0.3000062241100109 2.975787767418522e-07
+              rotation 0.9339285073727986 0.03467822728529165 -0.35577375348494467 1.19581238315935e-06
               children [
                 DEF sec_1 Shape {
                   appearance PBRAppearance {
@@ -3195,7 +3173,7 @@ DEF robot_3_4 Robot {
                         ]
                         endPoint DEF sec_3 Solid {
                           translation 1.5298890438941565e-06 0.0036594658945944825 -0.055739888230764874
-                          rotation -0.99999999999596 -1.5165158393260594e-06 2.404215396323914e-06 2.8999996607748617
+                          rotation -0.99999999999596 -1.5165158393260598e-06 2.4042153963239136e-06 2.8999996607748617
                           children [
                             HingeJoint {
                               jointParameters HingeJointParameters {

@@ -70,6 +70,7 @@ class CleaningController(object):
         mc.stop(self.robot)
         if tc.has_valuable(self.side_camera):
             return
+        self.bin_controller.open_bin()
         self.arm_controller.sweep(dist_to_wall, desired_x)
     
     def closer_to_table(self, to_wall, to_table):
@@ -107,6 +108,7 @@ if __name__ == "__main__":
     attempts = CLEAN_ATTEMPTS
 
     # Assume robot is already centered
+    mc.turn_angle(robot, 180)
     while robot.step(controller.time_step) != -1:
         # TODO next week
         # if not centred:
@@ -154,7 +156,6 @@ if __name__ == "__main__":
                 mc.move_forward(robot)
         
         else:
-            bin_controller.open_bin()
             print("Attempts:", attempts)
             for i in range(attempts):
                 print("Attempt #", i)
