@@ -107,7 +107,7 @@ class ArmController(object):
                     break
 
                 if not tuck_in:
-                    if self.pressure_sensors[0].getValue() > 8.0:
+                    if self.pressure_sensors[0].getValue() > 10.0:
                         d_x = d_x + 0.001
                         dq = kinematics.all_joints(d_x, d_y, self.sec_1_length, self.sec_2_length, self.sec_3_length,
                                                    self.head_length, round(self.position_sensors[1].getValue(), 2),
