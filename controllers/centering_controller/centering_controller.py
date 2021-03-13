@@ -97,6 +97,7 @@ class CleaningController(object):
         print(image_width)
 
     def centre(self, l_dist, r_dist):
+        centred = False
         print("****")
         temp_l_dist = self.distance_sensors[2].getValue()
         temp_r_dist = self.distance_sensors[3].getValue()
@@ -119,8 +120,9 @@ class CleaningController(object):
             mc.fix_centering(self.robot, self.sticker_image_offset)
         else:
             print('No rotation needed')
+            centred = True
         print("****")
-        return left_dist, right_dist
+        return left_dist, right_dist, centred
 
 
 # Controller assumes library functions handle their own timesteps
@@ -128,16 +130,15 @@ if __name__ == "__main__":
     controller = CleaningController()
     robot, bin_controller, dist_sensors = controller.robot, controller.bin_controller, controller.distance_sensors
     table_check, table_length, distance_to_wall = sc.SideCheck(robot), None, None
-    table_detected, done_cleaning, left_side = False, False, True  # flags
+    table_detected, done_cleaning, left_side, centred = False, False, True, False  # flags
     attempts = CLEAN_ATTEMPTS
 
-    steps_until_sticker_check = 256
+    steps_until_sticker_check = 280
     centering_eps = 0.035  # for rotations to center
     centering_dist_eps = 0.2  # for sideways movement to center
     centering_move_mult = 1/3  # for sideways movement to center (how much of side diff to move)
     l_dist = dist_sensors[2].getValue()
     r_dist = dist_sensors[3].getValue()
-    # l_dist, r_dist = controller.centre(l_dist, r_dist)
 
     while robot.step(controller.time_step) != -1:
         if done_cleaning:  # either completed cleaning both sides or bin is full
@@ -152,7 +153,9 @@ if __name__ == "__main__":
             mc.move_forward(robot)
 
         elif not table_detected:
-            # if robot.step(controller.time_step) % steps_until_sticker_check == 0:
+            if robot.step(controller.time_step) % steps_until_sticker_check == 0:
+                l_dist, r_dist, centred = controller.centre(l_dist, r_dist)
+                
             table_length, pole_length, distance_to_table = table_check.side_check(dist_sensors[2])
 
             if table_length:  # if not None or 0 -> table detected
@@ -196,4 +199,4 @@ if __name__ == "__main__":
             mc.move_distance(robot, 'side', move_dist_to_table)
             table_check.done_cleaning()
             table_detected = False
-            l_dist, r_dist = controller.centre(l_dist, r_dist)
+            centred = False

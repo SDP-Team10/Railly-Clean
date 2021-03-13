@@ -146,8 +146,10 @@ class SideCheck:
             abs(self._current_side_distance - self._previous_side_distance) > 0.3
             and self._enable_updates
         ):
+            print(self._length_morse)
             # if it's a rising edge, distance grows, end of chair/pole
             if self._current_side_distance > self._previous_side_distance:
+                print("End of object")
                 # save start time of empty space
                 self._empty_start = self._robot.getTime()
                 self.params["DISTANCE_TO_WALL"] = self._current_side_distance
