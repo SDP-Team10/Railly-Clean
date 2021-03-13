@@ -71,6 +71,15 @@ class CleaningController(object):
             return
         self.arm_controller.sweep(distance_to_wall, desired_x)
     
+    def closer_to_table(self, to_wall, to_table):
+        # move a bit out
+        if abs(to_wall - to_table) < BIN_LENGTH + 0.03:
+            move_dist = BIN_LENGTH + 0.03 - to_table
+        # move closer
+        else:
+            move_dist = -(to_table - BIN_LENGTH + 0.05)
+        mc.move_distance(self.robot, 'side', move_dist)
+
     # TODO use `sticker_detection`
     # IMPORTANT: centre before next row
     def centre(self):
@@ -127,10 +136,9 @@ if __name__ == "__main__":
                 attempts = math.ceil(table_length / HEAD_WIDTH)
                 distance = (table_length / 2) + pole_length
                 mc.move_distance(robot, 'forward', -distance)  # to back edge of table
+                # closer_to_table(dist_sensors[2].getValue(), distance_to_table)
                 move_dist_to_table = distance_to_table - BIN_LENGTH
-                #  mc.turn_angle(robot, -90)
                 mc.move_distance(robot, 'side', -move_dist_to_table)  # move bin closer to table
-                #  mc.turn_angle(robot, 90)
             
             elif controller.wall_in_front(True):  # turn around
                 if left_side:
