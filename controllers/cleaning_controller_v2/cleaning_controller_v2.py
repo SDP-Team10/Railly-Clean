@@ -18,7 +18,7 @@ TIME_STEP = 32  # this or robot.getBasicTimeStep()
 STOP_THRESHOLD = 0.6
 TABLE_WIDTH = 1  # param
 HEAD_WIDTH = 0.3  # param
-BIN_LENGTH = 0.34  # param
+BIN_LENGTH = 0.35  # param
 CLEAN_ATTEMPTS = int(TABLE_WIDTH // HEAD_WIDTH)
 
 
@@ -40,8 +40,6 @@ class CleaningController(object):
             "right distance sensor"
         ]
         self.distance_sensors = self.init_dist()
-        self.left_motor = self.robot.getDevice("wheel_left_joint")
-        self.right_motor = self.robot.getDevice("wheel_right_joint")
 
         self.arm_controller = ac.ArmController(self.robot)
         self.bin_controller = bc.BinController(self.robot)
@@ -66,13 +64,24 @@ class CleaningController(object):
     def check_valuable(self):  # NOT USED
         return
 
-    # TODO next week: sweep and check again for reamining trash, max. 3 sweeps
-    def clean_table(self, distance_to_wall, desired_x):
+    # TODO next week: sweep and check again for remaining trash, max. 3 sweeps
+    def clean_table(self, dist_to_wall):
+        desired_x = -0.20
         mc.stop(self.robot)
         if tc.has_valuable(self.side_camera):
             return
-        self.arm_controller.sweep(distance_to_wall, desired_x)
+        self.bin_controller.open_bin()
+        self.arm_controller.sweep(dist_to_wall, desired_x)
     
+    def closer_to_table(self, to_wall, to_table):
+        # move a bit out
+        if abs(to_wall - to_table) < BIN_LENGTH + 0.02:
+            move_dist = BIN_LENGTH + 0.02 - to_table
+        # move closer
+        else:
+            move_dist = -(to_table - BIN_LENGTH + 0.2)
+        mc.move_distance(self.robot, 'side', move_dist)
+
     # TODO use `sticker_detection`
     # IMPORTANT: centre before next row
     def centre(self):
@@ -94,12 +103,12 @@ class CleaningController(object):
 if __name__ == "__main__":
     controller = CleaningController()
     robot, bin_controller, dist_sensors = controller.robot, controller.bin_controller, controller.distance_sensors
-    table_check, table_length = sc.SideCheck(robot), None
+    table_check, table_length, distance_to_wall = sc.SideCheck(robot), None, None
     table_detected, done_cleaning, left_side = False, False, True  # flags
     attempts = CLEAN_ATTEMPTS
-    desired_x = -0.20
 
     # Assume robot is already centered
+    # mc.turn_angle(robot, 180)
     while robot.step(controller.time_step) != -1:
         # TODO next week
         # if not centred:
@@ -118,23 +127,23 @@ if __name__ == "__main__":
             mc.move_forward(robot)
 
         elif not table_detected:  # still cleaning
-            print(dist_sensors[0].getValue())
             table_length, pole_length, distance_to_table = table_check.side_check(dist_sensors[2])
             
             if table_length:  # if not None or 0 -> table detected
-                print("Table detected")
                 table_detected = True
                 table_check.stop_scanning()
+
                 table_length = table_length if table_length < 1 else 1  # TODO remove
-                print("Table Length:", table_length)
+                # print("Table Length:", table_length)
+                print("To table:", distance_to_table)
                 attempts = math.ceil(table_length / HEAD_WIDTH)
-                print("TOTAL ATTEMPTS:", attempts)
                 distance = (table_length / 2) + pole_length
                 mc.move_distance(robot, 'forward', -distance)  # to back edge of table
-                move_dist_to_table = distance_to_table - BIN_LENGTH
-                #  mc.turn_angle(robot, -90)
+
+                # closer_to_table(table_check.params['DISTANCE_TO_WALL'], distance_to_table)
+                move_dist_to_table = distance_to_table - (BIN_LENGTH - 0.05)
                 mc.move_distance(robot, 'side', -move_dist_to_table)  # move bin closer to table
-                #  mc.turn_angle(robot, 90)
+                distance_to_wall = dist_sensors[2].getValue()
             
             elif controller.wall_in_front(True):  # turn around
                 if left_side:
@@ -144,14 +153,14 @@ if __name__ == "__main__":
                     left_side = True  # on left side after turning -> straight to carriage's end
             
             else:  # business as usual
-                print("Moving forward")
                 mc.move_forward(robot)
         
         else:
             print("Attempts:", attempts)
             for i in range(attempts):
                 print("Attempt #", i)
-                controller.clean_table(table_check.params['DISTANCE_TO_WALL'], desired_x)
+                # controller.clean_table(table_check.params['DISTANCE_TO_WALL'], desired_x)
+                controller.clean_table(distance_to_wall)
                 if bin_controller.is_full():
                     done_cleaning = True
                     break

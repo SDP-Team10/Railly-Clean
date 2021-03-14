@@ -17,7 +17,8 @@ class SideCheck:
         self.params = {
             "WHEEL_RADIUS": mc.WHEEL_RADIUS,  # from movement library
             "SPEED": mc.NORM_SPEED,  # from movement library
-            "DISTANCE_TO_WALL": 2.5  # should be setup parameter while installing in carriage
+            "DISTANCE_TO_WALL": 2.5,  # should be setup parameter while installing in carriage
+            "MAX_POLE_LENGTH": 0.2
         }
 
         self._robot = robot_inst
@@ -62,8 +63,9 @@ class SideCheck:
             # {seat, leg-space, table pole}
             pole = self._length_morse[2]
             seat = self._length_morse[0]
-            if pole < seat:  # and pole < 0.2
+            if pole < seat and pole < self.params["MAX_POLE_LENGTH"]:
                 print("We just passed a table pole!")
+                print(self._length_morse)
                 self._enable_updates = False
                 return True
             else:
@@ -136,7 +138,6 @@ class SideCheck:
         # passenger_sensor = ds[4]  # distance sensor in passenger butt level - unused
         self._previous_side_distance = self._current_side_distance
         self._current_side_distance = side_sensor.getValue()
-        print(self._current_side_distance)
         # Check if sensor data is withing expected range - filter out faulty readings
         if self._current_side_distance > self.max_distance_to_wall:
             self._current_side_distance = self._previous_side_distance
@@ -145,8 +146,10 @@ class SideCheck:
             abs(self._current_side_distance - self._previous_side_distance) > 0.3
             and self._enable_updates
         ):
+            print(self._length_morse)
             # if it's a rising edge, distance grows, end of chair/pole
             if self._current_side_distance > self._previous_side_distance:
+                print("End of object")
                 # save start time of empty space
                 self._empty_start = self._robot.getTime()
                 self.params["DISTANCE_TO_WALL"] = self._current_side_distance
@@ -159,13 +162,11 @@ class SideCheck:
                     else 0
                 )
                 self._length_morse.append(self._occupied_space)
-                print(self._length_morse)
                 # call self.that_a_table here - based on seat-pole-seat sizes, only needed after solids
                 if self.that_a_table():  # if a table is found:
                     # return estimated table width to the main controller (_length_morse[1] * 2)
                     # also return estimated length of table pole and recorded distance to last chair
-                    print("bazinga bitch")
-                    return self._length_morse[1] * 2, self._length_morse[2], self._distance_morse[1]
+                    return self._length_morse[1] * 2, self._length_morse[2], self._distance_morse[0]
 
             # falling edge, distance shrinks, start of chair/pole
             else:
@@ -180,4 +181,5 @@ class SideCheck:
                 )
                 self._length_morse.append(self._empty_space)
                 self._distance_morse.append(self._current_side_distance)
+                print("Side:", self._current_side_distance)
         return None, None, None

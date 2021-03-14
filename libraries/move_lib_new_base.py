@@ -4,10 +4,10 @@ import math
 from libraries import side_check as sc
 
 MAX_SPEED = 0       ### maximum velocity of the turtlebot motors ( set to motors max velocity in setup() )
-TURN_MULT = 0.25    ### constant to slow down turn speed ( too high and turning will be inaccurate)
-MOVE_MULT = 0.25    ### constant to slow down move speed ( too high and moving will be inaccurate)
+TURN_MULT = 0.45    ### constant to slow down turn speed ( too high and turning will be inaccurate)
+MOVE_MULT = 0.45    ### constant to slow down move speed ( too high and moving will be inaccurate)
 TIME_STEP = 0       ### constant to control time step ( set to robots basic time step in setup() )
-NORM_SPEED = 0
+NORM_SPEED = 14.8 * MOVE_MULT
 WHEEL_RADIUS = 0.05
 
 motor_names = ['wheel_1_motor', # top left
@@ -165,14 +165,14 @@ def check_move(robot, start_positions, pos, stop_at_end=True):
                        abs(positions[0]-start_positions[0]) +
                        abs(positions[1]-start_positions[1]) +
                        abs(positions[2]-start_positions[2]) +
-                       abs(positions[3]-start_positions[3]) - 
+                       abs(positions[3]-start_positions[3]) -
                        abs(pos)*4) < eps
 
         slowing_down = abs(
                         abs(positions[0]-start_positions[0]) +
                         abs(positions[1]-start_positions[1]) +
                         abs(positions[2]-start_positions[2]) +
-                        abs(positions[3]-start_positions[3]) - 
+                        abs(positions[3]-start_positions[3]) -
                         abs(pos)*4) < eps/2
 
         if close_to_pos and slowing_down:
@@ -189,9 +189,9 @@ def turn_angle(robot, angle, stop_at_end=True):
             print('Error in setting up robot')
             return False
     offsets = get_offsets()
-    rads = abs(angle) * deg_to_rad * 1.075
+    rads = abs(angle) * deg_to_rad  # * 1.075
     ###
-    multiplier = 0.66
+    multiplier = 1.03  # 0.962
     ###
     sector_len = rads * distance_between_wheels * multiplier
     pos = sector_len / wheel_radius
@@ -228,12 +228,6 @@ def move_distance(robot, dir, dist=1):
         gtop_right_motor.setPosition(offsets[1] - pos)
         gback_left_motor.setPosition(offsets[2] - pos)
         gback_right_motor.setPosition(offsets[3] + pos)
-        # enable_speed_control()
-        # new_vel = MAX_SPEED * MOVE_MULT
-        # gtop_left_motor.setVelocity(-new_vel)
-        # gtop_right_motor.setVelocity(new_vel)
-        # gback_left_motor.setVelocity(new_vel)
-        # gback_right_motor.setVelocity(-new_vel)
     limit_vel(MAX_SPEED*MOVE_MULT)
     return check_move(robot, offsets, pos)
 
@@ -277,6 +271,27 @@ def move_distance_check_sides(robot, dist, table_check, dist_sensor):
     return check_move_side_check(robot, left_offset, right_offset, pos, table_check, dist_sensor)
 ###
 
+centering_strength = 10 ### strength of centering effect (changes amount of turning)
+
+def fix_centering(robot, sticker_image_offset):
+    if robot != grobot or grobot is None:
+        if not setup(robot):
+            print('Error in setting up robot')
+            return False
+    turn_dir = -1 if sticker_image_offset-0.5 < 0 else 1
+    turn_diff = abs(sticker_image_offset-0.5)
+    turn_amount = centering_strength * turn_diff * turn_dir
+    turn_angle(robot, turn_amount, False)
+
+def fix_centering1(robot, sticker_offset):
+    if robot != grobot or grobot is None:
+        if not setup(robot):
+            print('Error in setting up robot')
+            return False
+    turn_dir = sticker_offset/abs(sticker_offset)
+    turn_amount = centering_strength * sticker_offset * turn_dir
+    turn_angle(robot, turn_amount, False)
+
 #############################################################
 
 
@@ -293,8 +308,6 @@ def stop(robot):
     gtop_right_motor.setVelocity(0)
     gback_left_motor.setVelocity(0)
     gback_right_motor.setVelocity(0)
-    #while gleft_motor.getVelocity() > 0 or gright_motor.getVelocity() > 0:
-    #    robot.step(TIME_STEP)
     enable_speed_control()
 
 def enable_speed_control():
