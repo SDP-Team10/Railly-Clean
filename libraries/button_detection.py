@@ -23,7 +23,7 @@ def button_match(
     kp1, des1 = finder.detectAndCompute(template, None)
     kp2, des2 = finder.detectAndCompute(image_gray, None)
     # des1, des2 = np.float32(des1), np.float32(des2)
-    kp_img = cv2.drawKeypoints(template, kp1, None, color=(0, 255, 0), flags=0)
+    kp_img = cv2.drawKeypoints(image_gray, kp2, None, color=(0, 255, 0), flags=0)
     cv2.imshow('ORB', kp_img)
     cv2.waitKey(0)
 
@@ -40,7 +40,7 @@ def button_match(
     for match in matches:
         if len(match) > 1:
             m, n = match    
-            if m.distance < 0.85 * n.distance:
+            if m.distance < 1 * n.distance:
                 good.append(m)
 
     if len(good) >= 4:
@@ -67,9 +67,10 @@ def button_match(
         return None
     box = cv2.minAreaRect(dst)
     real_coords = convert_img_to_3d(box[0], hfov, pdist, cam_res)
+    print(box[0])
     return real_coords
 
 
 if __name__ == "__main__":
-    img = cv2.imread(filename="/home/apurv/Railly-Clean/images/scene.png")
+    img = cv2.imread(filename="C:/Users/caitl/sdp/Railly-Clean/images/scene.png")
     print(button_match(img, 0.785, 1.5, (128, 128)))
