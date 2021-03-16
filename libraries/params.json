@@ -1,0 +1,11 @@
+{
+
+  "Wheel radius": 0.05,
+  "Distance to wall": 2.5,
+  "Pole width": 0.2,
+  "Turn multiplier": 0.45,
+  "Move multiplier": 0.45,
+  "Front camera width": 128,
+  "Front camera height": 128,
+  "Table height": 0.77
+}
