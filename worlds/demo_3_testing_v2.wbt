@@ -6,7 +6,6 @@ WorldInfo {
     "The robot can be equiped with various sensors (including the Microsoft Kinect) and configured with zero, one or two arms."
   ]
   title "KUKA youBot"
-  basicTimeStep 48
   coordinateSystem "NUE"
   contactProperties [
     ContactProperties {
@@ -34,11 +33,10 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.09209108445496167 -0.9554721076276478 -0.2803431534913766 2.5333331385234708
-  position -24.405891392701967 14.683191765057199 -27.776955930737735
+  orientation 0.7845500398217898 0.5802303219528441 0.21866414544256374 5.387578827511325
+  position -16.961369228470254 2.2570928757308035 -11.70260449113528
 }
 TexturedBackground {
-  reflections FALSE
 }
 TexturedBackgroundLight {
   castShadows FALSE
@@ -47,7 +45,165 @@ Floor {
   size 100 100
 }
 Solid {
-  translation -16.024 1.28 1.39462
+  translation -14.82 1 -6.78
+  rotation 0 1 0 3.14159
+  children [
+    HingeJoint {
+      jointParameters HingeJointParameters {
+        anchor 0 0.0142 0.0546
+        minStop -2.105
+        maxStop 0.01
+        staticFriction 0.8
+      }
+      endPoint Solid {
+        translation 0.014500000000000004 0.12999999999999998 0.1
+        rotation 1 0 0 0
+        children [
+          Shape {
+            appearance PBRAppearance {
+              baseColorMap ImageTexture {
+                url [
+                  "textures/laptop_screen_base_color.jpg"
+                ]
+              }
+              roughnessMap ImageTexture {
+                url [
+                  "textures/laptop_screen_roughness.jpg"
+                ]
+              }
+              metalness 0
+              normalMap ImageTexture {
+                url [
+                  "textures/laptop_screen_normal.jpg"
+                ]
+              }
+            }
+            geometry IndexedFaceSet {
+              coord Coordinate {
+                point [
+                  0.15393 -0.121846 -0.030726
+                  0.15393 0.068025 0.081871
+                  -0.192175 0.068025 0.081871
+                  -0.192175 -0.121846 -0.030726
+                  0.160877 -0.121901 -0.042869
+                  0.160877 0.079694 0.07668
+                  -0.199123 0.079694 0.07668
+                  -0.199123 -0.121901 -0.042869
+                  0.098279 -0.122127 -0.049684
+                  0.098279 -0.122126 -0.032252
+                  0.083065 -0.122126 -0.032252
+                  0.083065 -0.122127 -0.049684
+                  0.098279 -0.107256 -0.049684
+                  0.098279 -0.107256 -0.032252
+                  0.083065 -0.107256 -0.032252
+                  0.083065 -0.107256 -0.049684
+                  -0.115506 -0.122127 -0.049684
+                  -0.115506 -0.122126 -0.032252
+                  -0.13072 -0.122126 -0.032252
+                  -0.13072 -0.122127 -0.049684
+                  -0.115506 -0.107256 -0.049684
+                  -0.115506 -0.107256 -0.032252
+                  -0.13072 -0.107256 -0.032252
+                  -0.13072 -0.107256 -0.049684
+                ]
+              }
+              texCoord TextureCoordinate {
+                point [
+                  0.936 0.5783, 0.919 0.5783, 0.9356 0.5696, 0.9237 0.5632, 0.9313 0.5632, 0.9238 0.5658, 0.9126 0.5577, 0.9174 0.5577, 0.9128 0.5601, 0.9303 0.5437, 0.9197 0.5437, 0.9301 0.5401, 0.919 0.5965, 0.919 0.5881, 0.9321 0.5965, 0.9795 0.3669, 0.9795 0.9912, 0.0205 0.9912, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.919 0.5783, 0.9195 0.5696, 0.9356 0.5696, 0.9313 0.5632, 0.9312 0.5658, 0.9238 0.5658, 0.9174 0.5577, 0.9172 0.5601, 0.9128 0.5601, 0.9197 0.5437, 0.9199 0.5401, 0.9301 0.5401, 0.919 0.5881, 0.9321 0.5881, 0.9321 0.5965, 0.0205 0.3669, 0.9795 0.3669, 0.0205 0.9912, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436, 0.0075 0.435, 0.0075 0.435, 0.008 0.436
+                ]
+              }
+              coordIndex [
+                4, 5, 0, -1, 5, 6, 1, -1, 6, 7, 2, -1, 7, 4, 3, -1, 0, 1, 3, -1, 7, 6, 5, -1, 12, 13, 9, -1, 13, 14, 9, -1, 14, 15, 11, -1, 15, 12, 11, -1, 8, 9, 11, -1, 15, 14, 12, -1, 20, 21, 16, -1, 21, 22, 17, -1, 22, 23, 19, -1, 23, 20, 16, -1, 16, 17, 19, -1, 23, 22, 21, -1, 5, 1, 0, -1, 6, 2, 1, -1, 7, 3, 2, -1, 4, 0, 3, -1, 1, 2, 3, -1, 4, 7, 5, -1, 8, 12, 9, -1, 14, 10, 9, -1, 10, 14, 11, -1, 12, 8, 11, -1, 9, 10, 11, -1, 14, 13, 12, -1, 21, 17, 16, -1, 22, 18, 17, -1, 18, 22, 19, -1, 19, 23, 16, -1, 17, 18, 19, -1, 20, 23, 21, -1
+              ]
+              texCoordIndex [
+                0, 1, 2, -1, 3, 4, 5, -1, 6, 7, 8, -1, 9, 10, 11, -1, 12, 13, 14, -1, 15, 16, 17, -1, 18, 19, 20, -1, 21, 22, 23, -1, 24, 25, 26, -1, 27, 28, 29, -1, 30, 31, 32, -1, 33, 34, 35, -1, 36, 37, 38, -1, 39, 40, 41, -1, 42, 43, 44, -1, 45, 46, 47, -1, 48, 49, 50, -1, 51, 52, 53, -1, 54, 55, 56, -1, 57, 58, 59, -1, 60, 61, 62, -1, 63, 64, 65, -1, 66, 67, 68, -1, 69, 70, 71, -1, 72, 73, 74, -1, 75, 76, 77, -1, 78, 79, 80, -1, 81, 82, 83, -1, 84, 85, 86, -1, 87, 88, 89, -1, 90, 91, 92, -1, 93, 94, 95, -1, 96, 97, 98, -1, 99, 100, 101, -1, 102, 103, 104, -1, 105, 106, 107, -1
+              ]
+              creaseAngle 2
+            }
+          }
+        ]
+        boundingObject Transform {
+          translation -0.02 -0.023 0.022
+          rotation 1 0 0 0.532
+          children [
+            Box {
+              size 0.359 0.232 0.011
+            }
+          ]
+        }
+        physics Physics {
+          density -1
+          mass 0.5
+        }
+      }
+    }
+    Shape {
+      appearance PBRAppearance {
+        baseColorMap ImageTexture {
+          url [
+            "textures/laptop_keyboard_base_color.jpg"
+          ]
+        }
+        roughness 0.7
+        metalness 0
+        normalMap ImageTexture {
+          url [
+            "textures/laptop_keyboard_normal.jpg"
+          ]
+        }
+        occlusionMap ImageTexture {
+          url [
+            "textures/laptop_keyboard_occlusion.jpg"
+          ]
+        }
+      }
+      geometry IndexedFaceSet {
+        coord Coordinate {
+          point [
+            0.154016 3e-06 -0.159485
+            0.154016 3e-06 0.042213
+            -0.162222 3e-06 0.042213
+            -0.162222 3e-06 -0.159485
+            0.175897 0.019796 -0.175825
+            0.175897 0.019796 0.058553
+            -0.184103 0.019796 0.058553
+            -0.184103 0.019796 -0.175825
+          ]
+        }
+        texCoord TextureCoordinate {
+          point [
+            0.2672 0.5894, 0.0609 0.5894, 0.2528 0.3878, 0.0317 0.3946, 0.2808 0.3946, 0.0468 0.5528, 0.2623 0.5999, 0.0384 0.5999, 0.0541 0.3811, 0.2622 0.5458, 0.0659 0.5458, 0.2503 0.4212, 0.0151 0.5659, 0.0151 0.3884, 0.2935 0.5659, 0.9927 0.3583, 0.9927 0.9998, 0.0073 0.3583, 0.0609 0.5894, 0.0753 0.3878, 0.2528 0.3878, 0.2808 0.3946, 0.2657 0.5528, 0.0468 0.5528, 0.2467 0.3811, 0.2623 0.5999, 0.0541 0.3811, 0.0659 0.5458, 0.0778 0.4212, 0.2503 0.4212, 0.0151 0.3884, 0.2935 0.3884, 0.2935 0.5659, 0.9927 0.9998, 0.0073 0.9998, 0.0073 0.3583
+          ]
+        }
+        coordIndex [
+          4, 5, 0, -1, 5, 6, 1, -1, 6, 7, 3, -1, 7, 4, 3, -1, 0, 1, 3, -1, 7, 6, 4, -1, 5, 1, 0, -1, 6, 2, 1, -1, 2, 6, 3, -1, 4, 0, 3, -1, 1, 2, 3, -1, 6, 5, 4, -1
+        ]
+        texCoordIndex [
+          0, 1, 2, -1, 3, 4, 5, -1, 6, 7, 8, -1, 9, 10, 11, -1, 12, 13, 14, -1, 15, 16, 17, -1, 18, 19, 20, -1, 21, 22, 23, -1, 24, 25, 26, -1, 27, 28, 29, -1, 30, 31, 32, -1, 33, 34, 35, -1
+        ]
+        creaseAngle 2
+      }
+    }
+  ]
+  name "laptop"
+  model "laptop"
+  boundingObject Transform {
+    translation -0.005 0.01 -0.058
+    children [
+      Box {
+        size 0.36 0.02 0.233
+      }
+    ]
+  }
+  physics Physics {
+    density 1200
+  }
+  recognitionColors [
+    0 0 0
+  ]
+}
+Solid {
+  translation -16.024 0.68 1.39462
   rotation 1 0 0 -1.5707953071795862
   children [
     Shape {
@@ -69,6 +225,31 @@ Solid {
       }
     }
   ]
+}
+Solid {
+  translation -16.024 0.68 -15.3854
+  rotation 1 0 0 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.05 0.01 0.2
+      }
+    }
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.2 0.01 0.05
+      }
+    }
+  ]
+  name "solid(20)"
 }
 DEF chair_transform Transform {
   children [
@@ -125,7 +306,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.03
           }
         }
       ]
@@ -133,7 +314,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -14.99 0.44 -11.77
+      translation -14.99 0.44 -11.7
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -155,7 +336,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.03
           }
         }
       ]
@@ -179,19 +360,12 @@ DEF chair_transform Transform {
       name "solid(6)"
       boundingObject USE table_shape
     }
-    PaperBoat {
-      translation -14.8198 0.9448189322695105 -11.805900000000424
-      rotation 0.9999992712520979 0.0012068749772607993 3.0790621204599664e-05 6.342638744957207e-07
-    }
-    Apple {
-      translation -14.9445 0.9944493078997578 -11.9743
-    }
     BeerBottle {
-      translation -14.5483 0.9453328921052377 -11.8428
+      translation -14.7583 0.945333 -9.5428
       rotation 0.40819084179953297 0.8607304560151303 -0.30417645990275843 -1.8903806690480653e-16
     }
     Can {
-      translation -15.1448 1.0059652437035145 -11.9994
+      translation -15.0848 1.00597 -9.0494
       rotation 0.16297030452737019 -0.8946639099418493 -0.4159533244125102 -1.863267193104203e-16
     }
     Solid {
@@ -202,7 +376,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.03
           }
         }
       ]
@@ -234,7 +408,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.03
           }
         }
       ]
@@ -249,7 +423,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.03
           }
         }
       ]
@@ -298,7 +472,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.03
           }
         }
       ]
@@ -330,7 +504,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.03
           }
         }
       ]
@@ -362,7 +536,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.03
           }
         }
       ]
@@ -559,7 +733,7 @@ Wall {
 }
 Robot {
   translation -20.6214 0.0533429 -10.625
-  rotation -0.6854617116621019 -0.515609455369269 -0.5140905867442696 1.9390272231693304
+  rotation 0.006780269998459954 0.7072879998393492 0.7068929998394389 -3.125485307179586
   children [
     Solid {
       rotation -9.412299999235842e-06 8.589689999302627e-06 0.9999999999188129 1.57734
@@ -1354,50 +1528,6 @@ Robot {
           translation -0.145 1e-07 0.49
           rotation 0 0 1 1.5708
           children [
-            Camera {
-              translation 1.65796e-07 0.08 0.08
-              rotation -0.9999999999943643 -8.732169999950788e-07 3.2417399999817304e-06 -1.5707953071795862
-              children [
-                DEF camerashape Shape {
-                  appearance PBRAppearance {
-                    baseColor 1 0 0
-                    metalness 0
-                  }
-                  geometry Box {
-                    size 0.05 0.02 0.05
-                  }
-                }
-              ]
-              name "rear_camera"
-              boundingObject USE camerashape
-              physics Physics {
-              }
-            }
-            DistanceSensor {
-              translation -0.00499994 0.0100001 -0.05
-              rotation 0 0 1 1.5708
-              children [
-                DEF dSensorShape Shape {
-                  appearance PBRAppearance {
-                    baseColor 0 1 0
-                    metalness 0
-                  }
-                  geometry Box {
-                    size 0.01 0.05 0.05
-                  }
-                }
-              ]
-              name "back distance sensor"
-              boundingObject USE dSensorShape
-              physics Physics {
-              }
-              lookupTable [
-                0 0 0
-                0.04 0 0.01
-                10 10 0.1
-              ]
-              type "sonar"
-            }
             DEF panel_shape Shape {
               appearance PBRAppearance {
                 baseColor 0.3 0.3 0.8
@@ -1610,8 +1740,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation -1.1977793645813571e-06 0.154056558689372 0.7199955293935151
-        rotation -0.9999846380810807 -0.0053151026976884915 -0.0015726681668172399 0.00272455484003246
+        translation -1.1977793645813571e-06 0.154056558689372 0.7199955293935203
+        rotation -0.9999846410670943 -0.005314586107997174 -0.0015725153148011906 0.0027245547748343812
         children [
           Solid {
             translation 0.13 -0.05 0
@@ -1676,8 +1806,8 @@ Robot {
         }
       ]
       endPoint Solid {
-        translation 0.0002099813501614166 1.7057483978097022e-05 0.9649720975274219
-        rotation 0.02685903941226878 -0.7068502193203259 -0.7068531385292544 3.087889857488026
+        translation 0.0002099813501614166 1.7057483978097016e-05 0.9649720975274219
+        rotation 0.026859039412268495 -0.7068502193203221 -0.7068531385292581 3.087889857488026
         children [
           DEF base_shape Shape {
             appearance PBRAppearance {
@@ -1701,7 +1831,7 @@ Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 0 0.2999999999863261 2.8647516184457334e-06
+              translation 0 0.2999999999863261 2.864751618445748e-06
               rotation 0.9999999999999999 0 0 9.549168226370608e-06
               children [
                 DEF sec_1 Shape {
@@ -1762,7 +1892,7 @@ Robot {
                                 }
                               ]
                               endPoint Solid {
-                                translation 7.608709999999996e-07 0.27258895129537547 -0.04500002444860722
+                                translation 7.608709999999996e-07 0.27258895129537547 -0.045000024448606984
                                 rotation -0.9999999999981907 1.6156631520088032e-06 -1.0040146394557206e-06 1.4707863974155113
                                 children [
                                   DEF left_part Transform {
@@ -1879,7 +2009,7 @@ Robot {
   }
 }
 Wall {
-  translation -16.02 0 -15.49
+  translation -15.99 0 -15.49
   rotation 0 1 0 3.14159
   name "wall(2)"
   size 5 2.4 0.2
@@ -1912,8 +2042,8 @@ DEF robot_3_4 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation 0.28020780420480795 -0.20045487237520962 -0.02581782706372701
-            rotation -0.2373886780391169 0.2373214533721352 -0.9419793752031824 4.652595830434053
+            translation 0.28020780420480795 -0.20045487237520962 -0.025817827063727008
+            rotation -0.23738867803911654 0.23732145337213498 -0.9419793752031824 4.652595830434054
             children [
               Shape {
                 appearance PBRAppearance {
@@ -2105,8 +2235,8 @@ DEF robot_3_4 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation -0.27971938936073126 0.2000836220888935 -0.023842312947693244
-            rotation -0.21484440418859552 0.21477425803383893 -0.9527402059716286 4.66393854802593
+            translation -0.27971938936073126 0.2000836220888935 -0.02384231294769324
+            rotation -0.2148444041885955 0.21477425803383882 -0.9527402059716286 4.66393854802593
             children [
               DEF wheel_shape Shape {
                 appearance PBRAppearance {
@@ -2299,7 +2429,7 @@ DEF robot_3_4 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation 0.27965327393055395 0.20140740452887052 -0.024567255540511687
-            rotation -0.21495930110954253 0.2148896693307544 -0.9526882642719054 4.6638875421514445
+            rotation -0.21495930110954248 0.21488966933075448 -0.9526882642719054 4.663887542151445
             children [
               Shape {
                 appearance PBRAppearance {
@@ -2492,7 +2622,7 @@ DEF robot_3_4 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation -0.2802746763172137 -0.20071322455643473 -0.023999951044035902
-            rotation -0.23629651206363644 0.23623258906318528 -0.9425275180338576 4.653175830172977
+            rotation -0.2362965120636359 0.2362325890631853 -0.9425275180338579 4.653175830172979
             children [
               Shape {
                 appearance PBRAppearance {
@@ -2780,7 +2910,7 @@ DEF robot_3_4 Robot {
               }
             }
             DistanceSensor {
-              translation 0.00499991 -0.00999924 -0.05
+              translation 0 -0.005 -0.05
               rotation 0 0 1 -1.5708053071795867
               children [
                 DEF dSensorShape Shape {
@@ -2998,8 +3128,8 @@ DEF robot_3_4 Robot {
         }
       ]
       endPoint Solid {
-        translation -1.288080000000014e-06 0.15389719381176398 0.7200118572460702
-        rotation -0.9999713799038534 -0.007254169376680052 -0.002148580889231291 0.001997723606003273
+        translation -1.288080000000028e-06 0.15389719381176398 0.720011857246074
+        rotation -0.9999713801258497 -0.007254141242987851 -0.0021485725564353224 0.0019977236024465105
         children [
           DistanceSensor {
             translation -2.97284e-07 0.0099999 0.09
@@ -3088,8 +3218,8 @@ DEF robot_3_4 Robot {
         }
       ]
       endPoint DEF arm_base Solid {
-        translation 0 0 0.95999999999999
-        rotation -3.8747648295495487e-07 0.7071052811839424 0.7071082811858646 3.1415907817373045
+        translation 0 0 0.9599999999999742
+        rotation -3.8747648279882965e-07 0.7071052811839444 0.7071082811858624 3.1415907817373045
         children [
           Gyro {
           }
@@ -3115,8 +3245,8 @@ DEF robot_3_4 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504449940995205e-06 0.3000062241099561 3.4522468894553534e-07
-              rotation 0.9482121476679825 0.03081499132506559 -0.3161394618273847 1.345402400528899e-06
+              translation 1.0504449940995188e-06 0.3000062241099532 3.4522468894553343e-07
+              rotation 0.9481394328848994 0.030836041764390566 -0.31635542406762385 1.3460623968406233e-06
               children [
                 DEF sec_1 Shape {
                   appearance PBRAppearance {
@@ -3142,7 +3272,7 @@ DEF robot_3_4 Robot {
                     }
                   ]
                   endPoint DEF sec_2 Solid {
-                    translation 0 -0.007598474284956108 0.033868223580093275
+                    translation 0 -0.007598474284956108 0.03386822358009327
                     rotation 1 0 0 3.0000008965701683
                     children [
                       HingeJoint {
@@ -3159,8 +3289,8 @@ DEF robot_3_4 Robot {
                           }
                         ]
                         endPoint DEF sec_3 Solid {
-                          translation 1.5298890438941465e-06 0.0036594709310459883 -0.05573990868206
-                          rotation -0.9999999999959625 -1.516050708923197e-06 2.4034777590519467e-06 2.899999570418552
+                          translation 1.5298890438941317e-06 0.0036594709310459883 -0.055739908682059996
+                          rotation -0.9999999999959629 -1.5159661031578022e-06 2.4033436289240988e-06 2.899999570418552
                           children [
                             HingeJoint {
                               jointParameters HingeJointParameters {
@@ -3176,7 +3306,7 @@ DEF robot_3_4 Robot {
                                 }
                               ]
                               endPoint DEF head Solid {
-                                translation 8.913590000000025e-07 0.27442344456156875 0.05789887888583069
+                                translation 8.913590000000015e-07 0.27442344456156875 0.05789887888583068
                                 rotation 1 0 0 1.0923387614520463
                                 children [
                                   Pen {

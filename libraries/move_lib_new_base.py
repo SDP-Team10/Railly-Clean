@@ -191,7 +191,7 @@ def turn_angle(robot, angle, stop_at_end=True):
     offsets = get_offsets()
     rads = abs(angle) * deg_to_rad  # * 1.075
     ###
-    multiplier = 1.03  # 0.962
+    multiplier = 1.035  # 0.962
     ###
     sector_len = rads * distance_between_wheels * multiplier
     pos = sector_len / wheel_radius

@@ -141,7 +141,9 @@ class SideCheck:
         # Check if sensor data is withing expected range - filter out faulty readings
         if self._current_side_distance > self.max_distance_to_wall:
             self._current_side_distance = self._previous_side_distance
+        
         # check if there is a larger than noise variance in the distance sensor
+        print("Checking for table")
         if (
             abs(self._current_side_distance - self._previous_side_distance) > 0.3
             and self._enable_updates

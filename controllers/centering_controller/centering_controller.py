@@ -15,7 +15,7 @@ from controller import Robot
 TIME_STEP = 32  # this or robot.getBasicTimeStep()
 STOP_THRESHOLD = 0.6
 TABLE_WIDTH = 1  # param
-HEAD_WIDTH = 0.3  # param
+HEAD_WIDTH = 0.25  # param
 BIN_LENGTH = 0.35  # param
 CLEAN_ATTEMPTS = int(TABLE_WIDTH // HEAD_WIDTH)
 
@@ -133,7 +133,7 @@ if __name__ == "__main__":
     table_detected, done_cleaning, left_side, centred = False, False, True, False  # flags
     attempts = CLEAN_ATTEMPTS
 
-    steps_until_sticker_check = 280
+    steps_until_sticker_check = 240
     centering_eps = 0.035  # for rotations to center
     centering_dist_eps = 0.2  # for sideways movement to center
     centering_move_mult = 1/3  # for sideways movement to center (how much of side diff to move)
@@ -150,13 +150,15 @@ if __name__ == "__main__":
                     # pass through door -> dock on the side -> wait to clear rubbish
                 else:
                     left_side = True
-            mc.move_forward(robot)
+            else:
+                mc.move_forward(robot)
 
         elif not table_detected:
             if robot.step(controller.time_step) % steps_until_sticker_check == 0:
                 l_dist, r_dist, centred = controller.centre(l_dist, r_dist)
-                
+            
             table_length, pole_length, distance_to_table = table_check.side_check(dist_sensors[2])
+            print(dist_sensors[0].getValue())
 
             if table_length:  # if not None or 0 -> table detected
                 table_detected = True
