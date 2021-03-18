@@ -1,0 +1,173 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Railly Clean - Budget</title>
+    <meta http-equiv="Content-Language" content="English" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+	<link rel="stylesheet" type="text/css" href="../src/tailwind.css" media="screen" />
+</head>
+
+  <body>
+    <nav class="relative z-50 h-24 select-none" x-data="{ showMenu: false }">
+      <div
+        class="container relative flex flex-wrap items-center justify-between h-24 mx-auto overflow-hidden font-medium border-b border-gray-200 md:overflow-visible lg:justify-center sm:px-4 md:px-2"
+      >
+        <div class="flex items-center justify-start w-1/4 h-full pr-4">
+          <a href="./index.html">
+            <!-- <span class="p-1 text-xl font-black leading-none text-gray-900"><span>tails</span><span class="text-indigo-600">.</span></span> -->
+            <img src="../resources/logo.png" alt="Railly-Clean" width="80" />
+          </a>
+        </div>
+        <div
+          class="top-0 left-0 items-start hidden w-full h-full p-4 text-sm bg-gray-900 bg-opacity-50 md:items-center md:w-3/4 md:absolute lg:text-base md:bg-transparent md:p-0 md:relative md:flex"
+          :class="{'flex fixed': showMenu, 'hidden': !showMenu }"
+        >
+          <div
+            class="flex-col w-full h-auto overflow-hidden bg-white rounded-lg md:bg-transparent md:overflow-visible md:rounded-none md:relative md:flex md:flex-row"
+          >
+            <div
+              class="flex flex-col items-start justify-center w-full space-x-8 text-center lg:space-x-10 md:w-2/3 md:mt-0 md:flex-row md:items-center"
+            >
+              <a
+                href="./system.html"
+                class="inline-block w-full py-2 mx-0 font-medium text-left text-gray-700 md:w-auto md:px-0 md:mx-2 hover:text-indigo-600 lg:mx-3 md:text-center"
+                id="system.html"
+                >System</a
+              >
+              <a
+                href="./howitworks.html"
+                class="inline-block w-full py-2 mx-0 font-medium text-left text-gray-700 md:w-auto md:px-0 md:mx-2 hover:text-indigo-600 lg:mx-3 md:text-center"
+                id="howitworks.html"
+                >How it works</a
+              >
+              <a
+                href="./evaluation.html"
+                class="inline-block w-full py-2 mx-0 font-medium text-left text-gray-700 md:w-auto md:px-0 md:mx-2 hover:text-indigo-600 lg:mx-3 md:text-center"
+                id="evaluation"
+                >Evaluation</a
+              >
+              <a
+                href="./budget.html"
+                class="inline-block w-full py-2 mx-0 ml-6 font-medium text-left text-indigo-600 md:ml-0 md:w-auto md:px-0 md:mx-2 lg:mx-3 md:text-center"
+                id="budget.html"
+                >Budget</a
+              >
+              <a
+                href="./team.html"
+                class="inline-block w-full py-2 mx-0 font-medium text-left text-gray-700 md:w-auto md:px-0 md:mx-2 hover:text-indigo-600 lg:mx-3 md:text-center"
+                id="team.html"
+                >Team</a
+              >
+            </div>
+          </div>
+        </div>
+        <div
+          @click="showMenu = !showMenu"
+          class="absolute right-0 flex flex-col items-center items-end justify-center w-10 h-10 bg-white rounded-full cursor-pointer md:hidden hover:bg-gray-100"
+        >
+          <svg
+            class="w-6 h-6 text-gray-700"
+            x-show="!showMenu"
+            fill="none"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            x-cloak=""
+          >
+            <path d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+          <svg
+            class="w-6 h-6 text-gray-700"
+            x-show="showMenu"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            xmlns="http://www.w3.org/2000/svg"
+            x-cloak=""
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M6 18L18 6M6 6l12 12"
+            ></path>
+          </svg>
+        </div>
+      </div>
+    </nav>
+
+    <div class="moving_header">
+		<div class="bg-purple-700">
+			<div class="pt-20 sm:pt-16 lg:pt-50">
+			  <div class="max-w-screen-xl mx-auto text-center px-6 sm:px-8 lg:px-10 text-center">
+				  <div class="mt-2 text-3xl leading-9 font-extrabold text-white sm:text-4xl sm:leading-10 lg:text-5xl lg:leading-none text-justify">
+		  			Budget
+				</div>
+	  		</div>
+		</div>
+	</div>
+
+	<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="">
+	<div class="-my-2 sm:-mx-6 lg:-mx-8">
+	  <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+		<div class="shadow overflow-hidden border-b border-gray-900 sm:rounded-lg">
+		  
+			<table class="min-w-full divide-y divide-gray-200">
+			<thead class="bg-gray-50">
+			  <tr>
+				<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+				  Component Model
+				</th>
+				<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+				  Price
+				</th>
+				<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+				  Count
+				</th>
+				<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+				  Note
+				</th>
+				<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+					Total
+				</th>
+			  </tr>
+			</thead>
+			<tbody class="bg-white divide-y divide-gray-200">
+			  <tr>
+				<td class="px-6 py-4 whitespace-nowrap">
+				  <div class="flex items-center">
+					<div class="ml-4">
+					  <div class="text-sm font-medium text-gray-900">
+						Raspberry PI Camera
+					  </div>
+					</div>
+				  </div>
+				</td>
+				<td class="px-6 py-4 whitespace-nowrap">
+				  <div class="text-sm text-gray-900">£20.00</div>
+				</td>
+				<td class="px-6 py-4 whitespace-nowrap">
+					<div class="text-sm text-gray-900">2</div>
+				</td>
+				<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+				  
+				</td>
+				<td class="px-6 py-4 whitespace-nowrap">
+					<div class="text-sm text-gray-900">£40.00</div>
+				  </td>
+			  </tr>
+  
+			  <!-- More items... -->
+			</tbody>
+		  </table>
+		</div>
+	  </div>
+	</div>
+  </div>
+  
+  </body>
+</html>
