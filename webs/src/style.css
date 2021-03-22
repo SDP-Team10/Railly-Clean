@@ -3,6 +3,13 @@
   margin: 0;
 }
 
+.center {
+  margin: auto;
+  width: 50%;
+  border: 3px solid green;
+  padding: 20px;
+}
+
 a img {
   border: 0;
 }

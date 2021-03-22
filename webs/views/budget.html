@@ -4,7 +4,7 @@
     <title>Railly Clean - Budget</title>
     <meta http-equiv="Content-Language" content="English" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" type="text/css" href="style.css" media="screen" />
+    <!-- <link rel="stylesheet" type="text/css" href="../src/style.css" media="screen" /> -->
 	<link rel="stylesheet" type="text/css" href="../src/tailwind.css" media="screen" />
 </head>
 
@@ -110,64 +110,279 @@
 		</div>
 	</div>
 
-	<!-- This example requires Tailwind CSS v2.0+ -->
-<div class="">
-	<div class="-my-2 sm:-mx-6 lg:-mx-8">
-	  <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-		<div class="shadow overflow-hidden border-b border-gray-900 sm:rounded-lg">
-		  
-			<table class="min-w-full divide-y divide-gray-200">
-			<thead class="bg-gray-50">
-			  <tr>
-				<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-				  Component Model
-				</th>
-				<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-				  Price
-				</th>
-				<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-				  Count
-				</th>
-				<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-				  Note
-				</th>
-				<th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-					Total
-				</th>
-			  </tr>
-			</thead>
-			<tbody class="bg-white divide-y divide-gray-200">
-			  <tr>
-				<td class="px-6 py-4 whitespace-nowrap">
-				  <div class="flex items-center">
-					<div class="ml-4">
-					  <div class="text-sm font-medium text-gray-900">
-						Raspberry PI Camera
-					  </div>
-					</div>
-				  </div>
-				</td>
-				<td class="px-6 py-4 whitespace-nowrap">
-				  <div class="text-sm text-gray-900">£20.00</div>
-				</td>
-				<td class="px-6 py-4 whitespace-nowrap">
-					<div class="text-sm text-gray-900">2</div>
-				</td>
-				<td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-				  
-				</td>
-				<td class="px-6 py-4 whitespace-nowrap">
-					<div class="text-sm text-gray-900">£40.00</div>
-				  </td>
-			  </tr>
-  
-			  <!-- More items... -->
-			</tbody>
-		  </table>
-		</div>
-	  </div>
-	</div>
+<div class="overflow-x-auto">
+  <div class="min-w-screen min-h-screen bg-gray-100 flex items-center justify-center bg-gray-100 font-sans overflow-hidden">
+      <div class="w-full lg:w-5/6">
+          <div class="bg-white shadow-md rounded my-6">
+              <table class="min-w-max w-full table-auto">
+                  <thead>
+                      <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                          <th class="py-3 px-6 text-center">Component model</th>
+                          <th class="py-3 px-6 text-center">Price</th>
+                          <th class="py-3 px-6 text-center">Count</th>
+                          <th class="py-3 px-6 text-center">Note</th>
+                          <th class="py-3 px-6 text-center">Total</th>
+                      </tr>
+                  </thead>
+                  <tbody class="text-gray-600 text-sm font-light">
+
+                    <!-- Item1 -->
+                      <tr class="border-b border-gray-200 hover:bg-gray-100">
+                          <td class="py-3 px-6 text-center whitespace-nowrap">
+                                  <span class="font-medium">Raspberry PI Camera</span>
+                          </td>
+                          <td class="py-3 px-6 text-center">
+                              <span class="font-medium">£20.00</span>
+                          </td>
+                          <td class="py-3 px-6 text-center">
+                            <span class="font-medium">2</span>
+                          </td>
+                          <td class="py-3 px-6 text-center">
+                              
+                          </td>
+                          <td class="py-3 px-6 text-center">
+                            <span class="font-medium">£40.00</span>
+                        </td>
+                      </tr>
+
+                    <!-- Item2 -->
+                      <tr class="border-b border-gray-200 hover:bg-gray-100">
+                        <td class="py-3 px-6 text-center whitespace-nowrap">
+                                <span class="font-medium">Raspberry PI 3</span>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            <span class="font-medium">£30.00</span>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                          <span class="font-medium">1</span>
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                            
+                        </td>
+                        <td class="py-3 px-6 text-center">
+                          <span class="font-medium">£30.00</span>
+                      </td>
+                    </tr>
+                    
+                    <!-- Item3 -->
+                    <tr class="border-b border-gray-200 hover:bg-gray-100">
+                      <td class="py-3 px-6 text-center whitespace-nowrap">
+                              <span class="font-medium">EV3 Ultrasonic Sensor</span>
+                      </td>
+                      <td class="py-3 px-6 text-center">
+                          <span class="font-medium">£32.39</span>
+                      </td>
+                      <td class="py-3 px-6 text-center">
+                        <span class="font-medium">5</span>
+                      </td>
+                      <td class="py-3 px-6 text-center">
+                          
+                      </td>
+                      <td class="py-3 px-6 text-center">
+                        <span class="font-medium">£161.95</span>
+                    </td>
+                  </tr>
+
+                  <!-- Item4 -->
+                  <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-center whitespace-nowrap">
+                        <span class="font-medium">EV3 Medium Motor</span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium">£25.79</span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium">4</span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium">Comes with rotation sensor<br> for the arm</span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium">£103.16</span>
+                    </td>
+                  </tr>
+                
+                  <!-- Item5 -->
+                  <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-center whitespace-nowrap">
+                        <span class="font-medium">EV3 Touch Sensor</span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium">£19.19</span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium">1</span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium"></span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium">£19.19</span>
+                  </td>
+                </tr>
+                                
+                  <!-- Item6 -->
+                  <tr class="border-b border-gray-200 hover:bg-gray-100">
+                    <td class="py-3 px-6 text-center whitespace-nowrap">
+                        <span class="font-medium">GBPro-Squeegee 35cm</span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium">£12.95</span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium">1</span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium">amazon.co.uk</span>
+                    </td>
+                    <td class="py-3 px-6 text-center">
+                      <span class="font-medium">£12.95</span>
+                    </td>
+                  </tr>
+
+                <!-- Item7 -->
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                  <td class="py-3 px-6 text-center whitespace-nowrap">
+                      <span class="font-medium">Wickes.co.uk 10mm Twinwall<br>
+                        Polycarbonate Sheet<br> 700x2500mm</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">£29.00</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">1</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">Rectangular body:<br>
+                      0.87m (h) x 0.30m (l)<br>
+                      Square base: 0.1m<br>
+                      (h) x 0.5m (l)
+                      </span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">£29.00</span>
+                  </td>
+                </tr>
+                
+                <!-- Item8 -->
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                  <td class="py-3 px-6 text-center whitespace-nowrap">
+                      <span class="font-medium">Plastock.co.uk Acryllic Blue Tube<br>
+                        1830x22mm</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">£25.01</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">1</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">For the arm</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">£25.01</span>
+                  </td>
+                </tr>
+                                
+                <!-- Item9 -->
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                  <td class="py-3 px-6 text-center whitespace-nowrap">
+                      <span class="font-medium">Set of four 100mm
+                        Mecanum wheel<br>
+                        robot omni wheels</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">£52.79</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">1</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">amazon.co.uk</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">£52.79</span>
+                  </td>
+                </tr>
+                                     
+                <!-- Item10 -->
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                  <td class="py-3 px-6 text-center whitespace-nowrap">
+                      <span class="font-medium">
+                        LSM6DS3TR STMicroelectronics
+                      </span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">£4.26</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">2</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">uk.rs-online.com<br>
+                      accelerometer +
+                      gyroscope
+                      </span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">£4.26</span>
+                  </td>
+                </tr>
+                      
+                <!-- Item11 -->
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                  <td class="py-3 px-6 text-center whitespace-nowrap">
+                      <span class="font-medium">
+                        Misc.
+                      </span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">£10.00</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">1</span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">
+                      </span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">£10.00</span>
+                  </td>
+                </tr>
+
+                <!-- Total -->
+                <tr class="border-b border-gray-200 hover:bg-gray-100">
+                  <td class="py-3 px-6 text-center whitespace-nowrap">
+                      <span class="font-medium">
+                        
+                      </span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium"></span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium"></span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium"><strong>Total estimated cost for system</strong>
+                      </span>
+                  </td>
+                  <td class="py-3 px-6 text-center">
+                    <span class="font-medium">£492.57</span>
+                  </td>
+                </tr>
+                
+
+
+
+                  </tbody>
+              </table>
+          </div>
+      </div>
   </div>
-  
+</div>
+
+
   </body>
 </html>
