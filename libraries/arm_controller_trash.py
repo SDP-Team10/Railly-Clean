@@ -340,7 +340,7 @@ class ArmController(object):
             d_y = 1.45
         d_x = d_height
         d_z = d_z
-        k = kinematics.joints_button(d_x, d_y,d_z,0.0,self.sec_1_length, self.sec_2_length,self.sec_3_length)
+        k = kinematics.joints_button(d_x, d_y,d_z,0.0,self.sec_1_length, self.sec_2_length,self.sec_3_length+0.07, 0.20)
         print('k: ', k)
         print("type is: ", k.dtype)
         # pos1 = 1.44
@@ -353,8 +353,8 @@ class ArmController(object):
         pos4 = 0.0
         # pos2 = 0.5
         vel0 = 0.5
-        vel1 = 0.25
-        vel2 = 0.8
+        vel1 = 0.1
+        vel2 = 1
         vel3 = 1
         vel4 = 1
         print(type(pos1))
