@@ -498,7 +498,7 @@ def desired_joint_angles_button(theta1, theta2, theta3, theta4, l1, l2, l3,l4, l
     error = error_button
     jac = jacobian_button(theta1, theta2, theta3, theta4, 0.0, l1, l2, l3,l5)
     # P gain
-    K_p = np.array([[0.5,0,0],[0,0.5,0],[0,0,0.5]])
+    K_p = np.array([[0.6,0,0],[0,0.6,0],[0,0,0.6]])
     # D gain
     K_d = np.array([[0.001,0,0],[0,0.001,0],[0,0,0.001]])
     kin = kinematics_button(theta1,theta2, theta3,theta4,l1,l2,l3,l4,l5)

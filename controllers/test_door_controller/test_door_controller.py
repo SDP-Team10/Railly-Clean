@@ -20,15 +20,6 @@ while robot.step(timestep) != -1:
     button_value = button_sensor.getValue()
     if (button_value == 1):
         slide_motor.setPosition(1.1)
-        pre = robot.getTime()
-        
-        post = robot.getTime()
-        while (post - pre < door_interval):
-            print("post - pre", post -pre)
-            post = robot.getTime()
-            slide_motor.setPosition(1.1)
-            
-        slide_motor.setPosition(0)
        
 
     pass

@@ -174,7 +174,7 @@ class ArmController(object):
                 else:
                     continue
 
-            if round(self.position_sensors[3].getValue(), 2) > -0.1 and round(self.position_sensors[3].getValue(), 2) < 0.1:
+            if round(self.position_sensors[3].getValue(), 2) < 0.1:
                 self.rotational_motors[1].setPosition(pos1)
                 self.rotational_motors[2].setPosition(pos2)
                 self.rotational_motors[1].setVelocity(1)
