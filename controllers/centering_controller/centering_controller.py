@@ -5,11 +5,13 @@ import math
 sys.path.append(os.path.abspath(os.path.join("..", "..")))
 from libraries import arm_controller_trash as ac
 from libraries import bin_controller as bc
+from libraries import button_detection as bd
 from libraries import move_lib_new_base as mc
 from libraries import side_check as sc
 from libraries import trash_classifier_wb as tc
 from libraries import sticker_detection as vc
 from controller import Robot
+import cv2
 
 
 TIME_STEP = 32  # this or robot.getBasicTimeStep()
@@ -32,6 +34,7 @@ class CleaningController(object):
         if self.side_camera.hasRecognition():
             self.side_camera.enable(self.time_step)
             self.side_camera.recognitionEnable(self.time_step)
+        self.camera_resolution = (128,128)
         self.sticker_offset = 0
         self.sticker_image_offset = 0
         self.ds_names = [
@@ -65,8 +68,24 @@ class CleaningController(object):
         self.bin_controller.open_bin()
         self.arm_controller.sweep(dist_to_wall, desired_x)
 
-    def wall_in_front(self, turn_around):
-        if self.distance_sensors[0].getValue() < STOP_THRESHOLD:  # check front sensor
+    def work_on_button(self):
+        counter = 0
+        while self.robot.step(self.timestep) != -1:
+            dist = self.distance_sensors[0].getValue()
+            self.front_camera.saveImage("bttn_img.png", 100)
+            image = cv2.imread("bttn_img.png")
+            hfov = self.front_camera.getFov()
+            x, y, z = bd.button_match(image, hfov, dist, self.camera_resolution)
+            print(x, y, z)
+            self.arm_controller.set_button_click(0.42, -x , -0.12-y)
+            print("after set_button_click")
+            mc.move_distance(self.robot, 'forward', z-0.14)
+            if counter == 21:
+                self.arm_controller.tuck_in_action()
+            counter+=1
+
+    def wall_in_front(self, turn_around, stop_dist=STOP_THRESHOLD):
+        if self.distance_sensors[0].getValue() < stop_dist:  # check front sensor
             print("Detected wall in front")
             mc.stop(self.robot)
             if vc.is_carriage_end(self.front_camera):
@@ -142,16 +161,11 @@ if __name__ == "__main__":
 
     while robot.step(controller.time_step) != -1:
         if done_cleaning:  # either completed cleaning both sides or bin is full
-            if controller.wall_in_front(not left_side):  # turn around when on right side
-                if left_side:
-                    break
-                    # TODO next week
-                    # detect -> clean -> push button
-                    # pass through door -> dock on the side -> wait to clear rubbish
-                else:
-                    left_side = True
-            else:
-                mc.move_forward(robot)
+            stop_dist = STOP_THRESHOLD if not left_side else 1.5
+            if controller.wall_in_front(not left_side, stop_dist):  # turn around when on right side
+                if left_side: controller.work_on_button()  # detect -> clean -> push button -> pass through door
+                else:         left_side = True
+            else: mc.move_forward(robot)
 
         elif not table_detected:
             if robot.step(controller.time_step) % steps_until_sticker_check == 0:
