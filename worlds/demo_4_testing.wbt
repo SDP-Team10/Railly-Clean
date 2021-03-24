@@ -34,8 +34,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.9314202917641964 -0.31019659462951393 -0.19035312650479974 1.1651234645221729
-  position -15.920746311965177 3.0469488349529223 -12.244293661552572
+  orientation -0.015400697442756189 0.8796751599825945 0.4753256056934797 3.084604584166414
+  position -15.296352373817871 9.317410702550646 -17.582821190409813
 }
 TexturedBackground {
   reflections FALSE
@@ -130,7 +130,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.04
           }
         }
       ]
@@ -145,7 +145,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.04
           }
         }
       ]
@@ -160,7 +160,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.04
           }
         }
       ]
@@ -207,7 +207,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.04
           }
         }
       ]
@@ -239,7 +239,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.04
           }
         }
       ]
@@ -254,7 +254,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.04
           }
         }
       ]
@@ -303,7 +303,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.04
           }
         }
       ]
@@ -335,7 +335,7 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.04
           }
         }
       ]
@@ -367,11 +367,26 @@ DEF chair_transform Transform {
           }
           geometry Cylinder {
             height 1
-            radius 0.02
+            radius 0.04
           }
         }
       ]
       name "solid(19)"
+      boundingObject USE table_support
+    }
+    Solid {
+      translation -15.11 0.44 -2.65
+      children [
+        DEF table_support Shape {
+          appearance PBRAppearance {
+          }
+          geometry Cylinder {
+            height 1
+            radius 0.04
+          }
+        }
+      ]
+      name "solid(20)"
       boundingObject USE table_support
     }
     Solid {
@@ -1961,8 +1976,8 @@ DEF robot_3_4 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504449940994987e-06 0.30000622411011946 1.3209410751657716e-07
-              rotation 0.7983356655650848 0.05842225562329432 -0.5993721758095212 7.052516678690489e-07
+              translation 1.0504449940994983e-06 0.3000062241101193 1.320941075165771e-07
+              rotation 0.7983844430110646 0.05841598198262634 -0.5993078125695657 7.052516678690489e-07
               children [
                 DEF sec_1 Shape {
                   appearance PBRAppearance {
