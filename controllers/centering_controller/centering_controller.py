@@ -16,6 +16,7 @@ import cv2
 
 TIME_STEP = 32  # this or robot.getBasicTimeStep()
 STOP_THRESHOLD = 0.6
+BUTTON_STOP_THRESHOLD = 1.5
 TABLE_WIDTH = 1  # param
 HEAD_WIDTH = 0.25  # param
 BIN_LENGTH = 0.35  # param
@@ -84,7 +85,7 @@ class CleaningController(object):
                 self.arm_controller.tuck_in_action()
             counter+=1
 
-    def wall_in_front(self, turn_around, stop_dist=STOP_THRESHOLD):
+    def wall_in_front(self, turn_around, stop_dist):
         if self.distance_sensors[0].getValue() < stop_dist:  # check front sensor
             print("Detected wall in front")
             mc.stop(self.robot)
@@ -160,25 +161,27 @@ if __name__ == "__main__":
     r_dist = dist_sensors[3].getValue()
 
     while robot.step(controller.time_step) != -1:
-        if done_cleaning:  # either completed cleaning both sides or bin is full
-            stop_dist = STOP_THRESHOLD if not left_side else 1.5
-            if controller.wall_in_front(not left_side, stop_dist):  # turn around when on right side
-                if left_side: controller.work_on_button()  # detect -> clean -> push button -> pass through door
-                else:         left_side = True
-            else: mc.move_forward(robot)
-
-        elif not table_detected:
-            if robot.step(controller.time_step) % steps_until_sticker_check == 0:
+        if robot.step(controller.time_step) % steps_until_sticker_check == 0:  # centre unless cleaning
+            if done_cleaning or not table_detected:
                 l_dist, r_dist, centred = controller.centre(l_dist, r_dist)
-            
+        
+        if done_cleaning:  # either completed cleaning both sides or bin is full
+            if controller.wall_in_front(not left_side, BUTTON_STOP_THRESHOLD):  # turn around when on right side
+                controller.work_on_button()
+                if not left_side: 
+                    left_side = True
+            else: mc.move_forward(robot)  # go straight to end of carriage
+
+        elif not table_detected:  # not done cleaning, check for table
             table_length, pole_length, distance_to_table = table_check.side_check(dist_sensors[2])
             print(dist_sensors[0].getValue())
+            stop_distance = STOP_THRESHOLD if left_side else BUTTON_STOP_THRESHOLD
 
             if table_length:  # if not None or 0 -> table detected
                 table_detected = True
                 table_check.stop_scanning()
 
-                table_length = table_length if table_length < 1 else 1  # TODO remove
+                # table_length = table_length if table_length < 1 else 1  # TODO remove
                 # print("Table Length:", table_length)
                 print("To table:", distance_to_table)
                 attempts = math.ceil(table_length / HEAD_WIDTH)
@@ -190,17 +193,15 @@ if __name__ == "__main__":
                 mc.move_distance(robot, 'side', -move_dist_to_table)  # move bin closer to table
                 distance_to_wall = dist_sensors[2].getValue()
 
-            elif controller.wall_in_front(True):  # turn around
-                if left_side:
-                    left_side = False  # start on right side after turning
-                else:  # right side
+            elif controller.wall_in_front(True, stop_distance):  # turn around
+                if not left_side:  # right side
                     done_cleaning = True  # completed both sides
-                    left_side = True  # on left side after turning -> straight to carriage's end
+                left_side = not left_side  # switch side
 
             else:  # business as usual
                 mc.move_forward(robot)
 
-        else:
+        else:  # cleaning
             print("Attempts:", attempts)
             for i in range(attempts):
                 print("Attempt #", i)
