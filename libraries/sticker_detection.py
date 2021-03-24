@@ -33,6 +33,7 @@ def blob_detection(img):
     cv2.destroyAllWindows()
     return mask
 
+
 def centroid_detection(cam):
     img = cam.getImageArray()
     gbr_img = []
@@ -47,14 +48,17 @@ def centroid_detection(cam):
     kernel = np.ones((1, 1), np.uint8)
     mask = cv2.dilate(mask, kernel, iterations=3)
     M = cv2.moments(mask)
-    cx = int(M['m10'] / M['m00'])
-    cy = int(M['m01'] / M['m00'])
-    return(cx,cy)
+    cx = int(M["m10"] / M["m00"])
+    cy = int(M["m01"] / M["m00"])
+    return (cx, cy)
 
-def camera_point_angle(field_of_view, image_width,point_coordinates):
-    angle_pixel_ratio = field_of_view/image_width
-    centre_point_x_value = image_width/2
-    angle = (point_coordinates[1] - centre_point_x_value) * angle_pixel_ratio #negative values are returned if the camera points to the right of the sticker and vice versa
+
+def camera_point_angle(field_of_view, image_width, point_coordinates):
+    angle_pixel_ratio = field_of_view / image_width
+    centre_point_x_value = image_width / 2
+    angle = (
+        point_coordinates[1] - centre_point_x_value
+    ) * angle_pixel_ratio  # negative values are returned if the camera points to the right of the sticker and vice versa
     return angle
 
 
@@ -78,7 +82,7 @@ def matchsticker(image):
         return False
     cnt2 = contours[0]
     ret = cv2.matchShapes(cnt1, cnt2, 1, 0.0)
-    print(ret)
+    # print(ret)
     if ret < 0.3:
         return True
     else:
@@ -125,7 +129,7 @@ count = 0
 # Enter here functions to read sensor data, like:
 #  val = ds.getValue()
 #  if count == 100:
-#        print(is_carriage_end(camera))
+#        #print(is_carriage_end(camera))
 #   count +=1
 
 # Process sensor data here.
