@@ -500,7 +500,7 @@ def desired_joint_angles_button(theta1, theta2, theta3, theta4, l1, l2, l3,l4, l
     # P gain
     K_p = np.array([[0.5,0,0],[0,0.5,0],[0,0,0.5]])
     # D gain
-    K_d = np.array([[0.002,0,0],[0,0.002,0],[0,0,0.002]])
+    K_d = np.array([[0.001,0,0],[0,0.001,0],[0,0,0.001]])
     kin = kinematics_button(theta1,theta2, theta3,theta4,l1,l2,l3,l4,l5)
     # robot end-effector position
     pos = np.array([kin[3], kin[7], kin[11]]).astype(np.float64)

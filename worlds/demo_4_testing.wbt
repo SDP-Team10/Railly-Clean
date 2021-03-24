@@ -34,8 +34,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.2445222987868057 -0.7092142585759788 -0.6612291439648897 2.6286116463790528
-  position -15.945177825545947 5.157019324793058 -14.531182988832391
+  orientation -0.9314202917641964 -0.31019659462951393 -0.19035312650479974 1.1651234645221729
+  position -15.920746311965177 3.0469488349529223 -12.244293661552572
 }
 TexturedBackground {
   reflections FALSE
@@ -619,7 +619,7 @@ DEF wall_robot Robot {
       }
     }
     Transform {
-      translation -15.2383 1.38809 -15.4998
+      translation -15.3383 1.20809 -15.4998
       rotation 1 0 0 1.5708
       children [
         Solid {
@@ -730,11 +730,11 @@ DEF wall_robot Robot {
   controller "test_door_controller"
 }
 DEF robot_3_4 Robot {
-  translation -15.8501 0.0498049 -13.9415
-  rotation 0.577349935856137 0.577349935856137 0.5773509358560258 -2.094395307179586
+  translation -15.8501 0.0498043 -13.7915
+  rotation -0.5773502691896258 0.5773502691896258 0.5773502691896258 2.09439
   children [
     DEF base_solid Solid {
-      rotation -9.412299999235842e-06 8.589689999302627e-06 0.9999999999188129 1.57734
+      rotation -9.412299999235844e-06 8.589689999302629e-06 0.999999999918813 1.57734
       children [
         DEF WHEEL1 HingeJoint {
           jointParameters HingeJointParameters {
@@ -752,7 +752,7 @@ DEF robot_3_4 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation 0.28020780420480795 -0.20015812549977346 -0.024077640899532852
-            rotation 0.640199477725525 -0.6402571263709972 -0.42451789226264414 3.944578208958436
+            rotation 0.640199477725525 -0.6402571263709971 -0.4245178922626445 3.9445782089584354
             children [
               Shape {
                 appearance PBRAppearance {
@@ -944,8 +944,8 @@ DEF robot_3_4 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation -0.27971938936073126 0.1989249967049636 -0.024562278763948477
-            rotation 0.6006116077376297 -0.600590981967831 0.5277842068779021 2.1704468559954697
+            translation -0.27971938936073126 0.1989249967049636 -0.02456227876394847
+            rotation 0.6006116077376297 -0.600590981967831 0.527784206877902 2.17044685599547
             children [
               DEF wheel_shape Shape {
                 appearance PBRAppearance {
@@ -1331,7 +1331,7 @@ DEF robot_3_4 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation -0.2802746763172137 -0.1993470061903476 -0.026040377944202005
-            rotation -0.6987211483222037 0.6987597250361229 0.1533740641527866 2.837122183788844
+            rotation -0.6987211483222046 0.698759725036122 0.15337406415278643 2.837122183788844
             children [
               Shape {
                 appearance PBRAppearance {
@@ -1527,7 +1527,7 @@ DEF robot_3_4 Robot {
           rotation 0 0 1 1.5708
           children [
             Camera {
-              translation 0 0.01 0.08
+              translation 0 0.01 0.28
               children [
                 DEF camerashape Shape {
                   appearance PBRAppearance {
@@ -1589,7 +1589,7 @@ DEF robot_3_4 Robot {
           rotation 0 0 1 1.5708
           children [
             Camera {
-              translation 0 0 0.08
+              translation -2.80891e-07 3.86178e-13 0.36
               rotation 6.174578089282104e-07 0.7071067811864128 0.7071067811864128 3.14159
               children [
                 DEF camerashape Shape {
@@ -1844,8 +1844,8 @@ DEF robot_3_4 Robot {
         }
       ]
       endPoint Solid {
-        translation -1.2880800000000083e-06 0.15367092446495265 0.71999517946576
-        rotation -0.9998784307830627 -0.01494815714453744 -0.0044357922384251295 0.0009693037640715782
+        translation -1.2880800000000088e-06 0.15367092446495265 0.71999517946576
+        rotation -0.9998784307830627 -0.014948157144527663 -0.004435792238422229 0.0009693037640715782
         children [
           DistanceSensor {
             translation -2.97284e-07 0.0099999 0.09
@@ -1935,7 +1935,7 @@ DEF robot_3_4 Robot {
       ]
       endPoint DEF arm_base Solid {
         translation 0 0 0.9599999999999842
-        rotation 0.026859276888087702 0.7068502000880824 0.7068531487377606 3.0878841404269424
+        rotation 0.026859276888087803 0.7068502000880825 0.7068531487377606 3.0878841404269424
         children [
           Gyro {
           }
@@ -1961,8 +1961,8 @@ DEF robot_3_4 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504449940995038e-06 0.3000062241101213 1.3209410751657774e-07
-              rotation 0.7978716723906879 0.05848188054256986 -0.5999838864875383 7.06509923406229e-07
+              translation 1.0504449940994987e-06 0.30000622411011946 1.3209410751657716e-07
+              rotation 0.7983356655650848 0.05842225562329432 -0.5993721758095212 7.052516678690489e-07
               children [
                 DEF sec_1 Shape {
                   appearance PBRAppearance {
@@ -1988,7 +1988,7 @@ DEF robot_3_4 Robot {
                     }
                   ]
                   endPoint DEF sec_2 Solid {
-                    translation 0 -0.0075984500039947 0.03386839391983946
+                    translation 0 -0.0075984500039947 0.03386839391983945
                     rotation 1 0 0 3.000000179647404
                     children [
                       HingeJoint {
@@ -2005,8 +2005,8 @@ DEF robot_3_4 Robot {
                           }
                         ]
                         endPoint DEF sec_3 Solid {
-                          translation 1.5298890438941345e-06 0.0036594505272792566 -0.055739825829340846
-                          rotation -0.9999999999959648 -1.5155848453286654e-06 2.4027401746995337e-06 2.899999936471931
+                          translation 1.5298890438941353e-06 0.0036594505272792566 -0.05573982582934083
+                          rotation -0.9999999999959648 -1.5155848453286675e-06 2.4027401746995325e-06 2.899999936471931
                           children [
                             HingeJoint {
                               jointParameters HingeJointParameters {
@@ -2022,7 +2022,7 @@ DEF robot_3_4 Robot {
                                 }
                               ]
                               endPoint DEF head Solid {
-                                translation 8.913590000000133e-07 0.30889161689947153 0.021921730758632886
+                                translation 8.913590000000129e-07 0.30889161689947153 0.021921730758632896
                                 rotation 1 0 0 0.2770719110268887
                                 children [
                                   Pen {
@@ -2225,5 +2225,5 @@ DEF robot_3_4 Robot {
   }
   physics Physics {
   }
-  controller "centering_controller"
+  controller "button_image_controller"
 }
