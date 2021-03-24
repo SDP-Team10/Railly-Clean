@@ -63,28 +63,32 @@ def kinematics4joint(theta_1, theta_2,theta_3, theta_4, length1, length2, length
     fk = A_10*A_21*A_32*A_43
     return fk
 
-def kinematics_button(theta_1, theta_2,theta_3, theta_4, length1, length2, length3, length4):
+def kinematics_button(theta_1, theta_2,theta_3, theta_4, length1, length2, length3, length4, length5):
     d_1 = 0
     d_2 = 0
     d_3 = 0
     d_4 = 0
+    d_5 = 0
 
     a_1 = length1
     a_2 = length2
     a_3 = length3
     a_4 = length4
+    a_5 = length5
 
     alpha_1 = PI/2
     alpha_2 = 0
     alpha_3 = 0
-    alpha_4 = 0
+    alpha_4 = -PI/2
+    alpha_5 = 0
 
-    A_10 = translation(3*PI/2+theta_1,d_1,a_1,alpha_1)
+    A_10 = translation(-PI/2+theta_1,d_1,a_1,alpha_1)
     A_21 = translation(PI/2+theta_2,d_2,a_2,alpha_2)
     A_32 = translation(theta_3,d_3,a_3,alpha_3)
     A_43 = translation(theta_4,d_4,a_4,alpha_4)
+    A_54 = translation(PI/2,d_5,a_5,alpha_5)
 
-    fk = A_10*A_21*A_32*A_43
+    fk = A_10*A_21*A_32*A_43 *A_54
     return fk
 
 
@@ -154,12 +158,12 @@ def jacobian4(current_theta_1, current_theta_2, current_theta_3, current_theta_4
     j = j.subs(sym_theta_4, current_theta_4)
     return np.array(j).astype(np.float64)
 
-def jacobian_button(current_theta_1, current_theta_2, current_theta_3, current_theta_4, l1, l2, l3, l4):
+def jacobian_button(current_theta_1, current_theta_2, current_theta_3, current_theta_4, l1, l2, l3, l4,l5):
     sym_theta_1 = sympy.Symbol('theta_1')
     sym_theta_2 = sympy.Symbol('theta_2')
     sym_theta_3 = sympy.Symbol('theta_3')
     sym_theta_4 = sympy.Symbol('theta_4')
-    k = kinematics_button(sym_theta_1,sym_theta_2,sym_theta_3,sym_theta_4,l1,l2,l3,l4)
+    k = kinematics_button(sym_theta_1,sym_theta_2,sym_theta_3,sym_theta_4,l1,l2,l3,l4,l5)
     j = Matrix([[diff(k[3], sym_theta_1), diff(k[3], sym_theta_2),diff(k[3], sym_theta_3),diff(k[3], sym_theta_4)], [diff(k[7], sym_theta_1), diff(k[7], sym_theta_2), diff(k[7], sym_theta_3),diff(k[7], sym_theta_4)],[diff(k[11], sym_theta_1), diff(k[11], sym_theta_2), diff(k[11], sym_theta_3),diff(k[11], sym_theta_4)]])
     j = j.subs(sym_theta_1, current_theta_1)
     j = j.subs(sym_theta_2, current_theta_2)
@@ -300,7 +304,7 @@ def big_boi_3(d_x, d_y,len1,len2,len3,theta1=0.0,theta2=0.0,theta3=0.0):
 
     return None
 
-def big_boi_button(d_x, d_y,d_z, len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,theta4=0.0):
+def big_boi_button(d_x, d_y,d_z, len1,len2,len3,len4,len5,theta1=0.0,theta2=0.0,theta3=0.0,theta4=0.0):
     # Position you want it to go
     desired_x_position = d_x
     desired_y_position = d_y
@@ -311,6 +315,7 @@ def big_boi_button(d_x, d_y,d_z, len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta
     l2 = len2
     l3 = len3
     l4 = len4
+    l5 = len5
 
     # Starting angle
     theta_1 = theta1
@@ -318,7 +323,7 @@ def big_boi_button(d_x, d_y,d_z, len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta
     theta_3 = theta3
     theta_4 = theta4
 
-    k = kinematics_button(theta_1, theta_2, theta_3, theta_4,l1,l2,l3,l4)
+    k = kinematics_button(theta_1, theta_2, theta_3, theta_4,l1,l2,l3,l4,l5)
     actual_x = k[3]
     actual_y = k[7]
     actual_z = k[11]
@@ -331,8 +336,8 @@ def big_boi_button(d_x, d_y,d_z, len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta
     count = 0
     angles = np.array([theta_1,theta_2,theta_3,theta_4]).astype(np.float64)
     while (actual_x < desired_x_position - threshold or actual_x > desired_x_position + threshold) or (actual_y < desired_y_position - threshold or actual_y > desired_y_position + threshold) or (actual_z < desired_z_position - threshold or actual_z > desired_z_position + threshold):
-        angles = desired_joint_angles_button(theta_1, theta_2,theta_3,theta_4, l1, l2, l3,l4, desired_x_position, desired_y_position,desired_z_position)
-        k = kinematics_button(angles[0], angles[1],angles[2],angles[3], l1, l2, l3, l4)
+        angles = desired_joint_angles_button(theta_1, theta_2,theta_3,theta_4, l1, l2, l3,l4,l5, desired_x_position, desired_y_position,desired_z_position)
+        k = kinematics_button(angles[0], angles[1],angles[2],angles[3], l1, l2, l3, l4, l5)
         actual_x = k[3]
         actual_y = k[7]
         actual_z = k[11]
@@ -400,8 +405,8 @@ def all_joints(d_x, d_y,len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,the
     kine = kinematics3joint(first_3_angles[0],first_3_angles[1],first_3_angles[2], len1, len2, len3)
     angles = big_boi_head(kine[3]-len4,kine[7],len1,len2,len3,len4,first_3_angles[0],first_3_angles[1],first_3_angles[2],theta4)
     return angles
-def joints_button(d_x, d_y, d_z,len1,len2,len3,len4,theta1=0.0,theta2=0.0,theta3=0.0,theta4=0.0):
-    return big_boi_button(d_x,d_y,d_z,len1,len2,len3,len4,theta1,theta2,theta3,theta4)
+def joints_button(d_x, d_y, d_z,len1,len2,len3,len4,len5, theta1=0.0,theta2=0.0,theta3=0.0,theta4=0.0):
+    return big_boi_button(d_x,d_y,d_z,len1,len2,len3,len4,len5,theta1,theta2,theta3,theta4)
 
 def testy_boi():
     k = kinematics(-PI, PI,0.6,0.6)
@@ -488,19 +493,17 @@ def brute_force(d_x, d_y, l1, l2, curr_theta_1 = None, curr_theta_2 = None):
                     return [theta1,theta2]
     return 0
 
-def desired_joint_angles_button(theta1, theta2, theta3, theta4, l1, l2, l3,l4, x_d, y_d, z_d):
+def desired_joint_angles_button(theta1, theta2, theta3, theta4, l1, l2, l3,l4, l5, x_d, y_d, z_d):
     global error_button, previous_time
     error = error_button
-    jac = jacobian_button(theta1, theta2, theta3, theta4, 0.0, l1, l2, l3)
-    print("TYPE = ", jac.dtype)
+    jac = jacobian_button(theta1, theta2, theta3, theta4, 0.0, l1, l2, l3,l5)
     # P gain
-    K_p = np.array([[0.5,0,0],[0,0.5,0],[0,0,0.5]])
+    K_p = np.array([[0.6,0,0],[0,0.6,0],[0,0,0.6]])
     # D gain
     K_d = np.array([[0.001,0,0],[0,0.001,0],[0,0,0.001]])
-    kin = kinematics_button(theta1,theta2, theta3,theta4,l1,l2,l3,l4)
+    kin = kinematics_button(theta1,theta2, theta3,theta4,l1,l2,l3,l4,l5)
     # robot end-effector position
     pos = np.array([kin[3], kin[7], kin[11]]).astype(np.float64)
-    print("TYPEPOS = ", pos.dtype)
     print(pos)
     # desired trajectory
     pos_d = np.array([x_d,y_d,z_d]).astype(np.float64)
@@ -510,12 +513,10 @@ def desired_joint_angles_button(theta1, theta2, theta3, theta4, l1, l2, l3,l4, x
     error = pos_d-pos
     q = np.array([theta1, theta2,theta3, theta4]) # estimate initial value of joints'
     J_inv = np.linalg.pinv(jac)  # calculating the psudeo inverse of Jacobian
-    print("TYPINV= ", J_inv.dtype)
     e_d_dot = np.dot(K_d, error_d.transpose())
     e_dot = np.dot(K_p, error.transpose())
     dq_d =np.dot(J_inv, ( np.dot(K_d,error_d.transpose()) + np.dot(K_p, error.transpose()) ) )  # control input (angular velocity of joints)
     q_d = q + dq_d  # control input (angular position of joints)
-    print("TYPEQD", q_d.dtype)
     # q = np.array([theta1,theta2])
     # x = np.array([theta1_d,theta2_d])
     # dt = 0.00002
@@ -525,13 +526,13 @@ def desired_joint_angles_button(theta1, theta2, theta3, theta4, l1, l2, l3,l4, x
     #
     # dq_d = dt * np.dot(J_inv, ((x-curr_pos)/dt).transpose())
     # print(dq_d)
+    max_joint_angles = [PI/2, PI/2, PI, PI]
     for i in range(len(q_d)):
         if q_d[i] < 0:
-            q_d[i] = abs(q_d[i]) % PI
+            q_d[i] = abs(q_d[i]) % max_joint_angles[i]
             q_d[i] = -q_d[i]
         else:
-            q_d[i] = q_d[i] % PI
-
+            q_d[i] = q_d[i] % max_joint_angles[i]
     return q_d
 
 def desired_joint_angles3(theta1, theta2, theta3, l1, l2, l3, x_d, y_d):

@@ -19,7 +19,7 @@ def button_match(
     template = cv2.imread(str(template_file_loc), 0)
 
     # keypoint matching using SIFT
-    finder = cv2.ORB_create(100000)
+    finder = cv2.SIFT_create(100000)
     kp1, des1 = finder.detectAndCompute(template, None)
     kp2, des2 = finder.detectAndCompute(image_gray, None)
     # des1, des2 = np.float32(des1), np.float32(des2)
@@ -28,8 +28,8 @@ def button_match(
     cv2.waitKey(0)
 
     FLANN_INDEX_LSH = 6
-    # index_params = dict(algorithm=0, trees=5)
-    index_params= dict(algorithm=FLANN_INDEX_LSH, table_number=12, key_size=20, multi_probe_level=2)
+    index_params = dict(algorithm=0, trees=5)
+    # index_params= dict(algorithm=FLANN_INDEX_LSH, table_number=12, key_size=20, multi_probe_level=2)
     search_params = dict(checks=50)
     
     flann = cv2.FlannBasedMatcher(index_params, search_params)
@@ -40,7 +40,7 @@ def button_match(
     for match in matches:
         if len(match) > 1:
             m, n = match    
-            if m.distance < 1 * n.distance:
+            if m.distance < 1.0 * n.distance:
                 good.append(m)
 
     if len(good) >= 4:

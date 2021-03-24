@@ -217,8 +217,17 @@ def move_distance(robot, dir, dist=1):
             print('Error in setting up robot')
             return False
     offsets = get_offsets()
+    print(dist)
     pos = dist / wheel_radius
     if dir == 'forward':
+        print(offsets[0])
+        print(offsets[1])
+        print(offsets[2])
+        print(offsets[3])
+        print(offsets[0]+pos)
+        print(offsets[1]+pos)
+        print(offsets[2]+pos)
+        print(offsets[3]+pos)
         gtop_left_motor.setPosition(offsets[0] + pos)
         gtop_right_motor.setPosition(offsets[1] + pos)
         gback_left_motor.setPosition(offsets[2] + pos)
