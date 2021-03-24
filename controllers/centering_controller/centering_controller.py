@@ -34,14 +34,14 @@ class CleaningController(object):
         if self.side_camera.hasRecognition():
             self.side_camera.enable(self.time_step)
             self.side_camera.recognitionEnable(self.time_step)
-        self.camera_resolution = (128,128)
+        self.camera_resolution = (128, 128)
         self.sticker_offset = 0
         self.sticker_image_offset = 0
         self.ds_names = [
             "front distance sensor",
             "back distance sensor",
             "left distance sensor",
-            "right distance sensor"
+            "right distance sensor",
         ]
         self.distance_sensors = self.init_dist()
 
@@ -50,7 +50,7 @@ class CleaningController(object):
 
     # Distance sensor initialization
     def init_dist(self):
-        """ function init_dist
+        """function init_dist
         :return: list of enabled distance sensor objects
         """
         ds = []
@@ -77,12 +77,12 @@ class CleaningController(object):
             hfov = self.front_camera.getFov()
             x, y, z = bd.button_match(image, hfov, dist, self.camera_resolution)
             print(x, y, z)
-            self.arm_controller.set_button_click(0.42, -x , -0.12-y)
+            self.arm_controller.set_button_click(0.42, -x, -0.12 - y)
             print("after set_button_click")
-            mc.move_distance(self.robot, 'forward', z-0.14)
+            mc.move_distance(self.robot, "forward", z - 0.14)
             if counter == 21:
                 self.arm_controller.tuck_in_action()
-            counter+=1
+            counter += 1
 
     def wall_in_front(self, turn_around, stop_dist=STOP_THRESHOLD):
         if self.distance_sensors[0].getValue() < stop_dist:  # check front sensor
@@ -105,7 +105,7 @@ class CleaningController(object):
             sticker_centroid = vc.centroid_detection(self.front_camera)
             cpa = vc.camera_point_angle(field_of_view, image_width, sticker_centroid)
             self.sticker_offset = cpa
-            self.sticker_image_offset = sticker_centroid[0]/image_width
+            self.sticker_image_offset = sticker_centroid[0] / image_width
         except:
             print(self.sticker_offset)
 
@@ -121,24 +121,32 @@ class CleaningController(object):
         temp_l_dist = self.distance_sensors[2].getValue()
         temp_r_dist = self.distance_sensors[3].getValue()
         # useful for chairs and poles but may cause future problems
-        left_dist = temp_l_dist if abs(temp_l_dist-l_dist) < centering_dist_eps*2 else l_dist
-        right_dist = temp_r_dist if abs(temp_r_dist-r_dist) < centering_dist_eps*2 else r_dist
+        left_dist = (
+            temp_l_dist
+            if abs(temp_l_dist - l_dist) < centering_dist_eps * 2
+            else l_dist
+        )
+        right_dist = (
+            temp_r_dist
+            if abs(temp_r_dist - r_dist) < centering_dist_eps * 2
+            else r_dist
+        )
         dist_diff = right_dist - left_dist
         if abs(dist_diff) > centering_dist_eps:
-            print('Moving to Center')
-            mc.move_distance(self.robot, 'side', dist_diff*centering_move_mult)
+            print("Moving to Center")
+            mc.move_distance(self.robot, "side", dist_diff * centering_move_mult)
         else:
-            print('No side movement needed')
-        print(left_dist, right_dist, dist_diff, dist_diff*centering_move_mult)
+            print("No side movement needed")
+        print(left_dist, right_dist, dist_diff, dist_diff * centering_move_mult)
         print("****")
         print("****")
         controller.off_centre_value()
-        if abs(self.sticker_image_offset-0.5) > centering_eps:
-            print('Adjusting Centering')
-            print('sticker_image_offset:', abs(self.sticker_image_offset-0.5))
+        if abs(self.sticker_image_offset - 0.5) > centering_eps:
+            print("Adjusting Centering")
+            print("sticker_image_offset:", abs(self.sticker_image_offset - 0.5))
             mc.fix_centering(self.robot, self.sticker_image_offset)
         else:
-            print('No rotation needed')
+            print("No rotation needed")
             centred = True
         print("****")
         return left_dist, right_dist, centred
@@ -147,47 +155,66 @@ class CleaningController(object):
 # Controller assumes library functions handle their own timesteps
 if __name__ == "__main__":
     controller = CleaningController()
-    robot, bin_controller, dist_sensors = controller.robot, controller.bin_controller, controller.distance_sensors
+    robot, bin_controller, dist_sensors = (
+        controller.robot,
+        controller.bin_controller,
+        controller.distance_sensors,
+    )
     table_check, table_length, distance_to_wall = sc.SideCheck(robot), None, None
-    table_detected, done_cleaning, left_side, centred = False, False, True, False  # flags
+    table_detected, done_cleaning, left_side, centred = (
+        False,
+        False,
+        True,
+        False,
+    )  # flags
     attempts = CLEAN_ATTEMPTS
 
     steps_until_sticker_check = 240
     centering_eps = 0.035  # for rotations to center
     centering_dist_eps = 0.2  # for sideways movement to center
-    centering_move_mult = 1/3  # for sideways movement to center (how much of side diff to move)
+    centering_move_mult = (
+        1 / 3
+    )  # for sideways movement to center (how much of side diff to move)
     l_dist = dist_sensors[2].getValue()
     r_dist = dist_sensors[3].getValue()
 
     while robot.step(controller.time_step) != -1:
         if done_cleaning:  # either completed cleaning both sides or bin is full
             stop_dist = STOP_THRESHOLD if not left_side else 1.5
-            if controller.wall_in_front(not left_side, stop_dist):  # turn around when on right side
-                if left_side: controller.work_on_button()  # detect -> clean -> push button -> pass through door
-                else:         left_side = True
-            else: mc.move_forward(robot)
+            if controller.wall_in_front(
+                not left_side, stop_dist
+            ):  # turn around when on right side
+                if left_side:
+                    controller.work_on_button()  # detect -> clean -> push button -> pass through door
+                else:
+                    left_side = True
+            else:
+                mc.move_forward(robot)
 
         elif not table_detected:
             if robot.step(controller.time_step) % steps_until_sticker_check == 0:
                 l_dist, r_dist, centred = controller.centre(l_dist, r_dist)
-            
-            table_length, pole_length, distance_to_table = table_check.side_check(dist_sensors[2])
+
+            table_length, pole_length, distance_to_table = table_check.side_check(
+                dist_sensors[2]
+            )
             print(dist_sensors[0].getValue())
 
             if table_length:  # if not None or 0 -> table detected
                 table_detected = True
                 table_check.stop_scanning()
 
-                table_length = table_length if table_length < 1 else 1  # TODO remove
                 # print("Table Length:", table_length)
                 print("To table:", distance_to_table)
                 attempts = math.ceil(table_length / HEAD_WIDTH)
                 distance = (table_length / 2) + pole_length
-                mc.move_distance(robot, 'forward', -distance)  # to back edge of table
+                mc.move_distance(robot, "forward", -distance)  # to back edge of table
 
                 # closer_to_table(table_check.params['DISTANCE_TO_WALL'], distance_to_table)
                 move_dist_to_table = distance_to_table - (BIN_LENGTH - 0.05)
-                mc.move_distance(robot, 'side', -move_dist_to_table)  # move bin closer to table
+                mc.move_distance(
+                    robot, "side", -move_dist_to_table
+                )  # move bin closer to table
                 distance_to_wall = dist_sensors[2].getValue()
 
             elif controller.wall_in_front(True):  # turn around
@@ -195,7 +222,9 @@ if __name__ == "__main__":
                     left_side = False  # start on right side after turning
                 else:  # right side
                     done_cleaning = True  # completed both sides
-                    left_side = True  # on left side after turning -> straight to carriage's end
+                    left_side = (
+                        True  # on left side after turning -> straight to carriage's end
+                    )
 
             else:  # business as usual
                 mc.move_forward(robot)
@@ -209,10 +238,10 @@ if __name__ == "__main__":
                 if bin_controller.is_full():
                     done_cleaning = True
                     break
-                if i < attempts-1:
-                    mc.move_distance(robot, 'forward', HEAD_WIDTH)
+                if i < attempts - 1:
+                    mc.move_distance(robot, "forward", HEAD_WIDTH)
             bin_controller.close_bin()
-            mc.move_distance(robot, 'side', move_dist_to_table)
+            mc.move_distance(robot, "side", move_dist_to_table)
             table_check.done_cleaning()
             table_detected = False
             centred = False
