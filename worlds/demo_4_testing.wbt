@@ -34,8 +34,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.015400697442756189 0.8796751599825945 0.4753256056934797 3.084604584166414
-  position -15.296352373817871 9.317410702550646 -17.582821190409813
+  orientation -0.7475418229578732 0.611679253706665 0.2589009724077475 1.0304004217789753
+  position -7.320481038874448 16.17263769911155 0.7065307497145294
 }
 TexturedBackground {
   reflections FALSE
@@ -52,7 +52,7 @@ Floor {
   }
 }
 Solid {
-  translation -15.884 1.02 1.26462
+  translation -15.884 1.02 1.35462
   rotation 1 0 0 -1.5707953071795862
   children [
     Shape {
@@ -74,6 +74,31 @@ Solid {
       }
     }
   ]
+}
+Solid {
+  translation -15.884 1.02 -15.4554
+  rotation 1 0 0 -1.5707953071795862
+  children [
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.05 0.01 0.2
+      }
+    }
+    Shape {
+      appearance PBRAppearance {
+        baseColor 0 0 1
+        metalness 0
+      }
+      geometry Box {
+        size 0.2 0.01 0.05
+      }
+    }
+  ]
+  name "solid(20)"
 }
 DEF chair_transform Transform {
   children [
@@ -746,7 +771,7 @@ DEF wall_robot Robot {
 }
 DEF robot_3_4 Robot {
   translation -15.8501 0.0498043 -13.7915
-  rotation -0.5773502691896258 0.5773502691896258 0.5773502691896258 2.09439
+  rotation 0.5773489358533613 0.5773489358533613 0.5773529358529169 -2.094395307179586
   children [
     DEF base_solid Solid {
       rotation -9.412299999235844e-06 8.589689999302629e-06 0.999999999918813 1.57734
@@ -767,7 +792,7 @@ DEF robot_3_4 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation 0.28020780420480795 -0.20015812549977346 -0.024077640899532852
-            rotation 0.640199477725525 -0.6402571263709971 -0.4245178922626445 3.9445782089584354
+            rotation 0.6401994777255252 -0.640257126370997 -0.4245178922626445 3.9445782089584354
             children [
               Shape {
                 appearance PBRAppearance {
@@ -1346,7 +1371,7 @@ DEF robot_3_4 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation -0.2802746763172137 -0.1993470061903476 -0.026040377944202005
-            rotation -0.6987211483222046 0.698759725036122 0.15337406415278643 2.837122183788844
+            rotation -0.6987211483222046 0.6987597250361219 0.1533740641527864 2.837122183788844
             children [
               Shape {
                 appearance PBRAppearance {
@@ -1860,7 +1885,7 @@ DEF robot_3_4 Robot {
       ]
       endPoint Solid {
         translation -1.2880800000000088e-06 0.15367092446495265 0.71999517946576
-        rotation -0.9998784307830627 -0.014948157144527663 -0.004435792238422229 0.0009693037640715782
+        rotation -0.9998784307830627 -0.014948157144537347 -0.0044357922384251035 0.0009693037640715782
         children [
           DistanceSensor {
             translation -2.97284e-07 0.0099999 0.09
@@ -1950,7 +1975,7 @@ DEF robot_3_4 Robot {
       ]
       endPoint DEF arm_base Solid {
         translation 0 0 0.9599999999999842
-        rotation 0.026859276888087803 0.7068502000880825 0.7068531487377606 3.0878841404269424
+        rotation 0.02685927688808781 0.7068502000880825 0.7068531487377606 3.0878841404269424
         children [
           Gyro {
           }
@@ -1976,8 +2001,8 @@ DEF robot_3_4 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504449940994983e-06 0.3000062241101193 1.320941075165771e-07
-              rotation 0.7983844430110646 0.05841598198262634 -0.5993078125695657 7.052516678690489e-07
+              translation 1.0504449940994975e-06 0.30000622411011896 1.32094107516577e-07
+              rotation 0.7984310506042266 0.05840998643564095 -0.599246302379597 7.052516678690489e-07
               children [
                 DEF sec_1 Shape {
                   appearance PBRAppearance {
@@ -2240,5 +2265,5 @@ DEF robot_3_4 Robot {
   }
   physics Physics {
   }
-  controller "button_image_controller"
+  controller "centering_controller"
 }
