@@ -34,8 +34,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.993731722305428 0.10907169230922098 0.024507754297167894 0.44474392825602266
-  position -15.784728297547213 4.245149255171513 -7.055878863019111
+  orientation -0.6559912752346453 0.48898509611053953 0.5749513219375968 2.123803951437194
+  position -16.56073135049749 8.69039316674935 -13.475176736218835
 }
 TexturedBackground {
   reflections FALSE
@@ -630,7 +630,7 @@ DEF wall_robot Robot {
               }
             ]
           }
-          Shape {
+          DEF door_shape Shape {
             appearance PBRAppearance {
             }
             geometry Box {
@@ -639,6 +639,7 @@ DEF wall_robot Robot {
           }
         ]
         name "solid(3)"
+        boundingObject USE door_shape
       }
     }
     Transform {
@@ -791,7 +792,7 @@ DEF wall_robot Robot {
               }
             ]
           }
-          Shape {
+          DEF door_shape Shape {
             appearance PBRAppearance {
             }
             geometry Box {
@@ -800,6 +801,7 @@ DEF wall_robot Robot {
           }
         ]
         name "solid(3)"
+        boundingObject USE door_shape
       }
     }
     Transform {
@@ -2146,8 +2148,8 @@ DEF robot_3_4 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504449940994966e-06 0.3000062241101186 1.320941075165769e-07
-              rotation 0.7984755856741423 0.058404256593575544 -0.5991875181394277 7.052516678690489e-07
+              translation 1.0504449940994962e-06 0.30000622411011846 1.3209410751657684e-07
+              rotation 0.7985181411150993 0.05839878062489335 -0.5991313384656254 7.052516678690489e-07
               children [
                 DEF sec_1 Shape {
                   appearance PBRAppearance {
