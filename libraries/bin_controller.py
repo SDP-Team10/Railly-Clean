@@ -10,7 +10,7 @@ class BinController(object):
         self.bin_sensor.enable(self.time_step)
 
         self.closed_pos = 0
-        self.opened_pos = 0.5
+        self.opened_pos = 0.45
 
     def open_bin(self):  # 1 rad/s
         self.bin_motor.setPosition(self.opened_pos)
