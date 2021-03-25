@@ -34,8 +34,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.6559912752346453 0.48898509611053953 0.5749513219375968 2.123803951437194
-  position -16.56073135049749 8.69039316674935 -13.475176736218835
+  orientation 0.1800615718785807 0.8056741719592599 0.5643287685120932 3.644832464842603
+  position -16.901312344279795 12.466909142046998 -16.741136913469347
 }
 TexturedBackground {
   reflections FALSE
@@ -916,7 +916,7 @@ DEF wall_robot Robot {
   name "robot(2)"
   controller "test_door_controller"
 }
-DEF robot_3_4 Robot {
+DEF robot_4_1 Robot {
   translation -15.8501 0.0498043 -13.7915
   rotation 0.5773489358533613 0.5773489358533613 0.5773529358529169 -2.094395307179586
   children [
@@ -2032,7 +2032,7 @@ DEF robot_3_4 Robot {
       ]
       endPoint Solid {
         translation -1.2880800000000088e-06 0.15367092446495265 0.71999517946576
-        rotation -0.9998784307830627 -0.014948157144537368 -0.0044357922384251096 0.0009693037640715782
+        rotation -0.9998784307830627 -0.01494815714453737 -0.0044357922384251096 0.0009693037640715782
         children [
           DistanceSensor {
             translation -2.97284e-07 0.0099999 0.09
@@ -2122,7 +2122,7 @@ DEF robot_3_4 Robot {
       ]
       endPoint DEF arm_base Solid {
         translation 0 0 0.9599999999999842
-        rotation 0.026859276888087816 0.7068502000880825 0.7068531487377606 3.0878841404269424
+        rotation 0.026859276888087823 0.7068502000880825 0.7068531487377606 3.0878841404269424
         children [
           Gyro {
           }
@@ -2148,8 +2148,8 @@ DEF robot_3_4 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504449940994962e-06 0.30000622411011846 1.3209410751657684e-07
-              rotation 0.7985181411150993 0.05839878062489335 -0.5991313384656254 7.052516678690489e-07
+              translation 1.0504449940994932e-06 0.3000062241101173 1.3209410751657647e-07
+              rotation 0.7985643701231577 0.05839283103454905 -0.5990702997591975 7.058810759977742e-07
               children [
                 DEF sec_1 Shape {
                   appearance PBRAppearance {
@@ -2302,8 +2302,8 @@ DEF robot_3_4 Robot {
                                     rotation 0 0 -1 1.5708
                                     children [
                                       Solid {
-                                        translation 0.038 0.026 0.0299996
-                                        rotation 0.5773489358556708 0.5773509358554485 -0.5773509358554485 2.0944
+                                        translation 0.038 0.0173397 0.0249996
+                                        rotation 0.6546527684883087 0.6546537684879549 -0.3779658663359857 2.41886
                                         children [
                                           DEF right_head_shape Shape {
                                             appearance PBRAppearance {
@@ -2326,7 +2326,7 @@ DEF robot_3_4 Robot {
                                     children [
                                       Solid {
                                         translation -0.021 0.011 0.02
-                                        rotation -0.35740699927911007 0.8628559982596194 0.35740699927911007 1.71777
+                                        rotation -0.37367192184409687 0.9021228113151699 0.21573995487659084 2.18123
                                         children [
                                           DEF right Shape {
                                             appearance PBRAppearance {
