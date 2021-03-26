@@ -4,6 +4,7 @@
 #  from controller import Robot, Motor, DistanceSensor
 import os
 import sys
+
 sys.path.append(os.path.abspath(os.path.join("..", "..")))
 from libraries import button_detection as bd
 from libraries import arm_controller_trash as arm_controller
@@ -29,7 +30,7 @@ cam.enable(timestep)
 ac = arm_controller.ArmController(robot)
 front_sensor = robot.getDevice("front distance sensor")
 front_sensor.enable(timestep)
-cam_res = (128,128)
+cam_res = (128, 128)
 # You should insert a getDevice-like function in order to get the
 # instance of a device of the robot. Something like:
 #  motor = robot.getMotor('motorname')
@@ -49,13 +50,14 @@ while robot.step(timestep) != -1:
         hfov = cam.getFov()
         x, y, z = bd.button_match(image, hfov, dist, cam_res)
         print(x, y, z)
-        ac.set_button_click(0.42, -x , -0.12-y)
+        mc.move_distance(robot, "forward", z - 0.20)
+        ac.set_button_click(0.42, -x, -0.12 - y)
         print("after set_button_click")
-        mc.move_distance(robot, 'forward', z-0.14)
+        mc.move_distance(robot, "forward", 0.06)
     if counter == 21:
         ac.tuck_in_action()
 
-    counter+=1
+    counter += 1
     # Read the sensors:
     # Enter here functions to read sensor data, like:
     #  val = ds.getValue()
