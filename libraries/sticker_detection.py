@@ -22,11 +22,13 @@ import numpy as np
 
 
 def blob_detection(img):
-    mask = cv2.inRange(img, (0.5, 0, 0), (0.9, 0.3, 0.2))
+    mask = cv2.inRange(img, (0.0, 0.3, 0.3), (0.1, 0.6, 0.6))
     kernel = np.ones((1, 1), np.uint8)
     mask = cv2.dilate(mask, kernel, iterations=3)
     kernel2 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel2, iterations=2)
+    cv2.imshow("win 1", mask)
+    cv2.waitKey(2000)
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     nu = np.zeros(img.shape)
     nu = cv2.drawContours(nu, contours, -1, (0, 0, 255), 1)
@@ -35,16 +37,18 @@ def blob_detection(img):
 
 
 def centroid_detection(cam):
-    img = cam.getImageArray()
-    gbr_img = []
-    for a in range(len(img)):
-        temp = []
-        for b in range(len(img[0])):
-            temp.append([img[b][a][2], img[b][a][1], img[b][a][0]])
-        gbr_img.append(temp)
-    img = np.array(gbr_img, np.uint8)
+    # img = cam.getImageArray()
+    # gbr_img = []
+    # for a in range(len(img)):
+    #     temp = []
+    #     for b in range(len(img[0])):
+    #         temp.append([img[b][a][2], img[b][a][1], img[b][a][0]])
+    #     gbr_img.append(temp)
+    # img = np.array(gbr_img, np.uint8)
+    cam.saveImage("../../images/center_image.png", 100)
+    img = cv2.imread("../../images/center_image.png")
     img = remove_illumination(img)
-    mask = cv2.inRange(img, (0.5, 0, 0), (0.9, 0.3, 0.2))
+    mask = cv2.inRange(img, (0, 0.3, 0.3), (0.1, 0.6, 0.6))
     kernel = np.ones((1, 1), np.uint8)
     mask = cv2.dilate(mask, kernel, iterations=3)
     M = cv2.moments(mask)
@@ -63,7 +67,7 @@ def camera_point_angle(field_of_view, image_width, point_coordinates):
 
 
 def matchsticker(image):
-    template = cv2.imread("../../images/sticker.png")
+    template = cv2.imread("../../images/yellow_sticker.png")
     imgray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
     ret, thresh = cv2.threshold(imgray, 127, 255, 0)
     thresh = cv2.bitwise_not(thresh)
@@ -105,23 +109,29 @@ def remove_illumination(image):
 
 # Press the green button in the gutter to run the script.
 def is_carriage_end(cam):
-    img = cam.getImageArray()
-    gbr_img = []
-    for a in range(len(img)):
-        temp = []
-        for b in range(len(img[0])):
-            temp.append([img[b][a][2], img[b][a][1], img[b][a][0]])
-        gbr_img.append(temp)
-    img = np.array(gbr_img, np.uint8)
+    img = cam.saveImage("../../images/front_image.png", 100)
+    cv2.imread("../../images/front_image.png")
+    # img = cam.getImageArray()
+    # gbr_img = []
+    # for a in range(len(img)):
+    #     temp = []
+    #     for b in range(len(img[0])):
+    #         temp.append([img[b][a][2], img[b][a][1], img[b][a][0]])
+    #     gbr_img.append(temp)
+    # img = np.array(gbr_img, np.uint8)
+    #img = cv2.imread("../images/yellow_sticker.png")
     img = remove_illumination(img)
     cv2.destroyAllWindows()
     blob = blob_detection(img)
-    matches = matchsticker(blob)
+    #matches = matchsticker(blob)
     cv2.destroyAllWindows()
-    return matches
+    #return matches
 
 
 count = 0
+if __name__ == "__main__":
+    cam = None
+    centroid_detection(cam)
 # Main loop:
 # - perform simulation steps until Webots is stopping the controller
 # while robot.step(timestep) != -1:
