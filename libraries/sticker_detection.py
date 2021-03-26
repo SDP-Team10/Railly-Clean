@@ -27,7 +27,7 @@ def blob_detection(img):
     mask = cv2.dilate(mask, kernel, iterations=3)
     kernel2 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3))
     mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel2, iterations=2)
-    cv2.imshow("win 1", mask)
+    # cv2.imshow("win 1", mask)
     cv2.waitKey(2000)
     contours, _ = cv2.findContours(mask, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
     nu = np.zeros(img.shape)
@@ -68,9 +68,7 @@ def camera_point_angle(field_of_view, image_width, point_coordinates):
 
 def matchsticker(image):
     template = cv2.imread("../../images/yellow_sticker.png")
-    imgray = cv2.cvtColor(template, cv2.COLOR_BGR2GRAY)
-    ret, thresh = cv2.threshold(imgray, 127, 255, 0)
-    thresh = cv2.bitwise_not(thresh)
+    thresh = cv2.inRange(template, (0.0, 220, 220), (60, 255, 255))
     kernel = np.ones((5, 5), np.uint8)
     thresh = cv2.dilate(thresh, kernel, iterations=3)
     kernel2 = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (11, 11))
@@ -109,8 +107,8 @@ def remove_illumination(image):
 
 # Press the green button in the gutter to run the script.
 def is_carriage_end(cam):
-    img = cam.saveImage("../../images/front_image.png", 100)
-    cv2.imread("../../images/front_image.png")
+    cam.saveImage("../../images/front_image.png", 100)
+    img = cv2.imread("../../images/front_image.png")
     # img = cam.getImageArray()
     # gbr_img = []
     # for a in range(len(img)):
@@ -119,13 +117,13 @@ def is_carriage_end(cam):
     #         temp.append([img[b][a][2], img[b][a][1], img[b][a][0]])
     #     gbr_img.append(temp)
     # img = np.array(gbr_img, np.uint8)
-    #img = cv2.imread("../images/yellow_sticker.png")
+    # img = cv2.imread("../images/yellow_sticker.png")
     img = remove_illumination(img)
     cv2.destroyAllWindows()
     blob = blob_detection(img)
-    #matches = matchsticker(blob)
+    matches = matchsticker(blob)
     cv2.destroyAllWindows()
-    #return matches
+    return matches
 
 
 count = 0

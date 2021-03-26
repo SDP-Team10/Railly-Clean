@@ -122,8 +122,8 @@ class CleaningController(object):
     def centre(self, l_dist, r_dist):
         centred = False
         print("****")
-        temp_l_dist = self.distance_sensors[2].getValue()
-        temp_r_dist = self.distance_sensors[3].getValue()
+        temp_l_dist = self.distance_sensors[4].getValue()
+        temp_r_dist = self.distance_sensors[5].getValue()
         # useful for chairs and poles but may cause future problems
         left_dist = (
             temp_l_dist
