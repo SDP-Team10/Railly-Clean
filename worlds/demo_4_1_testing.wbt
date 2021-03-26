@@ -34,8 +34,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.9761956194734787 -0.2000526825690919 -0.08379162677559959 5.472574094214433
-  position -15.11394151819513 9.29305230967008 -6.127748799480798
+  orientation 0.4749049574395346 -0.7187909281533506 -0.5077448995349916 4.325378893981976
+  position -12.950080248517573 8.295824740403646 -13.099663276228608
 }
 TexturedBackground {
   reflections FALSE
@@ -335,7 +335,7 @@ DEF chair_transform Transform {
       boundingObject USE table_shape
     }
     Solid {
-      translation -14.91 0.44 -13.34
+      translation -14.91 0.44 -13.39
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -350,7 +350,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -16.8 0.44 -13.34
+      translation -16.8 0.44 -13.38
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -365,7 +365,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -16.8 0.44 -11.38
+      translation -16.8 0.44 -11.42
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -380,7 +380,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -16.8 0.44 -9.39
+      translation -16.8 0.44 -9.43
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -395,7 +395,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -16.8 0.44 -1.6
+      translation -16.8 0.44 -1.62
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -410,7 +410,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -16.8 0.44 -5.56
+      translation -16.8 0.44 -5.6
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -425,7 +425,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -16.8 0.44 -3.55
+      translation -16.8 0.44 -3.6
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -440,7 +440,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -14.92 0.44 -3.55
+      translation -14.92 0.44 -3.6
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -455,7 +455,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -14.92 0.44 -1.6
+      translation -14.92 0.44 -1.64
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -470,7 +470,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -14.96 0.44 -5.56
+      translation -14.96 0.44 -5.6
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -485,7 +485,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -14.92 0.44 -9.39
+      translation -14.92 0.44 -9.43
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -500,7 +500,7 @@ DEF chair_transform Transform {
       boundingObject USE table_support
     }
     Solid {
-      translation -14.91 0.44 -11.38
+      translation -14.91 0.44 -11.42
       children [
         DEF table_support Shape {
           appearance PBRAppearance {
@@ -605,6 +605,7 @@ DEF wall_robot Robot {
           }
           DEF door_shape Shape {
             appearance PBRAppearance {
+              metalness 0
             }
             geometry Box {
               size 1 2.4 0.05
@@ -652,7 +653,6 @@ DEF wall_robot Robot {
           boundingObject USE OuterCircle
           physics Physics {
           }
-          linearVelocity 0 -9.2458206298036e-06 0
         }
         DEF left_arrow Solid {
           translation 0.015 0.01 0
@@ -721,7 +721,6 @@ DEF wall_robot Robot {
           boundingObject USE OuterCircle
           physics Physics {
           }
-          linearVelocity 0 -2.031281916981195e-08 0
         }
       ]
     }
@@ -769,6 +768,7 @@ DEF wall_robot Robot {
           }
           DEF door_shape Shape {
             appearance PBRAppearance {
+              metalness 0
             }
             geometry Box {
               size 1 2.4 0.05
@@ -780,7 +780,7 @@ DEF wall_robot Robot {
       }
     }
     Transform {
-      translation -15.3383 1.20804 1.1402
+      translation -15.6283 1.20804 1.0402
       rotation -1 0 0 1.57079
       children [
         Solid {
@@ -816,7 +816,6 @@ DEF wall_robot Robot {
           boundingObject USE OuterCircle
           physics Physics {
           }
-          linearVelocity 0 -9.2458206298036e-06 0
         }
         DEF left_arrow Solid {
           translation 0.015 0.01 0
@@ -885,7 +884,6 @@ DEF wall_robot Robot {
           boundingObject USE OuterCircle
           physics Physics {
           }
-          linearVelocity 0 -2.031281916981195e-08 0
         }
       ]
     }
@@ -915,8 +913,8 @@ DEF robot_4_1 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation 0.28020780420480795 -0.20015812624452328 -0.024077641027210044
-            rotation 0.6401993765741144 -0.6402570252404691 -0.4245181973300324 3.9445787258812173
+            translation 0.28020780420480795 -0.20015812624452328 -0.024077641027210047
+            rotation 0.6401993765741144 -0.6402570252404691 -0.42451819733003227 3.9445787258812173
             children [
               Shape {
                 appearance PBRAppearance {
@@ -1091,8 +1089,6 @@ DEF robot_4_1 Robot {
               density -1
               mass 0.4
             }
-            linearVelocity 0.00022783226408539672 0.0447173644366854 9.909883936299427e-06
-            angularVelocity 9.856370323606247e-05 1.3364769755153316e-07 -0.004483723409923807
           }
         }
         DEF WHEEL2 HingeJoint {
@@ -1111,7 +1107,7 @@ DEF robot_4_1 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation -0.27971938936073126 0.1989249963337742 -0.024562279675556815
-            rotation 0.6006117507748215 -0.6005911250371886 0.5277838812977975 2.1704473653171865
+            rotation 0.6006117507748215 -0.6005911250371887 0.5277838812977976 2.1704473653171865
             children [
               DEF wheel_shape Shape {
                 appearance PBRAppearance {
@@ -1286,8 +1282,6 @@ DEF robot_4_1 Robot {
               density -1
               mass 0.4
             }
-            linearVelocity 0.00022663473027723603 0.04725377934281148 9.681593983004305e-06
-            angularVelocity 9.829367821907354e-05 1.2754896866832836e-07 -0.0044699761055126495
           }
         }
         DEF WHEEL3 HingeJoint {
@@ -1305,8 +1299,8 @@ DEF robot_4_1 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation 0.27965327393055395 0.20138543955583194 -0.02549861058175617
-            rotation -0.09928923172747585 0.09937278617373728 0.9900841872442142 1.5807880164596817
+            translation 0.27965327393055395 0.20138543955583194 -0.025498610581756172
+            rotation -0.09928923172747593 0.09937278617373728 0.9900841872442142 1.5807880164596817
             children [
               Shape {
                 appearance PBRAppearance {
@@ -1481,8 +1475,6 @@ DEF robot_4_1 Robot {
               density -1
               mass 0.4
             }
-            linearVelocity 0.00022138170023503498 0.04486119372225154 8.910906989683109e-06
-            angularVelocity 9.00789527097979e-05 1.2533483269868638e-07 -0.004485002724210215
           }
         }
         DEF WHEEL4 HingeJoint {
@@ -1676,8 +1668,6 @@ DEF robot_4_1 Robot {
               density -1
               mass 0.4
             }
-            linearVelocity 0.00022001880544752784 0.04730472171338853 9.209086236509554e-06
-            angularVelocity 8.957008500253919e-05 1.3162971295053588e-07 -0.004469348404235233
           }
         }
         DEF base_shape Shape {
@@ -2017,7 +2007,7 @@ DEF robot_4_1 Robot {
       ]
       endPoint Solid {
         translation -1.2880800000000105e-06 0.15367139252798534 0.7199952142070961
-        rotation -0.9998789626837151 -0.014915426722909872 -0.004426062382225709 0.000971431111635421
+        rotation -0.9998789626836785 -0.014915426725160389 -0.004426062382893535 0.000971431111635421
         children [
           DistanceSensor {
             translation -2.97284e-07 0.0099999 0.09
@@ -2090,8 +2080,6 @@ DEF robot_4_1 Robot {
         boundingObject USE door_shape
         physics Physics {
         }
-        linearVelocity 0.003570091858562615 0.04454936003622531 7.970539640374472e-05
-        angularVelocity 9.417995122535351e-05 1.3001416768808977e-07 -0.004497219282244596
       }
     }
     DEF arm_joint HingeJoint {
@@ -2109,7 +2097,7 @@ DEF robot_4_1 Robot {
       ]
       endPoint DEF arm_base Solid {
         translation 0 0 0.9599999999999831
-        rotation 0.026859230607878964 0.706850200967325 0.7068531496170932 3.087884232921015
+        rotation 0.02685923060787897 0.7068502009673252 0.7068531496170933 3.087884232921015
         children [
           Gyro {
           }
@@ -2135,8 +2123,8 @@ DEF robot_4_1 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504449940994521e-06 0.30000622411008443 1.7291016731411987e-07
-              rotation 0.8563255985826395 0.050100893514691526 -0.5140003596118526 8.161702118891029e-07
+              translation 1.0504449940994513e-06 0.3000062241100843 1.7291016731411976e-07
+              rotation 0.8563511118387684 0.0500967891967515 -0.5139582521612835 8.161702118891029e-07
               children [
                 DEF sec_1 Shape {
                   appearance PBRAppearance {
@@ -2179,8 +2167,8 @@ DEF robot_4_1 Robot {
                           }
                         ]
                         endPoint DEF sec_3 Solid {
-                          translation 1.5298890438941654e-06 0.003659453909661131 -0.05573983956404595
-                          rotation -0.9999999999959723 -1.5141667184619974e-06 2.4004917786220955e-06 2.8999998757903374
+                          translation 1.529889043894167e-06 0.003659453909661131 -0.05573983956404595
+                          rotation -0.9999999999959727 -1.5141243635558101e-06 2.400424631059778e-06 2.8999998757903374
                           children [
                             HingeJoint {
                               jointParameters HingeJointParameters {
@@ -2196,7 +2184,7 @@ DEF robot_4_1 Robot {
                                 }
                               ]
                               endPoint DEF head Solid {
-                                translation 8.913590000000127e-07 0.3088916161530436 0.02192173276387368
+                                translation 8.913590000000123e-07 0.30889161615304356 0.02192173276387367
                                 rotation 1 0 0 0.27707194507657107
                                 children [
                                   Pen {
@@ -2247,8 +2235,6 @@ DEF robot_4_1 Robot {
                                       0 0 0
                                       5000 5000 0
                                     ]
-                                    linearVelocity 0.007552969108356424 0.04445983983501316 0.00016443236966808694
-                                    angularVelocity 9.568523089219426e-05 6.459834907384874e-07 -0.004480600945213472
                                   }
                                   DEF Pointer_head Solid {
                                     translation -0.175 1.46928e-07 0.03
@@ -2346,8 +2332,6 @@ DEF robot_4_1 Robot {
                                 physics Physics {
                                   density 100
                                 }
-                                linearVelocity 0.007306237548344808 0.044498734507101595 0.0001591687686933524
-                                angularVelocity 9.568523146372765e-05 6.459834999481897e-07 -0.0044806009451019025
                               }
                             }
                             DEF sec_3_shape Shape {
@@ -2363,8 +2347,6 @@ DEF robot_4_1 Robot {
                           physics Physics {
                             density 100
                           }
-                          linearVelocity 0.005964892067811324 0.044789295852570625 0.0001306272188315393
-                          angularVelocity 9.543343967995464e-05 6.450295252221632e-07 -0.004480560210542514
                         }
                       }
                       DEF sec_2 Shape {
@@ -2380,8 +2362,6 @@ DEF robot_4_1 Robot {
                     physics Physics {
                       density 100
                     }
-                    linearVelocity 0.005945827525971878 0.04504848844202679 0.0001301963629455288
-                    angularVelocity 9.51605245909402e-05 6.44008901805985e-07 -0.004480232414858724
                   }
                 }
               ]
@@ -2389,8 +2369,6 @@ DEF robot_4_1 Robot {
               physics Physics {
                 density 100
               }
-              linearVelocity 0.005980039089237159 0.045214729369697726 0.0001310119661297372
-              angularVelocity 9.485110085395915e-05 6.428452242606599e-07 -0.00447943865962035
             }
           }
         ]
@@ -2398,8 +2376,6 @@ DEF robot_4_1 Robot {
         boundingObject USE base_shape
         physics Physics {
         }
-        linearVelocity 0.004636118148886705 0.04523449280863032 0.00010255461653923153
-        angularVelocity 9.4537658160412e-05 6.416826785720733e-07 -0.004478570036235916
       }
     }
   ]
@@ -2412,8 +2388,6 @@ DEF robot_4_1 Robot {
   physics Physics {
   }
   controller "centering_controller"
-  linearVelocity 0.0009900651153230623 0.045322614206901014 2.554315278529147e-05
-  angularVelocity 9.417832885862907e-05 1.2958463311730048e-07 -0.004476978363542317
 }
 DEF train_chair Transform {
   translation -14.91 0.03 -14.91
