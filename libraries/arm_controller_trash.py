@@ -37,7 +37,7 @@ class ArmController(object):
         self.table_bottom_sec_1 = 0.84  # The edge of the table
         self.table_top_sec_2 = 0
         self.table_bottom_sec_2 = 2.3  # The edge of the table
-        self.last_4_positions = deque([], maxlen=4)
+        self.last_4_positions = deque([], maxlen=8)
         self.sec_1_length = 0.5
         self.sec_2_length = 0.5
         self.sec_3_length = 0.5
@@ -105,7 +105,9 @@ class ArmController(object):
             self.rotational_motors[2].setVelocity(0.5)
             self.rotational_motors[3].setVelocity(0.5)
             self.rotational_motors[4].setVelocity(0.8)
+            counter = 0
             while self.robot.step(self.time_step) != -1:
+
                 # print("UNDER PRESSURE: ",self.pressure_sensors[0].getValue())
                 self.last_4_positions.append(
                     [
@@ -115,14 +117,14 @@ class ArmController(object):
                         self.position_sensors[4].getValue(),
                     ]
                 )
-                if self.is_stationary(self.last_4_positions):
+                if self.is_stationary(self.last_4_positions) or counter >= 6:
                     d_x = d_x + 0.005
                     # print("stationary")
                     break
-
                 if not tuck_in:
                     if self.pressure_sensors[0].getValue() > 10.0:
-                        d_x = d_x + 0.001
+                        counter +=1
+                        d_x = d_x + 0.001*counter
                         dq = kinematics.all_joints(
                             d_x,
                             d_y,
@@ -215,7 +217,7 @@ class ArmController(object):
 
     def is_stationary(self, last_4_joint_positions):
         temp = last_4_joint_positions.copy()
-        if len(temp) == 4:
+        if len(temp) == 8:
             last_joints = temp.pop()
             while len(temp) > 0:
                 next_joints = temp.pop()
