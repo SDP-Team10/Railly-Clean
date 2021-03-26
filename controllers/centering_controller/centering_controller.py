@@ -73,7 +73,7 @@ class CleaningController(object):
 
     def work_on_button(self):
         counter = 0
-        while self.robot.step(self.timestep) != -1:
+        while self.robot.step(self.time_step) != -1:
             dist = self.distance_sensors[0].getValue()
             self.front_camera.saveImage("bttn_img.png", 100)
             image = cv2.imread("bttn_img.png")
@@ -176,19 +176,25 @@ if __name__ == "__main__":
     steps_until_sticker_check = 240
     centering_eps = 0.035  # for rotations to center
     centering_dist_eps = 0.2  # for sideways movement to center
-    centering_move_mult = (1/3)  # for sideways movement to center (how much of side diff to move)
+    centering_move_mult = (
+        1 / 3
+    )  # for sideways movement to center (how much of side diff to move)
     l_dist = dist_sensors[2].getValue()
     r_dist = dist_sensors[3].getValue()
     lh_dist = dist_sensors[4].getValue()
     rh_dist = dist_sensors[5].getValue()
 
     while robot.step(controller.time_step) != -1:
-        if robot.step(controller.time_step) % steps_until_sticker_check == 0:  # centre unless cleaning
+        if (
+            robot.step(controller.time_step) % steps_until_sticker_check == 0
+        ):  # centre unless cleaning
             if done_cleaning or not table_detected:
                 lh_dist, rh_dist, centred = controller.centre(lh_dist, rh_dist)
 
         if done_cleaning:  # either completed cleaning both sides or bin is full
-            if controller.wall_in_front(not left_side, BUTTON_STOP_THRESHOLD):  # turn around when on right side
+            if controller.wall_in_front(
+                not left_side, BUTTON_STOP_THRESHOLD
+            ):  # turn around when on right side
                 controller.work_on_button()
                 if not left_side:
                     left_side = True
@@ -196,7 +202,9 @@ if __name__ == "__main__":
                 mc.move_forward(robot)  # go straight to end of carriage
 
         elif not table_detected:  # not done cleaning, check for table
-            table_length, pole_length, distance_to_table = table_check.side_check(dist_sensors[2])
+            table_length, pole_length, distance_to_table = table_check.side_check(
+                dist_sensors[2]
+            )
             print(dist_sensors[0].getValue())
             stop_distance = STOP_THRESHOLD if left_side else BUTTON_STOP_THRESHOLD
 
@@ -213,7 +221,9 @@ if __name__ == "__main__":
 
                 # closer_to_table(table_check.params['DISTANCE_TO_WALL'], distance_to_table)
                 move_dist_to_table = distance_to_table - (BIN_LENGTH - 0.05)
-                mc.move_distance(robot, "side", -move_dist_to_table)  # move bin closer to table
+                mc.move_distance(
+                    robot, "side", -move_dist_to_table
+                )  # move bin closer to table
                 distance_to_wall = dist_sensors[2].getValue()
 
             elif controller.wall_in_front(True, stop_distance):  # turn around
