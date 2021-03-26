@@ -6,7 +6,6 @@ WorldInfo {
     "The robot can be equiped with various sensors (including the Microsoft Kinect) and configured with zero, one or two arms."
   ]
   title "KUKA youBot"
-  basicTimeStep 48
   coordinateSystem "NUE"
   contactProperties [
     ContactProperties {
@@ -34,8 +33,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.4749049574395346 -0.7187909281533506 -0.5077448995349916 4.325378893981976
-  position -12.950080248517573 8.295824740403646 -13.099663276228608
+  orientation 0.9921164029457444 -0.11364873880032544 -0.05281105163782117 5.40712034163561
+  position -14.524807459628516 14.843304587498366 -4.027268455965775
 }
 TexturedBackground {
   reflections FALSE
@@ -579,6 +578,115 @@ DEF wall_robot Robot {
         translation -15.86 1.2 -15.45
         rotation 0 1 0 3.14159
         children [
+          Transform {
+            translation -0.34 0.05 -0.0300009
+            rotation 1 0 0 -1.5707953071795862
+            children [
+              Solid {
+                children [
+                  DEF OuterCircle Shape {
+                    appearance PBRAppearance {
+                      baseColor 0.0352941 0.317647 0.168627
+                      metalness 0
+                    }
+                    geometry Cylinder {
+                      height 0.015
+                      radius 0.05
+                    }
+                  }
+                ]
+                name "solid(3)"
+                boundingObject USE OuterCircle
+              }
+              TouchSensor {
+                translation -6.217488124349302e-07 0.0009822014626319486 9.511850285193191e-08
+                rotation 0.007486443298713753 0.001606018259448629 0.9999706865064023 1.8227888374215625e-07
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0.854902 0.854902 0.854902
+                    }
+                    geometry Cylinder {
+                      height 0.02
+                      radius 0.03
+                    }
+                  }
+                ]
+                name "button_sensor"
+                boundingObject USE OuterCircle
+                physics Physics {
+                }
+              }
+              DEF left_arrow Solid {
+                translation 0.015 0.01 0
+                rotation 1 0 0 1.5708
+                scale 0.13 0.13 0.13
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0 0 0
+                      metalness 0
+                    }
+                    geometry IndexedFaceSet {
+                      coord Coordinate {
+                        point [
+                          -0.016272 0.057538 -0.02
+                          0.026209 0.015388 -0.02
+                          -0.083277 0.015312 -0.02
+                          -0.083644 -0.014357 -0.02
+                          0.027261 -0.014327 -0.02
+                          -0.018454 -0.057874 -0.02
+                          0.025324 -0.057692 -0.02
+                          0.083733 0.000784 -0.02
+                          0.02544 0.057485 -0.02
+                        ]
+                      }
+                      coordIndex [
+                        1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
+                      ]
+                    }
+                  }
+                ]
+                name "solid(1)"
+                boundingObject USE OuterCircle
+              }
+              DEF right_arrow Solid {
+                translation -0.009998683260482366 0.009999868063053086 -3.028984196795648e-08
+                rotation 3.6489274662189142e-09 -0.7071082810723579 0.7071052812975557 3.1415900005160626
+                scale 0.13 0.13 0.13
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0 0 0
+                      metalness 0
+                    }
+                    geometry IndexedFaceSet {
+                      coord Coordinate {
+                        point [
+                          -0.016272 0.057538 -0.02
+                          0.026209 0.015388 -0.02
+                          -0.083277 0.015312 -0.02
+                          -0.083644 -0.014357 -0.02
+                          0.027261 -0.014327 -0.02
+                          -0.018454 -0.057874 -0.02
+                          0.025324 -0.057692 -0.02
+                          0.083733 0.000784 -0.02
+                          0.02544 0.057485 -0.02
+                        ]
+                      }
+                      coordIndex [
+                        1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
+                      ]
+                    }
+                  }
+                ]
+                name "solid(2)"
+                boundingObject USE OuterCircle
+                physics Physics {
+                }
+              }
+            ]
+          }
           Solid {
             translation 0 4.07845e-08 -0.04
             rotation 1 0 0 -1.5707953071795862
@@ -615,114 +723,6 @@ DEF wall_robot Robot {
         name "solid(3)"
         boundingObject USE door_shape
       }
-    }
-    Transform {
-      translation -15.5283 1.20809 -15.4198
-      rotation 1 0 0 1.5708
-      children [
-        Solid {
-          children [
-            DEF OuterCircle Shape {
-              appearance PBRAppearance {
-                baseColor 0.0352941 0.317647 0.168627
-                metalness 0
-              }
-              geometry Cylinder {
-                height 0.015
-                radius 0.05
-              }
-            }
-          ]
-          boundingObject USE OuterCircle
-        }
-        TouchSensor {
-          translation -6.217488124349302e-07 0.0009822014626319486 9.511850285193191e-08
-          rotation 0.007486443298713753 0.001606018259448629 0.9999706865064023 1.8227888374215625e-07
-          children [
-            Shape {
-              appearance PBRAppearance {
-                baseColor 0.854902 0.854902 0.854902
-              }
-              geometry Cylinder {
-                height 0.02
-                radius 0.03
-              }
-            }
-          ]
-          name "button_sensor"
-          boundingObject USE OuterCircle
-          physics Physics {
-          }
-        }
-        DEF left_arrow Solid {
-          translation 0.015 0.01 0
-          rotation 1 0 0 1.5708
-          scale 0.13 0.13 0.13
-          children [
-            Shape {
-              appearance PBRAppearance {
-                baseColor 0 0 0
-                metalness 0
-              }
-              geometry IndexedFaceSet {
-                coord Coordinate {
-                  point [
-                    -0.016272 0.057538 -0.02
-                    0.026209 0.015388 -0.02
-                    -0.083277 0.015312 -0.02
-                    -0.083644 -0.014357 -0.02
-                    0.027261 -0.014327 -0.02
-                    -0.018454 -0.057874 -0.02
-                    0.025324 -0.057692 -0.02
-                    0.083733 0.000784 -0.02
-                    0.02544 0.057485 -0.02
-                  ]
-                }
-                coordIndex [
-                  1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
-                ]
-              }
-            }
-          ]
-          name "solid(1)"
-          boundingObject USE OuterCircle
-        }
-        DEF right_arrow Solid {
-          translation -0.009998683260482366 0.009999868063053086 -3.028984196795648e-08
-          rotation 3.6489274662189142e-09 -0.7071082810723579 0.7071052812975557 3.1415900005160626
-          scale 0.13 0.13 0.13
-          children [
-            Shape {
-              appearance PBRAppearance {
-                baseColor 0 0 0
-                metalness 0
-              }
-              geometry IndexedFaceSet {
-                coord Coordinate {
-                  point [
-                    -0.016272 0.057538 -0.02
-                    0.026209 0.015388 -0.02
-                    -0.083277 0.015312 -0.02
-                    -0.083644 -0.014357 -0.02
-                    0.027261 -0.014327 -0.02
-                    -0.018454 -0.057874 -0.02
-                    0.025324 -0.057692 -0.02
-                    0.083733 0.000784 -0.02
-                    0.02544 0.057485 -0.02
-                  ]
-                }
-                coordIndex [
-                  1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
-                ]
-              }
-            }
-          ]
-          name "solid(2)"
-          boundingObject USE OuterCircle
-          physics Physics {
-          }
-        }
-      ]
     }
   ]
   controller "test_door_controller"
@@ -742,6 +742,115 @@ DEF wall_robot Robot {
       endPoint Solid {
         translation -15.99 1.2 1.07
         children [
+          Transform {
+            translation -0.26 1.89804e-07 -0.03
+            rotation -1 0 0 1.57079
+            children [
+              Solid {
+                children [
+                  DEF OuterCircle Shape {
+                    appearance PBRAppearance {
+                      baseColor 0.0352941 0.317647 0.168627
+                      metalness 0
+                    }
+                    geometry Cylinder {
+                      height 0.015
+                      radius 0.05
+                    }
+                  }
+                ]
+                name "solid(3)"
+                boundingObject USE OuterCircle
+              }
+              TouchSensor {
+                translation -6.217488124349302e-07 0.000982201452648157 -1.9019379091655964e-06
+                rotation 0.007486442689643617 0.001606018259455759 0.9999706865109622 1.8227888374193216e-07
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0.854902 0.854902 0.854902
+                    }
+                    geometry Cylinder {
+                      height 0.02
+                      radius 0.03
+                    }
+                  }
+                ]
+                name "button_sensor"
+                boundingObject USE OuterCircle
+                physics Physics {
+                }
+              }
+              DEF left_arrow Solid {
+                translation 0.015 0.01 0
+                rotation 1 0 0 1.5708
+                scale 0.13 0.13 0.13
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0 0 0
+                      metalness 0
+                    }
+                    geometry IndexedFaceSet {
+                      coord Coordinate {
+                        point [
+                          -0.016272 0.057538 -0.02
+                          0.026209 0.015388 -0.02
+                          -0.083277 0.015312 -0.02
+                          -0.083644 -0.014357 -0.02
+                          0.027261 -0.014327 -0.02
+                          -0.018454 -0.057874 -0.02
+                          0.025324 -0.057692 -0.02
+                          0.083733 0.000784 -0.02
+                          0.02544 0.057485 -0.02
+                        ]
+                      }
+                      coordIndex [
+                        1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
+                      ]
+                    }
+                  }
+                ]
+                name "solid(1)"
+                boundingObject USE OuterCircle
+              }
+              DEF right_arrow Solid {
+                translation -0.009998683260482366 0.009999868063031991 -3.467741072071817e-08
+                rotation 3.6489274662188084e-09 -0.7071082810723579 0.7071052812975556 3.141590000516063
+                scale 0.13 0.13 0.13
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0 0 0
+                      metalness 0
+                    }
+                    geometry IndexedFaceSet {
+                      coord Coordinate {
+                        point [
+                          -0.016272 0.057538 -0.02
+                          0.026209 0.015388 -0.02
+                          -0.083277 0.015312 -0.02
+                          -0.083644 -0.014357 -0.02
+                          0.027261 -0.014327 -0.02
+                          -0.018454 -0.057874 -0.02
+                          0.025324 -0.057692 -0.02
+                          0.083733 0.000784 -0.02
+                          0.02544 0.057485 -0.02
+                        ]
+                      }
+                      coordIndex [
+                        1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
+                      ]
+                    }
+                  }
+                ]
+                name "solid(2)"
+                boundingObject USE OuterCircle
+                physics Physics {
+                }
+              }
+            ]
+          }
           Solid {
             translation 0 4.07845e-08 -0.04
             rotation 1 0 0 -1.5707953071795862
@@ -778,114 +887,6 @@ DEF wall_robot Robot {
         name "solid(3)"
         boundingObject USE door_shape
       }
-    }
-    Transform {
-      translation -15.6283 1.20804 1.0402
-      rotation -1 0 0 1.57079
-      children [
-        Solid {
-          children [
-            DEF OuterCircle Shape {
-              appearance PBRAppearance {
-                baseColor 0.0352941 0.317647 0.168627
-                metalness 0
-              }
-              geometry Cylinder {
-                height 0.015
-                radius 0.05
-              }
-            }
-          ]
-          boundingObject USE OuterCircle
-        }
-        TouchSensor {
-          translation -6.217488124349302e-07 0.000982201452648157 -1.9019379091655964e-06
-          rotation 0.007486442689643617 0.001606018259455759 0.9999706865109622 1.8227888374193216e-07
-          children [
-            Shape {
-              appearance PBRAppearance {
-                baseColor 0.854902 0.854902 0.854902
-              }
-              geometry Cylinder {
-                height 0.02
-                radius 0.03
-              }
-            }
-          ]
-          name "button_sensor"
-          boundingObject USE OuterCircle
-          physics Physics {
-          }
-        }
-        DEF left_arrow Solid {
-          translation 0.015 0.01 0
-          rotation 1 0 0 1.5708
-          scale 0.13 0.13 0.13
-          children [
-            Shape {
-              appearance PBRAppearance {
-                baseColor 0 0 0
-                metalness 0
-              }
-              geometry IndexedFaceSet {
-                coord Coordinate {
-                  point [
-                    -0.016272 0.057538 -0.02
-                    0.026209 0.015388 -0.02
-                    -0.083277 0.015312 -0.02
-                    -0.083644 -0.014357 -0.02
-                    0.027261 -0.014327 -0.02
-                    -0.018454 -0.057874 -0.02
-                    0.025324 -0.057692 -0.02
-                    0.083733 0.000784 -0.02
-                    0.02544 0.057485 -0.02
-                  ]
-                }
-                coordIndex [
-                  1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
-                ]
-              }
-            }
-          ]
-          name "solid(1)"
-          boundingObject USE OuterCircle
-        }
-        DEF right_arrow Solid {
-          translation -0.009998683260482366 0.009999868063031991 -3.467741072071817e-08
-          rotation 3.6489274662188084e-09 -0.7071082810723579 0.7071052812975556 3.141590000516063
-          scale 0.13 0.13 0.13
-          children [
-            Shape {
-              appearance PBRAppearance {
-                baseColor 0 0 0
-                metalness 0
-              }
-              geometry IndexedFaceSet {
-                coord Coordinate {
-                  point [
-                    -0.016272 0.057538 -0.02
-                    0.026209 0.015388 -0.02
-                    -0.083277 0.015312 -0.02
-                    -0.083644 -0.014357 -0.02
-                    0.027261 -0.014327 -0.02
-                    -0.018454 -0.057874 -0.02
-                    0.025324 -0.057692 -0.02
-                    0.083733 0.000784 -0.02
-                    0.02544 0.057485 -0.02
-                  ]
-                }
-                coordIndex [
-                  1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
-                ]
-              }
-            }
-          ]
-          name "solid(2)"
-          boundingObject USE OuterCircle
-          physics Physics {
-          }
-        }
-      ]
     }
   ]
   name "robot(2)"
@@ -2123,8 +2124,8 @@ DEF robot_4_1 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504449940994513e-06 0.3000062241100843 1.7291016731411976e-07
-              rotation 0.8563511118387684 0.0500967891967515 -0.5139582521612835 8.161702118891029e-07
+              translation 1.0504449940994509e-06 0.30000622411008426 1.7291016731411973e-07
+              rotation 0.8563735879872418 0.05009317307842803 -0.5139211532996012 8.161702118891029e-07
               children [
                 DEF sec_1 Shape {
                   appearance PBRAppearance {
