@@ -222,7 +222,7 @@ if __name__ == "__main__":
                 mc.move_distance(
                     robot, "side", -move_dist_to_table
                 )  # move bin closer to table
-                distance_to_wall = dist_sensors[2].getValue()
+                distance_to_wall = dist_sensors[1].getValue()
 
             elif controller.wall_in_front(True, stop_distance):  # turn around
                 if not left_side:  # right side
