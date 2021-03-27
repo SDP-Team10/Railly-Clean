@@ -6,6 +6,7 @@ WorldInfo {
     "The robot can be equiped with various sensors (including the Microsoft Kinect) and configured with zero, one or two arms."
   ]
   title "KUKA youBot"
+  basicTimeStep 48
   coordinateSystem "NUE"
   contactProperties [
     ContactProperties {
@@ -1108,7 +1109,7 @@ DEF robot_4_1 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation -0.27971938936073126 0.1989249963337742 -0.024562279675556815
-            rotation 0.6006117507748215 -0.6005911250371887 0.5277838812977976 2.1704473653171865
+            rotation 0.6006117507748215 -0.6005911250371886 0.5277838812977975 2.1704473653171865
             children [
               DEF wheel_shape Shape {
                 appearance PBRAppearance {
@@ -1301,7 +1302,7 @@ DEF robot_4_1 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation 0.27965327393055395 0.20138543955583194 -0.025498610581756172
-            rotation -0.09928923172747593 0.09937278617373728 0.9900841872442142 1.5807880164596817
+            rotation -0.09928923172747592 0.09937278617373742 0.9900841872442142 1.5807880164596817
             children [
               Shape {
                 appearance PBRAppearance {
@@ -2008,7 +2009,7 @@ DEF robot_4_1 Robot {
       ]
       endPoint Solid {
         translation -1.2880800000000105e-06 0.15367139252798534 0.7199952142070961
-        rotation -0.9998789626836785 -0.014915426725160389 -0.004426062382893535 0.000971431111635421
+        rotation -0.9998789626836786 -0.014915426725160419 -0.004426062382893544 0.000971431111635421
         children [
           DistanceSensor {
             translation -2.97284e-07 0.0099999 0.09
@@ -2098,7 +2099,7 @@ DEF robot_4_1 Robot {
       ]
       endPoint DEF arm_base Solid {
         translation 0 0 0.9599999999999831
-        rotation 0.02685923060787897 0.7068502009673252 0.7068531496170933 3.087884232921015
+        rotation 0.026859230607878967 0.7068502009673251 0.7068531496170931 3.087884232921015
         children [
           Gyro {
           }
@@ -2124,8 +2125,8 @@ DEF robot_4_1 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504449940994509e-06 0.30000622411008426 1.7291016731411973e-07
-              rotation 0.8563735879872418 0.05009317307842803 -0.5139211532996012 8.161702118891029e-07
+              translation 1.05044499409945e-06 0.30000622411008415 1.7291016731411963e-07
+              rotation 0.8563933892641166 0.05008998701701095 -0.5138884665229942 8.161702118891029e-07
               children [
                 DEF sec_1 Shape {
                   appearance PBRAppearance {
@@ -2168,7 +2169,7 @@ DEF robot_4_1 Robot {
                           }
                         ]
                         endPoint DEF sec_3 Solid {
-                          translation 1.529889043894167e-06 0.003659453909661131 -0.05573983956404595
+                          translation 1.529889043894168e-06 0.003659453909661131 -0.05573983956404595
                           rotation -0.9999999999959727 -1.5141243635558101e-06 2.400424631059778e-06 2.8999998757903374
                           children [
                             HingeJoint {
@@ -2185,7 +2186,7 @@ DEF robot_4_1 Robot {
                                 }
                               ]
                               endPoint DEF head Solid {
-                                translation 8.913590000000123e-07 0.30889161615304356 0.02192173276387367
+                                translation 8.913590000000118e-07 0.3088916161530435 0.021921732763873658
                                 rotation 1 0 0 0.27707194507657107
                                 children [
                                   Pen {
