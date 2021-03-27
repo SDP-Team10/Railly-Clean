@@ -201,7 +201,7 @@ if __name__ == "__main__":
 
         elif not table_detected:  # not done cleaning, check for table
             table_length, pole_length, distance_to_table = table_check.side_check(
-                dist_sensors[2]
+                dist_sensors[1]
             )
             print(dist_sensors[0].getValue())
             stop_distance = STOP_THRESHOLD if left_side else BUTTON_STOP_THRESHOLD
