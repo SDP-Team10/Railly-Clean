@@ -40,7 +40,9 @@ class CleaningController(object):
         self.sticker_image_offset = 0
         self.ds_names = [
             "front distance sensor",
+            "back distance sensor",
             "left distance sensor",
+            "right distance sensor",
             "left_high_sensor",
             "right_high_sensor",
         ]
@@ -119,8 +121,8 @@ class CleaningController(object):
     def centre(self, l_dist, r_dist):
         centred = False
         print("****")
-        temp_l_dist = self.distance_sensors[2].getValue()
-        temp_r_dist = self.distance_sensors[3].getValue()
+        temp_l_dist = self.distance_sensors[4].getValue()
+        temp_r_dist = self.distance_sensors[5].getValue()
         if math.isnan(l_dist) or math.isnan(r_dist):
             left_dist = temp_l_dist
             right_dist = temp_r_dist
@@ -201,7 +203,7 @@ if __name__ == "__main__":
 
         elif not table_detected:  # not done cleaning, check for table
             table_length, pole_length, distance_to_table = table_check.side_check(
-                dist_sensors[1]
+                dist_sensors[2]
             )
             print(dist_sensors[0].getValue())
             stop_distance = STOP_THRESHOLD if left_side else BUTTON_STOP_THRESHOLD
