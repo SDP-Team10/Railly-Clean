@@ -1,0 +1,13 @@
+#VRML_OBJ R2021a utf8
+Solid {
+  children [
+    Shape {
+      appearance PBRAppearance {
+      }
+      geometry Box {
+        size 0.4 0.4 0.2
+      }
+    }
+  ]
+  name "solid(4)"
+}
