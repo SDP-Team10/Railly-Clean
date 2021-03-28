@@ -14,9 +14,9 @@ from controller import Robot
 import cv2
 
 
-TIME_STEP = 32  # this or robot.getBasicTimeStep()
-STOP_THRESHOLD = 1
-BUTTON_STOP_THRESHOLD = 1.5
+POSS_TIME_STEP = 32  # this or robot.getBasicTimeStep()
+# STOP_THRESHOLD = 1
+BUTTON_STOP_THRESHOLD = 1.13
 TABLE_WIDTH = 1  # param
 HEAD_WIDTH = 0.25  # param
 BIN_LENGTH = 0.35  # param
@@ -25,7 +25,6 @@ CLEAN_ATTEMPTS = int(TABLE_WIDTH // HEAD_WIDTH)
 
 class CleaningController(object):
     def __init__(self):
-        # self.camera = self.robot.getDevice("front_camera")
         self.robot = Robot()
         self.time_step = int(self.robot.getBasicTimeStep())
 
@@ -40,7 +39,9 @@ class CleaningController(object):
         self.sticker_image_offset = 0
         self.ds_names = [
             "front distance sensor",
+            "back distance sensor",
             "left distance sensor",
+            "right distance sensor",
             "left_high_sensor",
             "right_high_sensor",
         ]
@@ -70,29 +71,25 @@ class CleaningController(object):
         self.arm_controller.sweep(dist_to_wall, desired_x)
 
     def work_on_button(self):
-        counter = 0
-        while self.robot.step(self.time_step) != -1:
-            dist = self.distance_sensors[0].getValue()
-            self.front_camera.saveImage("bttn_img.png", 100)
-            image = cv2.imread("bttn_img.png")
-            hfov = self.front_camera.getFov()
-            x, y, z = bd.button_match(image, hfov, dist, self.camera_resolution)
-            print(x, y, z)
-            self.arm_controller.set_button_click(0.42, -x, -0.12 - y)
-            print("after set_button_click")
-            mc.move_distance(self.robot, "forward", z - 0.14)
-            if counter == 21:
-                self.arm_controller.tuck_in_action()
-            counter += 1
+        dist = self.distance_sensors[0].getValue()
+        self.front_camera.saveImage("bttn_img.png", 100)
+        image = cv2.imread("bttn_img.png")
+        hfov = self.front_camera.getFov()
+        x, y, z = bd.button_match(image, hfov, dist, self.camera_resolution)
+        print(x, y, z)
+        mc.move_distance(self.robot, "forward", z-0.4)
+        self.arm_controller.set_button_click(0.42, -x, -0.12 - y)
+        print("after set_button_click")
+        mc.move_distance(self.robot, "forward", 0.26)
+        self.arm_controller.tuck_in_action()
+        self.robot.getDevice("base_motor").setPosition(0)
 
-    def wall_in_front(self, turn_around, stop_dist):
-        if self.distance_sensors[0].getValue() < stop_dist:  # check front sensor
+    def wall_in_front(self):
+        if self.distance_sensors[0].getValue() < BUTTON_STOP_THRESHOLD:  # check front sensor
             print("Detected wall in front")
             mc.stop(self.robot)
             if vc.is_carriage_end(self.front_camera):
                 print("End of carriage detected")
-                if turn_around:
-                    mc.turn_angle(self.robot, 180)
                 return True
         return False
 
@@ -119,8 +116,8 @@ class CleaningController(object):
     def centre(self, l_dist, r_dist):
         centred = False
         print("****")
-        temp_l_dist = self.distance_sensors[2].getValue()
-        temp_r_dist = self.distance_sensors[3].getValue()
+        temp_l_dist = self.distance_sensors[4].getValue()
+        temp_r_dist = self.distance_sensors[5].getValue()
         if math.isnan(l_dist) or math.isnan(r_dist):
             left_dist = temp_l_dist
             right_dist = temp_r_dist
@@ -176,9 +173,7 @@ if __name__ == "__main__":
     steps_until_sticker_check = 240
     centering_eps = 0.035  # for rotations to center
     centering_dist_eps = 0.2  # for sideways movement to center
-    centering_move_mult = (
-        1 / 3
-    )  # for sideways movement to center (how much of side diff to move)
+    centering_move_mult = 1/3  # for sideways movement to center (how much of side diff to move)
     l_dist = dist_sensors[2].getValue()
     r_dist = dist_sensors[3].getValue()
 
@@ -190,21 +185,19 @@ if __name__ == "__main__":
                 l_dist, r_dist, centred = controller.centre(l_dist, r_dist)
 
         if done_cleaning:  # either completed cleaning both sides or bin is full
-            if controller.wall_in_front(
-                not left_side, BUTTON_STOP_THRESHOLD
-            ):  # turn around when on right side
+            if controller.wall_in_front():  # turn around when on right side
                 controller.work_on_button()
-                if not left_side:
-                    left_side = True
+                if left_side:
+                    mc.turn_angle(robot, 180)
+                    left_side = False
             else:
                 mc.move_forward(robot)  # go straight to end of carriage
 
         elif not table_detected:  # not done cleaning, check for table
             table_length, pole_length, distance_to_table = table_check.side_check(
-                dist_sensors[1]
+                dist_sensors[2]
             )
             print(dist_sensors[0].getValue())
-            stop_distance = STOP_THRESHOLD if left_side else BUTTON_STOP_THRESHOLD
 
             if table_length:  # if not None or 0 -> table detected
                 table_detected = True
@@ -224,10 +217,16 @@ if __name__ == "__main__":
                 )  # move bin closer to table
                 distance_to_wall = dist_sensors[2].getValue()
 
-            elif controller.wall_in_front(True, stop_distance):  # turn around
+            elif controller.wall_in_front():  # turn around
+                table_check.stop_scanning()
                 if not left_side:  # right side
                     done_cleaning = True  # completed both sides
-                left_side = not left_side  # switch side
+                    continue
+                controller.work_on_button()
+                mc.turn_angle(robot, 180)
+                mc.move_distance(robot, "forward", 0.5)
+                table_check.done_cleaning()
+                left_side = False  # switch side
 
             else:  # business as usual
                 mc.move_forward(robot)
