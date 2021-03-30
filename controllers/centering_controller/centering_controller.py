@@ -16,7 +16,7 @@ import cv2
 
 POSS_TIME_STEP = 32  # this or robot.getBasicTimeStep()
 # STOP_THRESHOLD = 1
-BUTTON_STOP_THRESHOLD = 1.13
+BUTTON_STOP_THRESHOLD = 1.2
 TABLE_WIDTH = 1  # param
 HEAD_WIDTH = 0.25  # param
 BIN_LENGTH = 0.35  # param
