@@ -12,15 +12,16 @@ door_interval = 5
 timestep = int(robot.getBasicTimeStep())
 
 slide_motor = robot.getDevice("slide_motor")
-button_sensor = robot.getDevice("button_sensor")
+button_sensor1 = robot.getDevice("button_sensor")
+button_sensor2 = robot.getDevice("button_sensor2")
 
-button_sensor.enable(1) #sets the sampling period
+button_sensor1.enable(1) #sets the sampling period
+button_sensor2.enable(1) #sets the sampling period
 
 while robot.step(timestep) != -1:
-    button_value = button_sensor.getValue()
-    if (button_value == 1):
+    button_value1 = button_sensor1.getValue()
+    button_value2 = button_sensor2.getValue()
+    if (button_value1 == 1) or (button_value2 == 1):
         slide_motor.setPosition(1.1)
-       
-
     pass
 
