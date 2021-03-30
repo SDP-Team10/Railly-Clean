@@ -35,6 +35,9 @@ class CleaningController(object):
         if self.side_camera.hasRecognition():
             self.side_camera.enable(self.time_step)
             self.side_camera.recognitionEnable(self.time_step)
+        if self.front_camera.hasRecognition():
+            self.front_camera.enable(self.time_step)
+            self.front_camera.recognitionEnable(self.time_step)
         self.camera_resolution = (128, 128)
         self.sticker_offset = 0
         self.sticker_image_offset = 0
@@ -73,14 +76,13 @@ class CleaningController(object):
 
     def work_on_button(self):
         dist = self.distance_sensors[0].getValue()
-        # self.front_camera.saveImage("bttn_img.png", 100)
-        # image = cv2.imread("bttn_img.png")
+        self.front_camera.saveImage("bttn_img.png", 100)
+        image = cv2.imread("bttn_img.png")
         # hfov = self.front_camera.getFov()
         # x, y, z = bd.button_match(image, hfov, dist, self.camera_resolution)
-        coordinates = wc.where_that(self.front_camera, b"button")
-        x, y, z = coordinates[0], coordinates[1], coordinates[2]
+        x, y, z = wc.where_that(self.front_camera, b"button")
         print(x, y, z)
-        mc.move_distance(self.robot, "forward", z-0.4)
+        mc.move_distance(self.robot, "forward", abs(z)-0.45)
         self.arm_controller.set_button_click(0.42, -x, -0.12 - y)
         print("after set_button_click")
         mc.move_distance(self.robot, "forward", 0.26)
@@ -88,7 +90,7 @@ class CleaningController(object):
         self.robot.getDevice("base_motor").setPosition(0)
 
     def button_in_front(self):
-        if self.distance_sensors[0].getValue() < 1:  # check front sensor
+        if self.distance_sensors[0].getValue() < BUTTON_STOP_THRESHOLD:  # check front sensor
             print("Detected wall in front")
             mc.stop(self.robot)
             if wc.see_that(self.front_camera, b"button"):

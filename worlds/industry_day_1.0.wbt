@@ -34,8 +34,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.4797510325724245 0.7469645698764067 0.46030737349628387 1.8185857095658633
-  position -3.493955671065319 15.997243441837359 1.3006760220584765
+  orientation -0.1896028230641979 0.8935907021091808 0.4068739689266294 2.352443952991047
+  position -6.294035728278436 11.808123058738138 0.2538870725892344
 }
 TexturedBackground {
 }
@@ -592,13 +592,13 @@ DEF Carriage Transform {
       size 1.2 2.4 0.2
     }
     Wall {
-      translation -12.73 -0.4 -18.66
+      translation -10.2825 -0.4 -11.1361
       rotation 0 1 0 3.14159
       name "wall(9)"
       size 3.5 2.4 0.2
     }
     Wall {
-      translation -12.73 -0.4 -15.61
+      translation -10.3651 -0.4 -10.8025
       rotation 0 1 0 3.14159
       name "wall(9)"
       size 3.5 2.4 0.2
@@ -17152,7 +17152,7 @@ DEF train_chair34 Transform {
   ]
 }
 DEF robot_4_5 Robot {
-  translation -10.4734 0.0470212 2.74384
+  translation -10.4736 -0.46298 2.74318
   rotation -0.003121840809032977 0.7066391831273396 0.7075671833678332 3.13461
   children [
     DEF base_solid Solid {
@@ -17173,8 +17173,8 @@ DEF robot_4_5 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation 0.280229661503931 -0.2009358510774497 -0.025569940850723005
-            rotation -0.06513313838292528 0.06527276220843006 0.9957394944452451 1.574982491911635
+            translation 0.280229661503931 -0.2009358510774497 -0.025569940850723
+            rotation -0.0651331383829254 0.06527276220843008 0.9957394944452451 1.574982491911635
             children [
               Shape {
                 appearance PBRAppearance {
@@ -17367,7 +17367,7 @@ DEF robot_4_5 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation -0.2797428061757117 0.2007165232984658 -0.026137051131011963
-            rotation -0.6312420553738333 0.6314026837027913 0.45040439445051045 2.295123940347151
+            rotation -0.6312420553738333 0.6314026837027916 0.45040439445051006 2.2951239403471515
             children [
               DEF wheel_shape Shape {
                 appearance PBRAppearance {
@@ -17560,7 +17560,7 @@ DEF robot_4_5 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation 0.27966720254020316 0.2004359839908041 -0.02663753923860696
-            rotation -0.44882011219384654 0.4489888620352886 0.7726380191645759 1.8258291090841547
+            rotation -0.4488201121938465 0.4489888620352886 0.7726380191645759 1.8258291090841547
             children [
               Shape {
                 appearance PBRAppearance {
@@ -17753,7 +17753,7 @@ DEF robot_4_5 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation -0.28029430176798087 -0.19930909794529406 -0.02624455008782368
-            rotation -0.6960871530999745 0.6962192619794336 0.175332297475353 2.794399228147094
+            rotation -0.6960871530999745 0.6962192619794336 0.17533229747535303 2.794399228147094
             children [
               Shape {
                 appearance PBRAppearance {
@@ -18024,6 +18024,8 @@ DEF robot_4_5 Robot {
               }
               width 128
               height 128
+              recognition Recognition {
+              }
             }
             Shape {
               appearance DEF _ PBRAppearance {
@@ -18263,8 +18265,8 @@ DEF robot_4_5 Robot {
         }
       ]
       endPoint Solid {
-        translation -1.2137491811614605e-06 0.15392568074220314 0.7199316923454991
-        rotation -0.9999714799500617 -0.007241167143265645 -0.002145876251485978 0.0019994781900650946
+        translation -1.2137491811614503e-06 0.15392568074220314 0.7199316923454991
+        rotation -0.9999714799491328 -0.007241167261181738 -0.002145876286429699 0.0019994781847346324
         children [
           DistanceSensor {
             translation -2.97284e-07 0.0099999 0.09
@@ -18351,8 +18353,8 @@ DEF robot_4_5 Robot {
         }
       ]
       endPoint DEF arm_base Solid {
-        translation 7.145228808624892e-06 6.681988685031113e-06 0.9599819288135737
-        rotation -1.4739806991720922e-07 -0.7071054048041284 -0.7071081575662724 3.141585477282212
+        translation 7.145228808624872e-06 6.681988685031074e-06 0.9599819288135686
+        rotation -1.473980699172098e-07 -0.7071054048041283 -0.7071081575662724 3.141585477282212
         children [
           Solid {
             translation 0 0.01 0
@@ -18416,8 +18418,8 @@ DEF robot_4_5 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504399999999996e-06 0.3000059999999057 3.126049135776952e-07
-              rotation 0.9406677318156452 0.03291931590681021 -0.33772849592688653 1.2338305440237987e-06
+              translation 1.0504399999999996e-06 0.300005999999907 3.1260491357769777e-07
+              rotation 0.9420416034975081 0.03254746578886792 -0.33391358126102944 1.219348463146633e-06
               children [
                 DEF sec_1 Shape {
                   appearance DEF _ PBRAppearance {
@@ -18562,7 +18564,7 @@ DEF robot_4_5 Robot {
                         ]
                         endPoint DEF sec_3 Solid {
                           translation 1.5298890438941645e-06 0.0036628285003866834 -0.055753540844084674
-                          rotation -0.9999999999959732 -1.5140966829941726e-06 2.4002197473969066e-06 2.8999393414211725
+                          rotation -0.9999999999959744 -1.5138848649319785e-06 2.3998839630963018e-06 2.8999393414211725
                           children [
                             HingeJoint {
                               jointParameters HingeJointParameters {
@@ -18578,7 +18580,7 @@ DEF robot_4_5 Robot {
                                 }
                               ]
                               endPoint DEF head Solid {
-                                translation 8.913590000000114e-07 0.2131586206481823 0.050906753853919864
+                                translation 8.913590000000017e-07 0.2131586206481823 0.050906753853919864
                                 rotation 0.9999999999999999 0 0 2.117978389034293
                                 children [
                                   Pen {

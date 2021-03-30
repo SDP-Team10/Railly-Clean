@@ -31,7 +31,7 @@ def where_that(camera, model_name):
         return "No recognition on camera"
 
     # If the camera has recognition enabled, find the button, and return it's position
-    if not see_that(camera):
+    if not see_that(camera, model_name):
         # print("no " + model_name + " here man")
         return None, None, None
     else:
