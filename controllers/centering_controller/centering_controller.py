@@ -5,12 +5,13 @@ import math
 sys.path.append(os.path.abspath(os.path.join("..", "..")))
 from libraries import arm_controller_trash as ac
 from libraries import bin_controller as bc
-from libraries import button_detection as bd
 from libraries import move_lib_new_base as mc
 from libraries import side_check as sc
 from libraries import trash_classifier_wb as tc
 from libraries import sticker_detection as vc
+from libraries import webots_detection as wc
 from controller import Robot
+from libraries import button_detection as bd
 import cv2
 
 
@@ -72,10 +73,12 @@ class CleaningController(object):
 
     def work_on_button(self):
         dist = self.distance_sensors[0].getValue()
-        self.front_camera.saveImage("bttn_img.png", 100)
-        image = cv2.imread("bttn_img.png")
-        hfov = self.front_camera.getFov()
-        x, y, z = bd.button_match(image, hfov, dist, self.camera_resolution)
+        # self.front_camera.saveImage("bttn_img.png", 100)
+        # image = cv2.imread("bttn_img.png")
+        # hfov = self.front_camera.getFov()
+        # x, y, z = bd.button_match(image, hfov, dist, self.camera_resolution)
+        coordinates = wc.where_that(self.front_camera, b"button")
+        x, y, z = coordinates[0], coordinates[1], coordinates[2]
         print(x, y, z)
         mc.move_distance(self.robot, "forward", z-0.4)
         self.arm_controller.set_button_click(0.42, -x, -0.12 - y)
@@ -83,6 +86,15 @@ class CleaningController(object):
         mc.move_distance(self.robot, "forward", 0.26)
         self.arm_controller.tuck_in_action()
         self.robot.getDevice("base_motor").setPosition(0)
+
+    def button_in_front(self):
+        if self.distance_sensors[0].getValue() < 1:  # check front sensor
+            print("Detected wall in front")
+            mc.stop(self.robot)
+            if wc.see_that(self.front_camera, b"button"):
+                print("Button detected")
+                return True
+        return False
 
     def wall_in_front(self):
         if self.distance_sensors[0].getValue() < BUTTON_STOP_THRESHOLD:  # check front sensor
@@ -92,9 +104,6 @@ class CleaningController(object):
                 print("End of carriage detected")
                 return True
         return False
-
-    def check_camera(self):
-        print(type(self.camera))
 
     def off_centre_value(self):
         try:
@@ -162,7 +171,8 @@ if __name__ == "__main__":
         controller.distance_sensors,
     )
     table_check, table_length, distance_to_wall = sc.SideCheck(robot), None, None
-    table_detected, done_cleaning, left_side, centred = (
+    in_carriage, table_detected, done_cleaning, left_side, centred = (
+        False,
         False,
         False,
         True,
@@ -176,15 +186,29 @@ if __name__ == "__main__":
     centering_move_mult = 1/3  # for sideways movement to center (how much of side diff to move)
     l_dist = dist_sensors[2].getValue()
     r_dist = dist_sensors[3].getValue()
+    button_detected_num = 0
 
     while robot.step(controller.time_step) != -1:
         if (
             robot.step(controller.time_step) % steps_until_sticker_check == 0
         ):  # centre unless cleaning
-            if done_cleaning or not table_detected:
+            if (done_cleaning or not table_detected) and in_carriage:
                 l_dist, r_dist, centred = controller.centre(l_dist, r_dist)
 
-        if done_cleaning:  # either completed cleaning both sides or bin is full
+        if not in_carriage:
+            mc.move_forward(robot)
+            if controller.button_in_front():
+                button_detected_num += 1
+                controller.work_on_button()
+            elif wc.see_that(controller.side_camera, b"button"):
+                print("Side button detected")
+                button_detected_num += 1
+                mc.stop(robot)
+                mc.turn_angle(robot, -90)
+            if button_detected_num == 2:
+                in_carriage = False
+
+        elif done_cleaning:  # either completed cleaning both sides or bin is full
             if controller.wall_in_front():  # turn around when on right side
                 controller.work_on_button()
                 if left_side:
