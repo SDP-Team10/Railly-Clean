@@ -203,11 +203,7 @@ if __name__ == "__main__":
                 button_detected_num += 1
                 mc.stop(robot)
                 mc.turn_angle(robot, -90)
-            elif controller.button_in_front():
-                button_detected_num += 1
-                controller.work_on_button()
-            if button_detected_num == 3:
-                in_carriage = False
+                in_carriage = True
 
         elif done_cleaning:  # either completed cleaning both sides or bin is full
             if controller.wall_in_front():  # turn around when on right side
