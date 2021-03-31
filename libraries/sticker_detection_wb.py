@@ -6,14 +6,14 @@ def see_sticker(camera):
     @param camera: webots camera object to use for the recognition
     @returns True if a valuable is detected, False otherwise
     """
-    # Check if camera has recognition and is enabled
+    # Check if camera has recogniton and is enabled
     if not camera.hasRecognition() or camera.getRecognitionSamplingPeriod() == 0:
         # the camera was not enabled or has not recognition
         return "No recognition on camera"
     # If the camera has recognition enabled, get the list of objects, and check if any of them are the sticker
     return (
         len(
-            STICKER
+            VALUABSTICKERLE_SET
             & {t.get_model() for t in camera.getRecognitionObjects()}
         )
         > 0
@@ -21,7 +21,7 @@ def see_sticker(camera):
 
 
 def where_sticker(camera):
-    # Check if camera has recognition and is enabled
+    # Check if camera has recogniton and is enabled
     if not camera.hasRecognition() or camera.getRecognitionSamplingPeriod() == 0:
         # the camera was not enabled or has not recognition
         return "No recognition on camera"
@@ -36,4 +36,4 @@ def where_sticker(camera):
         pos_to_cam = stickers[0].get_position()
         # position on image - returns[2] - pixels xz
         pos_on_pic = stickers[0].get_position_on_image()
-        return pos_to_cam
+        return "we have stuff, idk what you need boss"
