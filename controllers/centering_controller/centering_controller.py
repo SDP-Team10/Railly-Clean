@@ -173,7 +173,7 @@ if __name__ == "__main__":
     )
     table_check, table_length, distance_to_wall = sc.SideCheck(robot), None, None
     in_carriage, table_detected, done_cleaning, left_side, centred = (
-        True,
+        False,
         False,
         False,
         True,
@@ -201,7 +201,7 @@ if __name__ == "__main__":
             # print("Detecting carriage's door button")
             if wc.see_that(controller.side_camera, b"button"):
                 print("Side button detected")
-                mc.move_distance(robot, "forward", 0.45)
+                mc.move_distance(robot, "forward", 0.1)
                 mc.stop(robot)
                 mc.turn_angle(robot, -90)
             elif controller.button_in_front():
