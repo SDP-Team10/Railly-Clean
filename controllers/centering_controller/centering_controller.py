@@ -31,7 +31,6 @@ class CleaningController(object):
 
         self.front_camera = self.robot.getDevice("front_camera")
         self.side_camera = self.robot.getDevice("side_camera")
-        self.front_camera.enable(self.time_step)
         if self.side_camera.hasRecognition():
             self.side_camera.enable(self.time_step)
             self.side_camera.recognitionEnable(self.time_step)
@@ -199,15 +198,15 @@ if __name__ == "__main__":
 
         if not in_carriage:
             mc.move_forward(robot)
-            if controller.button_in_front():
-                button_detected_num += 1
-                controller.work_on_button()
-            elif wc.see_that(controller.side_camera, b"button"):
+            if wc.see_that(controller.side_camera, b"button"):
                 print("Side button detected")
                 button_detected_num += 1
                 mc.stop(robot)
                 mc.turn_angle(robot, -90)
-            if button_detected_num == 2:
+            elif controller.button_in_front():
+                button_detected_num += 1
+                controller.work_on_button()
+            if button_detected_num == 3:
                 in_carriage = False
 
         elif done_cleaning:  # either completed cleaning both sides or bin is full
