@@ -34,8 +34,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.2857309062923082 0.9153955753437755 0.28356443682241683 1.651496481669617
-  position -7.772295353656698 6.755184102160084 3.1116906460649827
+  orientation 0.3461652575053375 -0.8513844375033869 -0.39409916781605214 4.425816109519015
+  position 0.4063310949097403 18.717847059184475 1.3853328129955305
 }
 TexturedBackground {
 }
@@ -57,7 +57,7 @@ Floor {
   }
 }
 DEF trainfloor Solid {
-  translation -15.93 0 -9.74
+  translation -15.93 0 -6.86
   children [
     DEF train_floor Shape {
       appearance Appearance {
@@ -71,7 +71,7 @@ DEF trainfloor Solid {
         }
       }
       geometry Box {
-        size 3.4 0.1 50
+        size 3.4 0.1 57
       }
     }
   ]
@@ -11257,8 +11257,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217488106585733e-07 0.0009822014004070567 -1.0159118393415767e-05
-                rotation 0.007486442689606214 0.0016060182594555042 0.9999706865109624 1.8227888374284283e-07
+                translation -6.217488106585733e-07 0.0009822013828584275 -1.2932830546708018e-05
+                rotation 0.007486442689593746 0.0016060182594554435 0.9999706865109625 1.8227888374314638e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -11274,7 +11274,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
-                linearVelocity 0 -1.6655329904655068e-07 0
+                linearVelocity 0 -1.3570366640911004e-15 0
               }
               DEF left_arrow Solid {
                 translation 0.015 0.01 0
@@ -11310,8 +11310,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260484142 0.009999868062917416 -5.281843296067734e-08
-                rotation 3.648927466218173e-09 -0.7071082810723577 0.7071052812975558 3.141590000516063
+                translation -0.009998683260484142 0.009999868062879003 -5.891227816690048e-08
+                rotation 3.6489274662178554e-09 -0.7071082810723577 0.7071052812975558 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -11343,7 +11343,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
-                linearVelocity 0 -3.6592287240107865e-10 0
+                linearVelocity 0 -1.6085342039465512e-15 0
               }
             ]
           }
@@ -11372,8 +11372,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217539407771255e-07 0.0009822014332627749 -1.0159118393637812e-05
-                rotation 0.007486443298676349 0.0016060182594499987 0.9999706865064025 1.8227888374306697e-07
+                translation -6.217591330681671e-07 0.0009822014489531128 -1.2932830547152108e-05
+                rotation 0.00748644756200529 0.0016060182593996138 0.9999706864744845 1.8227888374858052e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -11389,7 +11389,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
-                linearVelocity 0 -1.6655329904655068e-07 0
+                linearVelocity 0 -1.3570366640911004e-15 0
               }
               DEF left_arrow Solid {
                 translation 0.015 0.01 0
@@ -11425,8 +11425,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.0099986832604948 0.00999986806298958 -5.281843296067734e-08
-                rotation 3.6489274662181747e-09 -0.707108281072358 0.7071052812975559 3.141590000516063
+                translation -0.009998683260505459 0.009999868063023998 -5.891227816690048e-08
+                rotation 3.648927466217741e-09 -0.7071082810723579 0.7071052812975556 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -11458,7 +11458,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
-                linearVelocity 0 -3.6592287240107865e-10 0
+                linearVelocity 0 -1.6085342039465512e-15 0
               }
             ]
           }
@@ -11575,8 +11575,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217488106585733e-07 0.0009822014004070567 -1.0159118393415767e-05
-                rotation 0.007486442689606214 0.0016060182594555042 0.9999706865109624 1.8227888374284283e-07
+                translation -6.217488106585733e-07 0.0009822013828575393 -1.2932830546930063e-05
+                rotation 0.007486442689593746 0.0016060182594554435 0.9999706865109625 1.8227888374314638e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -11592,6 +11592,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
+                linearVelocity 0 -1.3570366640911004e-15 0
               }
               DEF left_arrow Solid {
                 translation 0.015 0.01 0
@@ -11627,8 +11628,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260484142 0.009999868062917416 -5.281843296067734e-08
-                rotation 3.648927466218173e-09 -0.7071082810723577 0.7071052812975558 3.141590000516063
+                translation -0.009998683260484142 0.009999868062877226 -5.891227816690048e-08
+                rotation 3.6489274662178554e-09 -0.7071082810723577 0.7071052812975558 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -11660,6 +11661,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
+                linearVelocity 0 -1.6085342039465512e-15 0
               }
             ]
           }
@@ -11688,8 +11690,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217539407771255e-07 0.0009822014332627749 -1.0159118393637812e-05
-                rotation 0.007486443298676349 0.0016060182594499987 0.9999706865064025 1.8227888374306697e-07
+                translation -6.217591330681671e-07 0.000982201448954001 -1.2932830547152108e-05
+                rotation 0.00748644756200529 0.0016060182593996138 0.9999706864744845 1.8227888374858052e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -11705,6 +11707,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
+                linearVelocity 0 -1.3570366640911004e-15 0
               }
               DEF left_arrow Solid {
                 translation 0.015 0.01 0
@@ -11740,8 +11743,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.0099986832604948 0.00999986806298958 -5.281843296067734e-08
-                rotation 3.6489274662181747e-09 -0.707108281072358 0.7071052812975559 3.141590000516063
+                translation -0.009998683260505459 0.009999868063024664 -5.891227816690048e-08
+                rotation 3.648927466217741e-09 -0.7071082810723579 0.7071052812975556 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -11773,6 +11776,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
+                linearVelocity 0 -1.6085342039465512e-15 0
               }
             ]
           }
@@ -11889,8 +11893,326 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217488106585733e-07 0.0009822014004070567 -1.0159118393415767e-05
-                rotation 0.007486442689606214 0.0016060182594555042 0.9999706865109624 1.8227888374284283e-07
+                translation -6.217488106585733e-07 0.0009822013828584275 -1.2932830546708018e-05
+                rotation 0.007486442689593746 0.0016060182594554435 0.9999706865109625 1.8227888374314638e-07
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0.854902 0.854902 0.854902
+                    }
+                    geometry Cylinder {
+                      height 0.02
+                      radius 0.03
+                    }
+                  }
+                ]
+                name "button_sensor"
+                boundingObject USE OuterCircle
+                physics Physics {
+                }
+                linearVelocity 0 -1.3570366640911004e-15 0
+              }
+              DEF left_arrow Solid {
+                translation 0.015 0.01 0
+                rotation 1 0 0 1.5708
+                scale 0.13 0.13 0.13
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0 0 0
+                      metalness 0
+                    }
+                    geometry IndexedFaceSet {
+                      coord Coordinate {
+                        point [
+                          -0.016272 0.057538 -0.02
+                          0.026209 0.015388 -0.02
+                          -0.083277 0.015312 -0.02
+                          -0.083644 -0.014357 -0.02
+                          0.027261 -0.014327 -0.02
+                          -0.018454 -0.057874 -0.02
+                          0.025324 -0.057692 -0.02
+                          0.083733 0.000784 -0.02
+                          0.02544 0.057485 -0.02
+                        ]
+                      }
+                      coordIndex [
+                        1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
+                      ]
+                    }
+                  }
+                ]
+                name "solid(1)"
+                boundingObject USE OuterCircle
+              }
+              DEF right_arrow Solid {
+                translation -0.009998683260484142 0.009999868062879003 -5.891227816690048e-08
+                rotation 3.6489274662178554e-09 -0.7071082810723577 0.7071052812975558 3.141590000516063
+                scale 0.13 0.13 0.13
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0 0 0
+                      metalness 0
+                    }
+                    geometry IndexedFaceSet {
+                      coord Coordinate {
+                        point [
+                          -0.016272 0.057538 -0.02
+                          0.026209 0.015388 -0.02
+                          -0.083277 0.015312 -0.02
+                          -0.083644 -0.014357 -0.02
+                          0.027261 -0.014327 -0.02
+                          -0.018454 -0.057874 -0.02
+                          0.025324 -0.057692 -0.02
+                          0.083733 0.000784 -0.02
+                          0.02544 0.057485 -0.02
+                        ]
+                      }
+                      coordIndex [
+                        1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
+                      ]
+                    }
+                  }
+                ]
+                name "solid(4)"
+                boundingObject USE OuterCircle
+                physics Physics {
+                }
+                linearVelocity 0 -1.6085342039465512e-15 0
+              }
+            ]
+          }
+          Transform {
+            translation 0.39 0.0399984 0.0300001
+            rotation -3.390488950803185e-09 0.707104781184338 0.7071087811831002 3.14159
+            children [
+              Solid {
+                children [
+                  DEF OuterCircle Shape {
+                    appearance PBRAppearance {
+                      baseColor 0.0352941 0.317647 0.168627
+                      metalness 0
+                    }
+                    geometry Cylinder {
+                      height 0.015
+                      radius 0.05
+                    }
+                  }
+                ]
+                name "solid(2)"
+                model "button"
+                boundingObject USE OuterCircle
+                recognitionColors [
+                  0 0.5 0
+                ]
+              }
+              TouchSensor {
+                translation -6.217591330681671e-07 0.0009822014489531128 -1.2932830547152108e-05
+                rotation 0.00748644756200529 0.0016060182593996138 0.9999706864744845 1.8227888374858052e-07
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0.854902 0.854902 0.854902
+                    }
+                    geometry Cylinder {
+                      height 0.02
+                      radius 0.03
+                    }
+                  }
+                ]
+                name "button_sensor2"
+                boundingObject USE OuterCircle
+                physics Physics {
+                }
+                linearVelocity 0 -1.3570366640911004e-15 0
+              }
+              DEF left_arrow Solid {
+                translation 0.015 0.01 0
+                rotation 1 0 0 1.5708
+                scale 0.13 0.13 0.13
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0 0 0
+                      metalness 0
+                    }
+                    geometry IndexedFaceSet {
+                      coord Coordinate {
+                        point [
+                          -0.016272 0.057538 -0.02
+                          0.026209 0.015388 -0.02
+                          -0.083277 0.015312 -0.02
+                          -0.083644 -0.014357 -0.02
+                          0.027261 -0.014327 -0.02
+                          -0.018454 -0.057874 -0.02
+                          0.025324 -0.057692 -0.02
+                          0.083733 0.000784 -0.02
+                          0.02544 0.057485 -0.02
+                        ]
+                      }
+                      coordIndex [
+                        1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
+                      ]
+                    }
+                  }
+                ]
+                name "solid(4)"
+                boundingObject USE OuterCircle
+              }
+              DEF right_arrow Solid {
+                translation -0.009998683260505459 0.009999868063023776 -5.891227816690048e-08
+                rotation 3.648927466217741e-09 -0.7071082810723579 0.7071052812975556 3.141590000516063
+                scale 0.13 0.13 0.13
+                children [
+                  Shape {
+                    appearance PBRAppearance {
+                      baseColor 0 0 0
+                      metalness 0
+                    }
+                    geometry IndexedFaceSet {
+                      coord Coordinate {
+                        point [
+                          -0.016272 0.057538 -0.02
+                          0.026209 0.015388 -0.02
+                          -0.083277 0.015312 -0.02
+                          -0.083644 -0.014357 -0.02
+                          0.027261 -0.014327 -0.02
+                          -0.018454 -0.057874 -0.02
+                          0.025324 -0.057692 -0.02
+                          0.083733 0.000784 -0.02
+                          0.02544 0.057485 -0.02
+                        ]
+                      }
+                      coordIndex [
+                        1, 0, 8, -1, 4, 6, 5, -1, 4, 7, 6, -1, 8, 7, 1, -1, 2, 1, 3, -1, 3, 1, 4, -1, 7, 4, 1, -1
+                      ]
+                    }
+                  }
+                ]
+                name "solid(4)"
+                boundingObject USE OuterCircle
+                physics Physics {
+                }
+                linearVelocity 0 -1.6085342039465512e-15 0
+              }
+            ]
+          }
+          Solid {
+            translation -0.01 3.05883e-08 -0.03
+            rotation 1 0 0 -1.5707953071795862
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 1 0
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.05 0.01 0.2
+                }
+              }
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 1 0
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.2 0.01 0.05
+                }
+              }
+            ]
+          }
+          Solid {
+            translation -0.01 -3.05888e-08 0.03
+            rotation 1 0 0 -1.5707953071795862
+            children [
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 1 0
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.05 0.01 0.2
+                }
+              }
+              Shape {
+                appearance PBRAppearance {
+                  baseColor 1 1 0
+                  metalness 0
+                }
+                geometry Box {
+                  size 0.2 0.01 0.05
+                }
+              }
+            ]
+            name "solid(5)"
+          }
+          DEF door_shape Shape {
+            appearance Appearance {
+              material Material {
+                ambientIntensity 1
+              }
+              texture ImageTexture {
+                url [
+                  "../images/door.png"
+                ]
+              }
+            }
+            geometry Box {
+              size 1 2.4 0.05
+            }
+          }
+        ]
+        name "solid(3)"
+        boundingObject USE door_shape
+      }
+    }
+  ]
+  name "robot(1)"
+  controller "test_door_controller"
+}
+DEF wall_robot Robot {
+  translation 0.4 0 20.4
+  children [
+    SliderJoint {
+      jointParameters JointParameters {
+        axis 1 0 0
+      }
+      device [
+        LinearMotor {
+          name "slide_motor"
+        }
+      ]
+      endPoint Solid {
+        translation -16.26 1.2 0.93
+        children [
+          Transform {
+            translation -0.4 0.04 -0.0299996
+            rotation -1 0 0 1.57079
+            children [
+              Solid {
+                children [
+                  DEF OuterCircle Shape {
+                    appearance PBRAppearance {
+                      baseColor 0.0352941 0.317647 0.168627
+                      metalness 0
+                    }
+                    geometry Cylinder {
+                      height 0.015
+                      radius 0.05
+                    }
+                  }
+                ]
+                name "solid(3)"
+                model "button"
+                boundingObject USE OuterCircle
+                recognitionColors [
+                  0 0.5 0
+                ]
+              }
+              TouchSensor {
+                translation -6.217488106585733e-07 0.0009822013828584275 -1.2932830546708018e-05
+                rotation 0.007486442689593746 0.0016060182594554435 0.9999706865109625 1.8227888374314638e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -11941,8 +12263,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260484142 0.009999868062917416 -5.281843296067734e-08
-                rotation 3.648927466218173e-09 -0.7071082810723577 0.7071052812975558 3.141590000516063
+                translation -0.009998683260484142 0.009999868062879003 -5.891227816690048e-08
+                rotation 3.6489274662178554e-09 -0.7071082810723577 0.7071052812975558 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -11970,7 +12292,7 @@ DEF wall_robot Robot {
                     }
                   }
                 ]
-                name "solid(4)"
+                name "solid(5)"
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
@@ -12002,8 +12324,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217539407771255e-07 0.0009822014332627749 -1.0159118393637812e-05
-                rotation 0.007486443298676349 0.0016060182594499987 0.9999706865064025 1.8227888374306697e-07
+                translation -6.217591330681671e-07 0.0009822014489531128 -1.2932830547152108e-05
+                rotation 0.00748644756200529 0.0016060182593996138 0.9999706864744845 1.8227888374858052e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -12050,12 +12372,12 @@ DEF wall_robot Robot {
                     }
                   }
                 ]
-                name "solid(4)"
+                name "solid(6)"
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.0099986832604948 0.00999986806298958 -5.281843296067734e-08
-                rotation 3.6489274662181747e-09 -0.707108281072358 0.7071052812975559 3.141590000516063
+                translation -0.009998683260505459 0.009999868063023776 -5.891227816690048e-08
+                rotation 3.648927466217741e-09 -0.7071082810723579 0.7071052812975556 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -12137,7 +12459,7 @@ DEF wall_robot Robot {
                 }
               }
             ]
-            name "solid(5)"
+            name "solid(7)"
           }
           DEF door_shape Shape {
             appearance Appearance {
@@ -12160,7 +12482,7 @@ DEF wall_robot Robot {
       }
     }
   ]
-  name "robot(1)"
+  name "robot(5)"
   controller "test_door_controller"
 }
 DEF wall_robot Robot {
@@ -12204,8 +12526,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217488106585733e-07 0.0009822014004061685 -1.0159118393415767e-05
-                rotation 0.007486442393145624 0.0016060173637587407 0.9999706865146204 1.8227888354613446e-07
+                translation -6.217488106585733e-07 0.000982201382855763 -1.2932830546708018e-05
+                rotation 0.007486441788667446 0.001606016755666456 0.9999706865201228 1.822788834341059e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -12221,7 +12543,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
-                linearVelocity 0 -1.6655329904655068e-07 0
+                linearVelocity 0 -1.3570366640911004e-15 0
               }
               DEF left_arrow Solid {
                 translation 0.015 0.01 0
@@ -12257,8 +12579,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260484142 0.009999868062916306 -5.281843273863274e-08
-                rotation 3.6489273767901294e-09 -0.7071082810723578 0.7071052812975561 3.1415900005160626
+                translation -0.009998683260484142 0.00999986806287545 -5.891227772281127e-08
+                rotation 3.6489273381738973e-09 -0.7071082810723576 0.7071052812975561 3.1415900005160617
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -12290,7 +12612,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
-                linearVelocity 0 -3.6592287240107865e-10 0
+                linearVelocity 0 -1.6085342039465512e-15 0
               }
             ]
           }
@@ -12319,8 +12641,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217539421093932e-07 0.0009822014332616646 -1.0159118393637812e-05
-                rotation 0.007486441459073798 0.0016060161412124517 0.999970686523577 1.8227888404411683e-07
+                translation -6.217591330681671e-07 0.0009822014489522246 -1.2932830547152108e-05
+                rotation 0.007486440534128707 0.001606014311544725 0.9999706865334405 1.8227888431988272e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -12336,7 +12658,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
-                linearVelocity 0 -1.6655329904655068e-07 0
+                linearVelocity 0 -1.3570366640911004e-15 0
               }
               DEF left_arrow Solid {
                 translation 0.015 0.01 0
@@ -12372,8 +12694,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260495245 0.009999868062990913 -5.2818433182721947e-08
-                rotation 3.648927485701467e-09 -0.7071082810723578 0.707105281297556 3.141590000516063
+                translation -0.009998683260506791 0.00999986806302644 -5.891227861098969e-08
+                rotation 3.6489275331924338e-09 -0.7071082810723578 0.7071052812975561 3.1415900005160626
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -12405,7 +12727,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
-                linearVelocity 0 -3.6592287240107865e-10 0
+                linearVelocity 0 -1.6085342039465512e-15 0
               }
             ]
           }
