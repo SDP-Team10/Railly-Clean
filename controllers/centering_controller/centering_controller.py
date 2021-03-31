@@ -201,6 +201,7 @@ if __name__ == "__main__":
             print("Detecting carriage's door button")
             if wc.see_that(controller.side_camera, b"button"):
                 print("Side button detected")
+                mc.move_distance(robot, "forward", 0.3)
                 mc.stop(robot)
                 mc.turn_angle(robot, -90)
                 in_carriage = True

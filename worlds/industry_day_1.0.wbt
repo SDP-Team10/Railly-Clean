@@ -34,8 +34,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation -0.25952076798222257 -0.9206865715262285 -0.2915222255629859 1.7684125337389256
-  position -16.72120657505513 4.199178349024113 2.0106393421836963
+  orientation -0.08893927188513132 -0.912581446659251 -0.3991051354340751 2.740333078670685
+  position -17.66308771328375 9.630611631131039 -3.022637729609678
 }
 TexturedBackground {
 }
@@ -57,15 +57,15 @@ Floor {
   }
 }
 DEF robot_4_5 Robot {
-  translation -10.083 0.226839 2.73777
-  rotation -0.0031220608069456677 0.7066391826419992 0.7075671828818553 3.13461
+  translation -10.766 -0.441877 2.73087
+  rotation -0.0032846913756259463 0.7063001188097999 0.7079049039043517 3.1331113306479232
   children [
     DEF base_solid Solid {
       rotation -9.412299999235844e-06 8.589689999302629e-06 0.999999999918813 1.57734
       children [
         DEF WHEEL1 HingeJoint {
           jointParameters HingeJointParameters {
-            position 559.667565916116
+            position 564.1461092253701
             anchor 0.29 -0.2 -0.025
           }
           device [
@@ -78,8 +78,8 @@ DEF robot_4_5 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation 0.280229661503931 -0.2009358510774497 -0.025569940850722988
-            rotation -0.0651331383829255 0.06527276220843002 0.9957394944452451 1.5749824919116344
+            translation 0.280229661503931 -0.2003375728427217 -0.023957553652055222
+            rotation 0.6357429333900503 -0.6357594412155841 -0.43776803852024454 3.9670725416930086
             children [
               Shape {
                 appearance PBRAppearance {
@@ -258,7 +258,7 @@ DEF robot_4_5 Robot {
         }
         DEF WHEEL2 HingeJoint {
           jointParameters HingeJointParameters {
-            position 589.3120829927168
+            position 593.7906261640372
             anchor -0.29 0.2 -0.025
           }
           device [
@@ -271,8 +271,8 @@ DEF robot_4_5 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation -0.2797428061757117 0.2007165232984658 -0.026137051131011963
-            rotation -0.6312420553738333 0.6314026837027917 0.45040439445050995 2.295123940347151
+            translation -0.2797428061757117 0.19872786358864478 -0.025433543380394698
+            rotation 0.6926187635127482 -0.6926725593165662 0.20120629711793284 2.744766513297235
             children [
               DEF wheel_shape Shape {
                 appearance PBRAppearance {
@@ -451,7 +451,7 @@ DEF robot_4_5 Robot {
         }
         DEF WHEEL3 HingeJoint {
           jointParameters HingeJointParameters {
-            position 532.1196864798009
+            position 536.5982295247356
             anchor 0.29 0.2 -0.025
           }
           device [
@@ -464,8 +464,8 @@ DEF robot_4_5 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation 0.27966720254020316 0.2004359839908041 -0.026637539238606962
-            rotation -0.4488201121938464 0.44898886203528915 0.7726380191645755 1.8258291090841539
+            translation 0.27966720254020316 0.19830600421144856 -0.025044666168235693
+            rotation 0.703500874854353 -0.7035351602658853 -0.10062205200061766 3.3424466513169517
             children [
               Shape {
                 appearance PBRAppearance {
@@ -644,7 +644,7 @@ DEF robot_4_5 Robot {
         }
         DEF WHEEL4 HingeJoint {
           jointParameters HingeJointParameters {
-            position 555.9401396037719
+            position 560.4186827260422
             anchor -0.29 -0.2 -0.025
           }
           device [
@@ -657,8 +657,8 @@ DEF robot_4_5 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation -0.28029430176798087 -0.19930909794529406 -0.02624455008782368
-            rotation -0.6960871530999752 0.6962192619794331 0.17533229747535284 2.7943992281470953
+            translation -0.28029430176798087 -0.2013707725636327 -0.02538370971982831
+            rotation 0.6211479669480177 -0.6212120546103181 0.4777769211286494 2.250386226783137
             children [
               Shape {
                 appearance PBRAppearance {
@@ -1155,7 +1155,7 @@ DEF robot_4_5 Robot {
     }
     DEF door_joint HingeJoint {
       jointParameters HingeJointParameters {
-        position 0.0019988386823370707
+        position 0.001998103393882059
         axis -1 0 0
         anchor 0 0.17 0.5
         minStop 0.001
@@ -1170,8 +1170,8 @@ DEF robot_4_5 Robot {
         }
       ]
       endPoint Solid {
-        translation -1.2137491811614397e-06 0.15392568074220314 0.7199316923454993
-        rotation -0.9999714800590487 -0.007241153307681672 -0.0021458721513940284 0.0019994781778494525
+        translation -1.213749181161433e-06 0.1539255190289732 0.7199316805261784
+        rotation -0.9999714590715018 -0.0072438163375873115 -0.002146664221285069 0.001998742908180438
         children [
           DistanceSensor {
             translation -2.97284e-07 0.0099999 0.09
@@ -1246,7 +1246,7 @@ DEF robot_4_5 Robot {
     }
     DEF arm_joint HingeJoint {
       jointParameters HingeJointParameters {
-        position -6.500943067180603e-07
+        position -1.1876405722760418e-06
         axis 0 0 1
       }
       device [
@@ -1258,8 +1258,8 @@ DEF robot_4_5 Robot {
         }
       ]
       endPoint DEF arm_base Solid {
-        translation 7.145228810064303e-06 6.681988683491784e-06 0.9599819288135626
-        rotation -1.4747423325456867e-07 -0.7071054048041285 -0.7071081575662722 3.1415854774345395
+        translation 7.1452324019413305e-06 6.681984842599744e-06 0.9599819288135605
+        rotation -3.375251681084997e-07 -0.7071054048035939 -0.7071081575667415 3.1415858575378888
         children [
           Solid {
             translation 0 0.01 0
@@ -1312,7 +1312,7 @@ DEF robot_4_5 Robot {
           }
           HingeJoint {
             jointParameters HingeJointParameters {
-              position 7.493974300482451e-07
+              position 9.437659800311206e-07
             }
             device [
               RotationalMotor {
@@ -1323,8 +1323,8 @@ DEF robot_4_5 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504400000000228e-06 0.300005999999915 3.126049135777077e-07
-              rotation 0.9421544874427998 0.032516699445463385 -0.33359794071392046 1.2178907836498538e-06
+              translation 1.0504400000000205e-06 0.30000599999984917 3.7091664478384825e-07
+              rotation 0.956729743878166 0.02822866390380648 -0.2896054897839904 1.4026101381481093e-06
               children [
                 DEF sec_1 Shape {
                   appearance DEF _ PBRAppearance {
@@ -1439,7 +1439,7 @@ DEF robot_4_5 Robot {
                 }
                 HingeJoint {
                   jointParameters HingeJointParameters {
-                    position 3.0000007393837698
+                    position 3.000000951555292
                     anchor 0 0.23 0
                   }
                   device [
@@ -1451,12 +1451,12 @@ DEF robot_4_5 Robot {
                     }
                   ]
                   endPoint DEF sec_2 Solid {
-                    translation 0 -0.007598468961329208 0.03386826092734124
-                    rotation 1 0 0 3.0000007393837698
+                    translation 0 -0.007598476147204325 0.033868210515711664
+                    rotation 0.9999999999999999 0 0 3.000000951555292
                     children [
                       HingeJoint {
                         jointParameters HingeJointParameters {
-                          position -2.8999393414231833
+                          position -2.899939250285962
                           anchor 0 0.23 0
                         }
                         device [
@@ -1468,12 +1468,12 @@ DEF robot_4_5 Robot {
                           }
                         ]
                         endPoint DEF sec_3 Solid {
-                          translation 1.529889043894189e-06 0.0036628285003866834 -0.05575354084408469
-                          rotation -0.999999999995978 -1.5132068478835898e-06 2.3988091374745958e-06 2.899939341421173
+                          translation 1.529889043894189e-06 0.0036628335816104307 -0.05575356147182536
+                          rotation -0.999999999995978 -1.5132069655663425e-06 2.3988090817921224e-06 2.8999392502839516
                           children [
                             HingeJoint {
                               jointParameters HingeJointParameters {
-                                position 2.117978389034293
+                                position 2.1179784785168585
                                 anchor 0 0.25 0
                               }
                               device [
@@ -1485,8 +1485,8 @@ DEF robot_4_5 Robot {
                                 }
                               ]
                               endPoint DEF head Solid {
-                                translation 8.913589999999911e-07 0.2131586206481823 0.05090675385391986
-                                rotation 0.9999999999999999 0 0 2.117978389034293
+                                translation 8.913589999999871e-07 0.21315861609291553 0.050906750557258525
+                                rotation 1 0 0 2.1179784785168585
                                 children [
                                   Pen {
                                     translation 1.3268e-07 0.055 0
@@ -1515,8 +1515,8 @@ DEF robot_4_5 Robot {
                                     maxDistance 0.02
                                   }
                                   TouchSensor {
-                                    translation 3.607318540943538e-05 0.0530170623568651 -6.498743317706612e-06
-                                    rotation -0.018064793475231718 0.998181484806254 0.05750988286094346 3.648564718152786e-07
+                                    translation 3.611062404296206e-05 0.05301728370628278 -6.246458900793783e-06
+                                    rotation -0.01806478378452627 0.9981834123309307 0.05747642068011443 3.6485657213187785e-07
                                     children [
                                       DEF head_sensor_shape Shape {
                                         appearance PBRAppearance {
@@ -1997,7 +1997,7 @@ DEF trainfloor Solid {
       }
     }
   ]
-  contactMaterial "ramp"
+  contactMaterial ""
   boundingObject USE train_floor
 }
 DEF Carriage Transform {
@@ -13167,8 +13167,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217488106585733e-07 0.000982201365512081 -1.5674564712186978e-05
-                rotation 0.00748644268958128 0.0016060182594553832 0.9999706865109627 1.822788837434499e-07
+                translation -6.217488106585733e-07 0.000982201348457279 -1.8370205126849726e-05
+                rotation 0.007486442689568813 0.00160601825945525 0.9999706865109628 1.8227888374375347e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -13219,7 +13219,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260484142 0.009999868062840811 -6.49358666837685e-08
+                translation -0.009998683260484142 0.009999868062803285 -7.085818598540072e-08
                 rotation 3.6489274662176437e-09 -0.7071082810723577 0.7071052812975558 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
@@ -13280,8 +13280,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217642649630761e-07 0.0009822014644624844 -1.5674564712853112e-05
-                rotation 0.007486448171062966 0.0016060182593925021 0.9999706864699248 1.8227888374910804e-07
+                translation -6.217693115928569e-07 0.0009822014797111756 -1.8370205127737904e-05
+                rotation 0.00748644999821108 0.0016060182593703146 0.9999706864562454 1.8227888375129714e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -13332,8 +13332,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260517893 0.009999868063058193 -6.49358666837685e-08
-                rotation 3.648927466217743e-09 -0.7071082810723581 0.7071052812975557 3.141590000516063
+                translation -0.009998683260528551 0.009999868063091721 -7.085818598540072e-08
+                rotation 3.6489274662175266e-09 -0.7071082810723582 0.7071052812975556 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -13481,8 +13481,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217488106585733e-07 0.0009822013655096384 -1.5674564712631067e-05
-                rotation 0.00748644268958128 0.0016060182594553832 0.9999706865109627 1.822788837434499e-07
+                translation -6.217488106585733e-07 0.0009822013484548364 -1.837020512751586e-05
+                rotation 0.007486442689568813 0.00160601825945525 0.9999706865109628 1.8227888374375347e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -13533,7 +13533,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260484142 0.009999868062838146 -6.49358666837685e-08
+                translation -0.009998683260484142 0.009999868062800843 -7.085818598540072e-08
                 rotation 3.6489274662176437e-09 -0.7071082810723577 0.7071052812975558 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
@@ -13594,8 +13594,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217642649630761e-07 0.0009822014644651489 -1.5674564712853112e-05
-                rotation 0.007486448171062966 0.0016060182593925021 0.9999706864699248 1.8227888374910804e-07
+                translation -6.217693115928569e-07 0.0009822014797151724 -1.8370205127737904e-05
+                rotation 0.00748644999821108 0.0016060182593703146 0.9999706864562454 1.8227888375129714e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -13646,8 +13646,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260517893 0.009999868063058415 -6.49358666837685e-08
-                rotation 3.648927466217743e-09 -0.7071082810723581 0.7071052812975557 3.141590000516063
+                translation -0.009998683260528551 0.009999868063092165 -7.085818598540072e-08
+                rotation 3.6489274662175266e-09 -0.7071082810723582 0.7071052812975556 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -13795,8 +13795,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217488106585733e-07 0.000982201365512303 -1.5674564712186978e-05
-                rotation 0.00748644268958128 0.0016060182594553832 0.9999706865109627 1.822788837434499e-07
+                translation -6.217488106585733e-07 0.000982201348457501 -1.8370205126849726e-05
+                rotation 0.007486442689568813 0.00160601825945525 0.9999706865109628 1.8227888374375347e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -13855,7 +13855,7 @@ DEF wall_robot Robot {
                 ]
               }
               DEF right_arrow Solid {
-                translation -0.009998683260484142 0.009999868062840811 -6.49358666837685e-08
+                translation -0.009998683260484142 0.009999868062803507 -7.085818598540072e-08
                 rotation 3.6489274662176437e-09 -0.7071082810723577 0.7071052812975558 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
@@ -13920,8 +13920,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217642649630761e-07 0.0009822014644615962 -1.5674564712853112e-05
-                rotation 0.007486448171062966 0.0016060182593925021 0.9999706864699248 1.8227888374910804e-07
+                translation -6.217693115928569e-07 0.0009822014797098433 -1.8370205127737904e-05
+                rotation 0.00748644999821108 0.0016060182593703146 0.9999706864562454 1.8227888375129714e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -13972,8 +13972,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260517893 0.009999868063057527 -6.49358666837685e-08
-                rotation 3.648927466217743e-09 -0.7071082810723581 0.7071052812975557 3.141590000516063
+                translation -0.009998683260528551 0.009999868063091277 -7.085818598540072e-08
+                rotation 3.6489274662175266e-09 -0.7071082810723582 0.7071052812975556 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -14121,8 +14121,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217488106585733e-07 0.0009822013655131911 -1.5674564712186978e-05
-                rotation 0.00748644268958128 0.0016060182594553832 0.9999706865109627 1.822788837434499e-07
+                translation -6.217488106585733e-07 0.0009822013484566128 -1.8370205126849726e-05
+                rotation 0.007486442689568813 0.00160601825945525 0.9999706865109628 1.8227888374375347e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -14173,7 +14173,7 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260484142 0.009999868062838146 -6.49358666837685e-08
+                translation -0.009998683260484142 0.009999868062799067 -7.085818598540072e-08
                 rotation 3.6489274662176437e-09 -0.7071082810723577 0.7071052812975558 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
@@ -14234,8 +14234,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217642649630761e-07 0.0009822014644598198 -1.5674564712853112e-05
-                rotation 0.007486448171062966 0.0016060182593925021 0.9999706864699248 1.8227888374910804e-07
+                translation -6.217693115928569e-07 0.000982201479708067 -1.8370205127737904e-05
+                rotation 0.00748644999821108 0.0016060182593703146 0.9999706864562454 1.8227888375129714e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -14286,8 +14286,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260517893 0.009999868063054862 -6.49358666837685e-08
-                rotation 3.648927466217743e-09 -0.7071082810723581 0.7071052812975557 3.141590000516063
+                translation -0.009998683260528551 0.009999868063090389 -7.085818598540072e-08
+                rotation 3.6489274662175266e-09 -0.7071082810723582 0.7071052812975556 3.141590000516063
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -14436,7 +14436,7 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217488106585733e-07 0.0009822013655060857 -1.5674564712186978e-05
+                translation -6.217488106585733e-07 0.000982201348447731 -1.8370205126849726e-05
                 rotation 0.007486441788667446 0.001606016755666456 0.9999706865201228 1.822788834341059e-07
                 children [
                   Shape {
@@ -14488,8 +14488,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260484587 0.00999986806283637 -6.493586623967929e-08
-                rotation 3.6489273217850804e-09 -0.7071082810723576 0.7071052812975562 3.1415900005160613
+                translation -0.00999868326048503 0.009999868062799067 -7.085818554131151e-08
+                rotation 3.6489272621768308e-09 -0.7071082810723575 0.7071052812975563 3.1415900005160604
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
@@ -14549,8 +14549,8 @@ DEF wall_robot Robot {
                 ]
               }
               TouchSensor {
-                translation -6.217642640748977e-07 0.0009822014644598198 -1.5674564712853112e-05
-                rotation 0.007486439920531125 0.0016060137014961185 0.999970686539014 1.8227888442989232e-07
+                translation -6.217693080401432e-07 0.0009822014797062906 -1.8370205127737904e-05
+                rotation 0.007486439004698118 0.0016060124828624867 0.9999706865478277 1.8227888448379848e-07
                 children [
                   Shape {
                     appearance PBRAppearance {
@@ -14601,8 +14601,8 @@ DEF wall_robot Robot {
                 boundingObject USE OuterCircle
               }
               DEF right_arrow Solid {
-                translation -0.009998683260517893 0.009999868063058415 -6.493586734990231e-08
-                rotation 3.648927714966022e-09 -0.7071082810723578 0.7071052812975561 3.141590000516062
+                translation -0.009998683260528551 0.009999868063090389 -7.085818687357914e-08
+                rotation 3.6489278159207025e-09 -0.7071082810723578 0.7071052812975561 3.1415900005160617
                 scale 0.13 0.13 0.13
                 children [
                   Shape {
