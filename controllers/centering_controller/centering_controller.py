@@ -82,9 +82,9 @@ class CleaningController(object):
         x, y, z = wc.where_that(self.front_camera, b"button")
         print(x, y, z)
         mc.move_distance(self.robot, "forward", abs(z)-0.45)
-        self.arm_controller.set_button_click(0.42, -x, -0.12 - y)
+        self.arm_controller.set_button_click(0.42, -x, -0.12 + y)
         print("after set_button_click")
-        mc.move_distance(self.robot, "forward", 0.26)
+        mc.move_distance(self.robot, "forward", 0.25)
         self.arm_controller.tuck_in_action()
         self.robot.getDevice("base_motor").setPosition(0)
 
@@ -201,9 +201,12 @@ if __name__ == "__main__":
             print("Detecting carriage's door button")
             if wc.see_that(controller.side_camera, b"button"):
                 print("Side button detected")
-                mc.move_distance(robot, "forward", 0.3)
+                mc.move_distance(robot, "forward", 0.45)
                 mc.stop(robot)
                 mc.turn_angle(robot, -90)
+            elif controller.button_in_front():
+                mc.stop(robot)
+                controller.work_on_button()
                 in_carriage = True
 
         elif done_cleaning:  # either completed cleaning both sides or bin is full
