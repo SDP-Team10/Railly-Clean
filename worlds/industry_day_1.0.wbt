@@ -34,8 +34,8 @@ WorldInfo {
   ]
 }
 Viewpoint {
-  orientation 0.5181866798730224 -0.5666126950559962 -0.640650153050442 4.0010651778497826
-  position -12.549147689064872 11.017525111892034 3.6028050701726935
+  orientation -0.25952076798222257 -0.9206865715262285 -0.2915222255629859 1.7684125337389256
+  position -16.72120657505513 4.199178349024113 2.0106393421836963
 }
 TexturedBackground {
 }
@@ -57,8 +57,8 @@ Floor {
   }
 }
 DEF robot_4_5 Robot {
-  translation -10.724 -0.4629 2.78086
-  rotation -0.003121840809032977 0.7066391831273396 0.7075671833678332 3.13461
+  translation -10.083 0.226839 2.73777
+  rotation -0.0031220608069456677 0.7066391826419992 0.7075671828818553 3.13461
   children [
     DEF base_solid Solid {
       rotation -9.412299999235844e-06 8.589689999302629e-06 0.999999999918813 1.57734
@@ -79,7 +79,7 @@ DEF robot_4_5 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation 0.280229661503931 -0.2009358510774497 -0.025569940850722988
-            rotation -0.0651331383829255 0.0652727622084299 0.9957394944452451 1.5749824919116344
+            rotation -0.0651331383829255 0.06527276220843002 0.9957394944452451 1.5749824919116344
             children [
               Shape {
                 appearance PBRAppearance {
@@ -465,7 +465,7 @@ DEF robot_4_5 Robot {
           ]
           endPoint DEF WHEEL_SOLID Solid {
             translation 0.27966720254020316 0.2004359839908041 -0.026637539238606962
-            rotation -0.4488201121938463 0.44898886203528904 0.7726380191645758 1.8258291090841536
+            rotation -0.4488201121938464 0.44898886203528915 0.7726380191645755 1.8258291090841539
             children [
               Shape {
                 appearance PBRAppearance {
@@ -657,7 +657,7 @@ DEF robot_4_5 Robot {
             }
           ]
           endPoint DEF WHEEL_SOLID Solid {
-            translation -0.28029430176798087 -0.19930909794529406 -0.026244550087823663
+            translation -0.28029430176798087 -0.19930909794529406 -0.02624455008782368
             rotation -0.6960871530999752 0.6962192619794331 0.17533229747535284 2.7943992281470953
             children [
               Shape {
@@ -1170,8 +1170,8 @@ DEF robot_4_5 Robot {
         }
       ]
       endPoint Solid {
-        translation -1.2137491811614457e-06 0.15392568074220309 0.7199316923454993
-        rotation -0.9999714799486683 -0.007241167320142998 -0.002145876303902512 0.0019994781820694015
+        translation -1.2137491811614397e-06 0.15392568074220314 0.7199316923454993
+        rotation -0.9999714800590487 -0.007241153307681672 -0.0021458721513940284 0.0019994781778494525
         children [
           DistanceSensor {
             translation -2.97284e-07 0.0099999 0.09
@@ -1258,8 +1258,8 @@ DEF robot_4_5 Robot {
         }
       ]
       endPoint DEF arm_base Solid {
-        translation 7.1452288100643075e-06 6.6819886834917995e-06 0.9599819288135644
-        rotation -1.4747423325456804e-07 -0.7071054048041283 -0.7071081575662724 3.1415854774345395
+        translation 7.145228810064303e-06 6.681988683491784e-06 0.9599819288135626
+        rotation -1.4747423325456867e-07 -0.7071054048041285 -0.7071081575662722 3.1415854774345395
         children [
           Solid {
             translation 0 0.01 0
@@ -1323,8 +1323,8 @@ DEF robot_4_5 Robot {
               }
             ]
             endPoint DEF sec_1 Solid {
-              translation 1.0504400000000228e-06 0.3000059999999143 3.1260491357770634e-07
-              rotation 0.9421465384789658 0.03251886699656865 -0.33362017822871887 1.2178907836498538e-06
+              translation 1.0504400000000228e-06 0.300005999999915 3.126049135777077e-07
+              rotation 0.9421544874427998 0.032516699445463385 -0.33359794071392046 1.2178907836498538e-06
               children [
                 DEF sec_1 Shape {
                   appearance DEF _ PBRAppearance {
@@ -1451,7 +1451,7 @@ DEF robot_4_5 Robot {
                     }
                   ]
                   endPoint DEF sec_2 Solid {
-                    translation 0 -0.007598468961329208 0.03386826092734125
+                    translation 0 -0.007598468961329208 0.03386826092734124
                     rotation 1 0 0 3.0000007393837698
                     children [
                       HingeJoint {
@@ -1468,8 +1468,8 @@ DEF robot_4_5 Robot {
                           }
                         ]
                         endPoint DEF sec_3 Solid {
-                          translation 1.5298890438941882e-06 0.0036628285003866834 -0.055753540844084674
-                          rotation -0.999999999995978 -1.51320684788359e-06 2.3988091374745958e-06 2.899939341421173
+                          translation 1.529889043894189e-06 0.0036628285003866834 -0.05575354084408469
+                          rotation -0.999999999995978 -1.5132068478835898e-06 2.3988091374745958e-06 2.899939341421173
                           children [
                             HingeJoint {
                               jointParameters HingeJointParameters {
@@ -1485,7 +1485,7 @@ DEF robot_4_5 Robot {
                                 }
                               ]
                               endPoint DEF head Solid {
-                                translation 8.913589999999966e-07 0.2131586206481823 0.05090675385391986
+                                translation 8.913589999999911e-07 0.2131586206481823 0.05090675385391986
                                 rotation 0.9999999999999999 0 0 2.117978389034293
                                 children [
                                   Pen {
@@ -13809,9 +13809,13 @@ DEF wall_robot Robot {
                   }
                 ]
                 name "button_sensor"
+                model "button"
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
+                recognitionColors [
+                  0 0 0
+                ]
               }
               DEF left_arrow Solid {
                 translation 0.015 0.01 0
@@ -13844,7 +13848,11 @@ DEF wall_robot Robot {
                   }
                 ]
                 name "solid(1)"
+                model "button"
                 boundingObject USE OuterCircle
+                recognitionColors [
+                  0 0 0
+                ]
               }
               DEF right_arrow Solid {
                 translation -0.009998683260484142 0.009999868062840811 -6.49358666837685e-08
@@ -13877,9 +13885,13 @@ DEF wall_robot Robot {
                   }
                 ]
                 name "solid(4)"
+                model "button"
                 boundingObject USE OuterCircle
                 physics Physics {
                 }
+                recognitionColors [
+                  0 0 0
+                ]
               }
             ]
           }
