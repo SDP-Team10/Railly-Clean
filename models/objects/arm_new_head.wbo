@@ -1,0 +1,44 @@
+#VRML_OBJ R2021a utf8
+Solid {
+  translation 1.98129 -0.325385 -3.76165
+  rotation 0.0001140719946599901 0.9999999531873738 -0.0002839239867087719 -1.5717053071795863
+  children [
+    DEF left_part Transform {
+      translation -0.1535 0 0.0282999
+      rotation 0 1 0 0.785398
+      children [
+        Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 0.15 0.01 0.07
+          }
+        }
+      ]
+    }
+    DEF right_part Transform {
+      translation 0.1535 0 0.0283
+      rotation 0 1 0 -0.785395307179586
+      children [
+        DEF right Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 0.15 0.01 0.07
+          }
+        }
+      ]
+    }
+    DEF Middle Shape {
+      appearance PBRAppearance {
+      }
+      geometry Box {
+        size 0.25 0.01 0.1
+      }
+    }
+  ]
+  name "solid(10)"
+  boundingObject USE Middle
+  physics Physics {
+  }
+}

@@ -1,0 +1,103 @@
+#VRML_OBJ R2021a utf8
+DEF train_chair Transform {
+  translation -1.1 0.2 -10.56
+  children [
+    Solid {
+      translation 0 0.54 0.15
+      children [
+        DEF seat Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 1 0.1 0.4
+          }
+        }
+      ]
+      boundingObject USE seat
+    }
+    Solid {
+      translation 0 0.27 0
+      children [
+        DEF lowest Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 1 0.6 0.1
+          }
+        }
+      ]
+      name "solid(23)"
+      boundingObject USE lowest
+    }
+    Solid {
+      translation 0.26 0.88 0.34
+      children [
+        DEF back Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 0.48 0.6 0.05
+          }
+        }
+      ]
+      name "solid(24)"
+      boundingObject USE back
+    }
+    Solid {
+      translation -0.26 0.88 0.34
+      children [
+        Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 0.48 0.6 0.05
+          }
+        }
+      ]
+      name "solid(25)"
+      boundingObject USE back
+    }
+    Solid {
+      translation 0 0.73 0.15
+      children [
+        DEF armrest Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 0.05 0.3 0.4
+          }
+        }
+      ]
+      name "solid(26)"
+      boundingObject USE armrest
+    }
+    Solid {
+      translation 0.27 1.28 0.34
+      children [
+        DEF headback Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 0.3 0.2 0.05
+          }
+        }
+      ]
+      name "solid(27)"
+      boundingObject USE headback
+    }
+    Solid {
+      translation -0.26 1.28 0.34
+      children [
+        DEF headrest Shape {
+          appearance PBRAppearance {
+          }
+          geometry Box {
+            size 0.3 0.2 0.05
+          }
+        }
+      ]
+      name "solid(28)"
+      boundingObject USE headrest
+    }
+  ]
+}

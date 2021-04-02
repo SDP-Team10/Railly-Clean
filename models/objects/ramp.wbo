@@ -1,0 +1,20 @@
+#VRML_OBJ R2021a utf8
+Solid {
+  translation -15.9 0.113739 -8.71661
+  rotation -1 0 0 0.22131444234779124
+  scale 3 3 3
+  children [
+    DEF table_shape Shape {
+      appearance PBRAppearance {
+        baseColor 0.262745 0.266667 0.345098
+        metalness 0
+      }
+      geometry Box {
+        size 1 0.05 1.1
+      }
+    }
+  ]
+  name "solid(2)"
+  contactMaterial "ramp"
+  boundingObject USE table_shape
+}
